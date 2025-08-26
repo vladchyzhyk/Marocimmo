@@ -84,6 +84,11 @@
   --button-lg-bold-tracking: 0em;
 
   /* Labels */
+  --label-lg-medium-size: 16px;
+  --label-lg-medium-weight: 500;
+  --label-lg-medium-leading: 1.1;
+  --label-lg-medium-tracking: 0em;
+
   --label-md-medium-size: 14px;
   --label-md-medium-weight: 500;
   --label-md-medium-leading: 1.1;
@@ -182,6 +187,13 @@ body {
 }
 
 /* Labels */
+.label-lg-medium {
+  font-size: var(--label-lg-medium-size);
+  line-height: var(--label-lg-medium-leading);
+  font-weight: var(--label-lg-medium-weight);
+  letter-spacing: var(--label-lg-medium-tracking);
+}
+
 .label-md-medium {
   font-size: var(--label-md-medium-size);
   line-height: var(--label-md-medium-leading);

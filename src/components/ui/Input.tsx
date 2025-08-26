@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
+import LocationDropdown, { LocationSuggestion } from './LocationDropdown';
 
 type InputAppearance = 'default' | 'filled';
+type InputVariant = 'default' | 'address';
 
 export type InputProps = {
   id?: string;
@@ -23,6 +25,10 @@ export type InputProps = {
   onRightIconClick?: () => void;
   clearable?: boolean;
   appearance?: InputAppearance;
+  variant?: InputVariant;
+  locationSuggestions?: LocationSuggestion[];
+  onLocationSelect?: (suggestion: LocationSuggestion) => void;
+  locationLoading?: boolean;
   className?: string;
   inputClassName?: string;
 };
@@ -52,6 +58,9 @@ const inputBorders = {
   disabled: 'opacity-40 cursor-not-allowed',
 };
 
+const leftIconBase =
+  'absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 text-[var(--text-body-tint)]';
+
 const rightIconButtonBase =
   'absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)]';
 
@@ -80,11 +89,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onRightIconClick,
       clearable,
       appearance = value ? 'filled' : 'default',
+      variant = 'default',
+      locationSuggestions = [],
+      onLocationSelect,
+      locationLoading = false,
       className = '',
       inputClassName = '',
     },
     ref,
   ) => {
+    const [showLocationDropdown, setShowLocationDropdown] = React.useState(false);
     const hasError = Boolean(error);
     const showClear = Boolean(clearable && value && !disabled);
 
@@ -94,11 +108,32 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       hasError ? inputBorders.error : inputBorders.default,
       inputBorders.focus,
       disabled ? inputBorders.disabled : '',
+      variant === 'address' ? 'pl-12' : '', // Add left padding for address variant
       rightIcon && showClear ? 'pr-20' : rightIcon || showClear ? 'pr-10' : '',
       inputClassName,
     ]
       .filter(Boolean)
       .join(' ');
+
+    const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (variant === 'address') {
+        setShowLocationDropdown(true);
+      }
+      onFocus?.(e);
+    };
+
+    const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      // Delay hiding dropdown to allow for clicks on suggestions
+      setTimeout(() => setShowLocationDropdown(false), 150);
+      onBlur?.(e);
+    };
+
+    const handleLocationSelect = (suggestion: LocationSuggestion) => {
+      if (onLocationSelect) {
+        onLocationSelect(suggestion);
+      }
+      setShowLocationDropdown(false);
+    };
 
     return (
       <div className={[baseContainer, className].filter(Boolean).join(' ')}>
@@ -114,14 +149,21 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ) : null}
 
         <div className="relative">
+          {/* Location Icon for address variant */}
+          {variant === 'address' && (
+            <div className={leftIconBase}>
+              <Image src="/icons/ic_location.svg" alt="Location" width={24} height={24} />
+            </div>
+          )}
+
           <input
             id={id}
             name={name}
             type={type}
             value={value}
             onChange={onChange}
-            onBlur={onBlur}
-            onFocus={onFocus}
+            onBlur={handleInputBlur}
+            onFocus={handleInputFocus}
             placeholder={placeholder}
             disabled={disabled}
             aria-invalid={hasError || undefined}
@@ -130,6 +172,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={computedInputClasses}
           />
+
+          {/* Location Dropdown */}
+          {variant === 'address' && (
+            <LocationDropdown
+              suggestions={locationSuggestions}
+              onSelect={handleLocationSelect}
+              visible={showLocationDropdown}
+              loading={locationLoading}
+            />
+          )}
 
           {showClear && type !== 'password' && label !== 'Password' ? (
             <button
