@@ -1,5 +1,6 @@
 'use client';
 
+import classNames from 'classnames';
 import React from 'react';
 
 type ModalProps = {
@@ -10,6 +11,7 @@ type ModalProps = {
   actionChildren?: React.ReactNode;
   className?: string;
   widthClassName?: string;
+  textCenter?: boolean;
 };
 
 const Modal = ({
@@ -19,42 +21,47 @@ const Modal = ({
   children,
   actionChildren,
   className = '',
-  widthClassName = 'max-w-[414px] w-[calc(100%-32px)]',
+  widthClassName = 'w-[calc(100%-32px)]',
+  textCenter = false,
 }: ModalProps) => {
-  if (!isOpen) return null;
-
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className={classNames(
+        'fixed inset-0 z-[90] flex items-center justify-center transition-all duration-300 ease-out',
+        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
+      )}
       role="dialog"
       aria-modal="true"
     >
-      <div className="absolute inset-0 bg-[var(--color-black)]/50" onClick={onClose} />
       <div
-        className={[
-          'relative z-10 rounded-[24px] border border-[var(--border)] bg-white p-6 shadow-xl',
+        className={classNames(
+          'absolute inset-0 min-h-screen bg-[var(--color-black)]/50 z-[50] transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'opacity-0',
+        )}
+        onClick={onClose}
+      />
+      <div
+        className={classNames(
+          'flex flex-col gap-4 relative rounded-[24px] border border-[var(--border)] bg-white p-6 shadow-xl z-[100] transition-all duration-300 ease-out origin-center',
           widthClassName,
           className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
+          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4',
+        )}
       >
         {title ? (
-          <div className="mb-4">
-            <h2 className="title-xl text-[var(--color-black)]">{title}</h2>
+          <div className="">
+            <h2
+              className={classNames(
+                'title-xl text-[var(--color-black)]',
+                textCenter ? 'text-center' : '',
+              )}
+            >
+              {title}
+            </h2>
           </div>
         ) : null}
-        <div className="mb-4">{children}</div>
+        <div className="">{children}</div>
         {actionChildren ? <div className="flex gap-2">{actionChildren}</div> : null}
-        <button
-          aria-label="Close"
-          className="absolute right-4 top-4 p-1 rounded-md hover:bg-[var(--bg-tint)]"
-          onClick={onClose}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" />
-          </svg>
-        </button>
       </div>
     </div>
   );

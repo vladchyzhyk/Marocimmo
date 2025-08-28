@@ -1,3 +1,4 @@
+import SegmentControl, { SegmentControlOption } from '@/components/SegmentControl';
 import Image from 'next/image';
 import React from 'react';
 import LocationDropdown, { LocationSuggestion } from './LocationDropdown';
@@ -31,6 +32,14 @@ export type InputProps = {
   locationLoading?: boolean;
   className?: string;
   inputClassName?: string;
+  // Optional segmented control next to label
+  segmentType?: 'switch' | 'segment';
+  segmentOptions?: SegmentControlOption[];
+  segmentValue?: string;
+  onSegmentChange?: (value: string) => void;
+  // Calendar variant
+  calendar?: boolean;
+  onCalendarClick?: () => void;
 };
 
 const baseContainer = 'flex flex-col gap-2 w-full';
@@ -38,34 +47,33 @@ const labelStyles = 'body-md text-[var(--color-black)]';
 const helperTextStyles = 'label-sm-medium text-[var(--text-body-tint)]';
 
 const inputBase = [
-  'w-full h-12 rounded-[8px] px-4',
-  'border bg-[var(--white)]',
+  'relative w-full h-12 rounded-[8px] px-4 z-[5]',
+  'border',
   'placeholder-[var(--text-body-tint)]',
   'text-[var(--color-black)] body-lg',
   'outline-none transition-colors',
 ].join(' ');
 
 const inputAppearance: Record<InputAppearance, string> = {
-  default: 'bg-[var(--white)] hover:bg-[var(--bg-tint)]',
-  filled: 'bg-[var(--bg-tint)] hover:bg-[var(--bg-tint)]',
+  default: 'hover:bg-[var(--bg-tint)]',
+  filled: 'bg-white hover:bg-[var(--bg-tint)]',
 };
 
 const inputBorders = {
   default: 'border-[var(--border-input)]',
-  focus:
-    'focus:ring-2 focus:ring-[var(--accent-green)] focus:ring-offset-0 border-[var(--accent-green)]',
+  focus: 'focus:border-[var(--accent-green)]',
   error: 'border-[var(--error)]',
   disabled: 'opacity-40 cursor-not-allowed',
 };
 
 const leftIconBase =
-  'absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 text-[var(--text-body-tint)]';
+  'absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 text-[var(--text-body-tint)] z-[10]';
 
 const rightIconButtonBase =
-  'absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)]';
+  'absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)] z-[10]';
 
 const clearButtonBase =
-  'absolute top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)] text-[var(--text-body-tint)]';
+  'absolute top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)] text-[var(--text-body-tint)] z-[10]';
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -95,6 +103,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       locationLoading = false,
       className = '',
       inputClassName = '',
+      segmentType = 'switch',
+      segmentOptions = [],
+      segmentValue,
+      onSegmentChange,
+      calendar = false,
+      onCalendarClick,
     },
     ref,
   ) => {
@@ -108,8 +122,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       hasError ? inputBorders.error : inputBorders.default,
       inputBorders.focus,
       disabled ? inputBorders.disabled : '',
-      variant === 'address' ? 'pl-12' : '', // Add left padding for address variant
-      rightIcon && showClear ? 'pr-20' : rightIcon || showClear ? 'pr-10' : '',
+      variant === 'address' ? 'pl-10' : '', // Add left padding for address variant
+      (calendar || rightIcon) && showClear
+        ? 'pr-20'
+        : calendar || rightIcon || showClear
+          ? 'pr-10'
+          : '',
       inputClassName,
     ]
       .filter(Boolean)
@@ -138,21 +156,34 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={[baseContainer, className].filter(Boolean).join(' ')}>
         {label ? (
-          <label htmlFor={id} className={labelStyles}>
-            {label}
-            {required ? (
-              <span className="ml-1 font-medium text-[var(--error)]" aria-hidden>
-                *
-              </span>
+          <div className="flex items-center justify-between gap-2">
+            <label htmlFor={id} className={labelStyles}>
+              {label}
+              {required ? (
+                <span className="ml-1 font-medium text-[var(--error)]" aria-hidden>
+                  *
+                </span>
+              ) : null}
+            </label>
+            {segmentType &&
+            segmentOptions &&
+            segmentOptions.length > 0 &&
+            segmentValue !== undefined ? (
+              <SegmentControl
+                type={segmentType}
+                options={segmentOptions}
+                value={segmentValue}
+                onChange={(val) => onSegmentChange?.(val)}
+              />
             ) : null}
-          </label>
+          </div>
         ) : null}
 
         <div className="relative">
           {/* Location Icon for address variant */}
           {variant === 'address' && (
             <div className={leftIconBase}>
-              <Image src="/icons/ic_location.svg" alt="Location" width={24} height={24} />
+              <Image src="/icons/ic_location.svg" alt="Location" width={16} height={16} />
             </div>
           )}
 
@@ -175,12 +206,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           {/* Location Dropdown */}
           {variant === 'address' && (
-            <LocationDropdown
-              suggestions={locationSuggestions}
-              onSelect={handleLocationSelect}
-              visible={showLocationDropdown}
-              loading={locationLoading}
-            />
+            <div className="absolute bottom-[0.25rem] left-0 right-0 z-[1]">
+              <LocationDropdown
+                suggestions={locationSuggestions}
+                value={value}
+                onSelect={handleLocationSelect}
+                visible={showLocationDropdown}
+                loading={locationLoading}
+              />
+            </div>
           )}
 
           {showClear && type !== 'password' && label !== 'Password' ? (
@@ -188,7 +222,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               type="button"
               tabIndex={-1}
               onClick={onClear}
-              className={[clearButtonBase, rightIcon ? 'right-10' : 'right-2'].join(' ')}
+              className={[clearButtonBase, calendar || rightIcon ? 'right-10' : 'right-2'].join(
+                ' ',
+              )}
               aria-label="Clear input"
               disabled={disabled}
             >
@@ -196,7 +232,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </button>
           ) : null}
 
-          {rightIcon ? (
+          {calendar ? (
+            <button
+              type="button"
+              tabIndex={-1}
+              onClick={onCalendarClick}
+              className={rightIconButtonBase}
+              aria-label="Open calendar"
+              disabled={disabled}
+            >
+              <span className="text-[var(--color-black)] opacity-80">
+                <Image src="/icons/ic_calendar.svg" alt="Calendar" width={24} height={24} />
+              </span>
+            </button>
+          ) : rightIcon ? (
             <button
               type="button"
               tabIndex={-1}

@@ -5,7 +5,6 @@ export type LocationSuggestion = {
   id: string;
   street: string;
   city: string;
-  isHighlighted?: boolean;
 };
 
 export type LocationDropdownProps = {
@@ -14,6 +13,7 @@ export type LocationDropdownProps = {
   visible: boolean;
   loading?: boolean;
   className?: string;
+  value?: string;
 };
 
 const LocationDropdown: React.FC<LocationDropdownProps> = ({
@@ -22,6 +22,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   visible,
   loading = false,
   className = '',
+  value,
 }) => {
   if (!visible) {
     return null;
@@ -30,7 +31,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   return (
     <div
       className={`
-        absolute top-full left-0 right-0 z-50 mt-1
+        absolute top-full left-0 right-0 z-50 scrollbar-none
         bg-[var(--bg-tint)] border border-[var(--border)] 
         rounded-b-[16px] shadow-lg
         max-h-64 overflow-y-auto
@@ -73,7 +74,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
             className={`
             w-full flex items-center gap-2 px-4 py-4
             hover:bg-white transition-colors
-            ${suggestion.isHighlighted ? 'bg-white' : ''}
+            ${value === suggestion.street ? 'bg-white' : ''}
           `}
           >
             {/* Location Icon */}
@@ -86,7 +87,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
               <span className="body-lg text-[var(--color-black)]">{suggestion.street},</span>
               <span
                 className={`body-lg ${
-                  suggestion.isHighlighted
+                  value === `${suggestion.street}, ${suggestion.city}`
                     ? 'text-[var(--accent-green)]'
                     : 'text-[var(--color-black)]'
                 }`}

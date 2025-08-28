@@ -1,168 +1,419 @@
 'use client';
 
-import Footer from '@/components/Footer';
 import Input from '@/components/ui/Input';
-import { LocationSuggestion } from '@/components/ui/LocationDropdown';
+import InputSelect from '@/components/ui/InputSelect';
 import SelectCard from '@/components/ui/SelectCard';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import {
+  ApartmentIcon,
+  CommercialIcon,
+  HouseIcon,
+  LandIcon,
+  OfficeIcon,
+  VillaIcon,
+} from '@/utils/icons';
+import classNames from 'classnames';
 
-const propertyTypes = [
+const transactionTypes = [
   {
     id: '1',
-    title: 'Apartment',
+    title: 'Short-term Rent',
+    variant: 'short-term',
+    propertyTypes: [
+      {
+        id: '1',
+        title: 'Apartment',
+        icon: ApartmentIcon,
+      },
+      {
+        id: '2',
+        title: 'House',
+        icon: HouseIcon,
+      },
+
+      {
+        id: '3',
+        title: 'Villa/Riad',
+        icon: VillaIcon,
+      },
+    ],
   },
   {
     id: '2',
-    title: 'House',
-  },
+    title: 'Long-term Rent',
+    variant: 'long-term',
+    propertyTypes: [
+      {
+        id: '1',
+        title: 'Apartment',
+        icon: ApartmentIcon,
+      },
+      {
+        id: '2',
+        title: 'House',
+        icon: HouseIcon,
+      },
 
+      {
+        id: '3',
+        title: 'Villa/Riad',
+        icon: VillaIcon,
+      },
+
+      {
+        id: '4',
+        title: 'Office',
+        icon: OfficeIcon,
+      },
+
+      {
+        id: '5',
+        title: 'Commercial',
+        icon: CommercialIcon,
+      },
+
+      {
+        id: '6',
+        title: 'Land',
+        icon: LandIcon,
+        zoningCategories: [
+          {
+            id: '1',
+            title: 'Residential',
+          },
+          {
+            id: '2',
+            title: 'Commercial',
+          },
+          {
+            id: '3',
+            title: 'Agricultural',
+          },
+          {
+            id: '4',
+            title: 'Industrial',
+          },
+          {
+            id: '5',
+            title: 'Public Services',
+          },
+          {
+            id: '6',
+            title: 'Mixed-Use',
+          },
+        ],
+      },
+    ],
+  },
   {
     id: '3',
-    title: 'Villa/Riad',
-  },
+    title: 'Sale',
+    variant: 'sale',
+    propertyTypes: [
+      {
+        id: '1',
+        title: 'Apartment',
+        icon: ApartmentIcon,
+      },
+      {
+        id: '2',
+        title: 'House',
+        icon: HouseIcon,
+      },
 
-  {
-    id: '4',
-    title: 'Office',
-  },
+      {
+        id: '3',
+        title: 'Villa/Riad',
+        icon: VillaIcon,
+      },
 
-  {
-    id: '5',
-    title: 'Commercial',
-  },
+      {
+        id: '4',
+        title: 'Office',
+        icon: OfficeIcon,
+      },
 
-  {
-    id: '6',
-    title: 'Land',
+      {
+        id: '5',
+        title: 'Commercial',
+        icon: CommercialIcon,
+      },
+
+      {
+        id: '6',
+        title: 'Land',
+        icon: LandIcon,
+      },
+    ],
   },
 ];
 
-const TypeAndLocationStep = () => {
-  const router = useRouter();
-  const [selectedPropertyType, setSelectedPropertyType] = useState('');
-  const [selectedPostedBy, setSelectedPostedBy] = useState('');
-  const [logoLoading, setLogoLoading] = useState(false);
-  const [address, setAddress] = useState('');
-  const [locationLoading, setLocationLoading] = useState(false);
-  const [footerLoading, setFooterLoading] = useState(false);
+const regions = [
+  {
+    id: '1',
+    title: 'Casablanca',
+  },
+  {
+    id: '2',
+    title: 'Tangier',
+  },
+  {
+    id: '3',
+    title: 'Fez',
+  },
+];
 
-  const PlusIcon = () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M12 5v14M5 12h14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+const cities = [
+  {
+    id: '1',
+    title: 'Casablanca',
+  },
+  {
+    id: '2',
+    title: 'Tangier',
+  },
+  {
+    id: '3',
+    title: 'Fez',
+  },
+];
 
-  const handleLogoClick = () => {
-    setLogoLoading(true);
-    // Simulate loading
-    setTimeout(() => {
-      setLogoLoading(false);
-    }, 2000);
+interface TypeAndLocationData {
+  transactionType: string;
+  propertyType: { id: string; name: string };
+  zoningCategory?: string;
+  address: {
+    region: string;
+    city: string;
+    streetAddress: string;
   };
+}
 
-  const handleLocationSelect = (suggestion: LocationSuggestion) => {
-    setAddress(`${suggestion.street}, ${suggestion.city}`);
-  };
+interface Props {
+  onDataChange?: (data: TypeAndLocationData) => void;
+  initialData?: TypeAndLocationData | null;
+}
 
-  const handleAddressClear = () => {
-    setAddress('');
+const TypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
+  const selectedPropertyType = initialData?.propertyType || { id: '', name: '' };
+  const selectedPostedBy = initialData?.transactionType || '';
+  const address = {
+    region: initialData?.address.region || '',
+    city: initialData?.address.city || '',
+    streetAddress: initialData?.address.streetAddress || '',
   };
-
-  const handleAddressFocus = () => {
-    // Simulate loading locations
-    setLocationLoading(true);
-    setTimeout(() => {
-      setLocationLoading(false);
-    }, 2000);
-  };
-
-  const handleContinue = () => {
-    setFooterLoading(true);
-    router.push('/add-property/base-property-info');
-  };
+  const selectedZoningCategory = initialData?.zoningCategory || '';
 
   return (
-    <div className="flex justify-center min-h-screen w-full bg-gray-50 pb-10">
-      <div className="flex flex-col gap-6 w-full max-w-[53rem] mt-[2rem]">
-        <div className="flex flex-col gap-6">
-          <div className="title-xl ">Choose transaction type</div>
+    <div className="flex justify-center w-full bg-white pb-10 px-4 md:px-6 lg:px-0">
+      <div className="h-full flex flex-col gap-6 w-full max-w-[53rem] min-h-screen md:min-h-fit pb-[14rem]">
+        <div className="flex flex-col gap-14">
+          <div className="flex flex-col gap-6">
+            <div className="title-xl ">Choose transaction type</div>
 
-          <div className="flex flex-col gap-3">
-            <div className="flex justify-center items-center gap-4">
-              <SelectCard
-                title="Short-term Rent"
-                variant="pill"
-                selected={selectedPostedBy === 'owner'}
-                onClick={() => setSelectedPostedBy('owner')}
-              />
-              <SelectCard
-                title="Long-term Rent"
-                variant="pill"
-                selected={selectedPostedBy === 'agency'}
-                onClick={() => setSelectedPostedBy('agency')}
-              />
-              <SelectCard
-                title="Sale"
-                variant="pill"
-                selected={selectedPostedBy === 'agency'}
-                onClick={() => setSelectedPostedBy('agency')}
-              />
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+                {transactionTypes.map((type) => (
+                  <SelectCard
+                    key={type.id}
+                    title={type.title}
+                    variant="pill"
+                    selected={selectedPostedBy === type.variant}
+                    onClick={() => {
+                      const clearedAddress = { region: '', city: '', streetAddress: '' };
+                      onDataChange?.({
+                        transactionType: type.variant,
+                        propertyType: { id: '', name: '' },
+                        zoningCategory: '',
+                        address: clearedAddress,
+                      });
+                    }}
+                  />
+                ))}
+              </div>
+              {selectedPostedBy !== '' && (
+                <div
+                  className={classNames('gap-4 w-full hidden md:grid', {
+                    'grid-cols-2 md:grid-cols-3': selectedPostedBy === 'short-term',
+                    'grid-cols-2 md:grid-cols-6':
+                      selectedPostedBy === 'sale' || selectedPostedBy === 'long-term',
+                  })}
+                >
+                  {transactionTypes
+                    .find((type) => type.variant === selectedPostedBy)
+                    ?.propertyTypes.map((type) => (
+                      <div key={type.id} className="w-full">
+                        <SelectCard
+                          title={type.title}
+                          Icon={type.icon}
+                          variant="type"
+                          selected={
+                            selectedPropertyType.id !== '' && selectedPropertyType.id === type.id
+                          }
+                          onClick={() => {
+                            const clearedAddress = { region: '', city: '', streetAddress: '' };
+                            onDataChange?.({
+                              transactionType: selectedPostedBy,
+                              propertyType: { id: type.id, name: type.title },
+                              zoningCategory: '',
+                              address: clearedAddress,
+                            });
+                          }}
+                        />
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
-            <div className="flex flex-wrap gap-4">
-              {propertyTypes.map((type) => (
-                <SelectCard
-                  key={type.id}
-                  title={type.title}
-                  variant="type"
-                  selected={selectedPropertyType === type.id}
-                  onClick={() => setSelectedPropertyType(type.id)}
+          </div>
+          <div className="flex md:hidden flex-col gap-6">
+            {selectedPostedBy !== '' && <div className="title-xl ">Choose property type</div>}
+            {selectedPostedBy !== '' && (
+              <div
+                className={classNames('grid gap-4 w-full', {
+                  'grid-cols-2 md:grid-cols-3': selectedPostedBy === 'short-term',
+                  'grid-cols-2 md:grid-cols-6':
+                    selectedPostedBy === 'sale' || selectedPostedBy === 'long-term',
+                })}
+              >
+                {transactionTypes
+                  .find((type) => type.variant === selectedPostedBy)
+                  ?.propertyTypes.map((type) => (
+                    <div key={type.id} className="w-full">
+                      <SelectCard
+                        title={type.title}
+                        Icon={type.icon}
+                        variant="type"
+                        selected={
+                          selectedPropertyType.id !== '' && selectedPropertyType.id === type.id
+                        }
+                        onClick={() => {
+                          const clearedAddress = { region: '', city: '', streetAddress: '' };
+                          onDataChange?.({
+                            transactionType: selectedPostedBy,
+                            propertyType: { id: type.id, name: type.title },
+                            zoningCategory: '',
+                            address: clearedAddress,
+                          });
+                        }}
+                      />
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+
+          {selectedPropertyType.id !== '' &&
+            (transactionTypes
+              .find((type) => type.variant === selectedPostedBy)
+              ?.propertyTypes.find((type) => type.id === selectedPropertyType.id)?.zoningCategories
+              ?.length ?? 0) > 0 && (
+              <div className="flex flex-col gap-8 w-full">
+                <div className="flex flex-col gap-2">
+                  <div className="title-xl">Zoning</div>
+                  <div className="body-lg text-[var(--text-body-tint)]">
+                    Select the zoning category
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:flex gap-4 w-full">
+                  {transactionTypes
+                    .find((type) => type.variant === selectedPostedBy)
+                    ?.propertyTypes.find((type) => type.id === selectedPropertyType.id)
+                    ?.zoningCategories?.map((category) => (
+                      <div
+                        key={category.id}
+                        onClick={() => {
+                          onDataChange?.({
+                            transactionType: selectedPostedBy,
+                            propertyType: selectedPropertyType || { id: '', name: '' },
+                            zoningCategory: category.id,
+                            address,
+                          });
+                        }}
+                        className={classNames(
+                          'w-full py-4 border flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer',
+                          selectedZoningCategory === category.id
+                            ? 'border-[var(--accent-green)] text-[var(--accent-green)]'
+                            : 'border-[var(--border)] text-[var(--text-body)]',
+                        )}
+                      >
+                        {category.title}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+          {selectedPropertyType.id !== '' && selectedPostedBy !== '' && (
+            <div className="flex flex-col gap-6 w-full pb-20 md:pb-0">
+              <div className="flex flex-col gap-2">
+                <div className="title-xl">Location</div>
+                <div className="body-lg text-[var(--text-body-tint)]">
+                  Tell us about your property&apos;s location
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4 w-full">
+                <InputSelect
+                  options={regions.map((region) => ({
+                    label: region.title,
+                    value: region.title,
+                  }))}
+                  placeholder="Type or select region"
+                  label="Region"
+                  name="region"
+                  required
+                  isTyping
+                  value={address.region}
+                  onChange={(e) => {
+                    const newAddress = { ...address, region: e };
+                    onDataChange?.({
+                      transactionType: selectedPostedBy,
+                      propertyType: selectedPropertyType || { id: '', name: '' },
+                      address: newAddress,
+                    });
+                  }}
                 />
-              ))}
+                <InputSelect
+                  options={cities.map((city) => ({
+                    label: city.title,
+                    value: city.title,
+                  }))}
+                  placeholder="Type or select city"
+                  label="City"
+                  name="city"
+                  required
+                  isTyping
+                  value={address.city}
+                  onChange={(e) => {
+                    const newAddress = { ...address, city: e };
+                    onDataChange?.({
+                      transactionType: selectedPostedBy,
+                      propertyType: selectedPropertyType || { id: '', name: '' },
+                      address: newAddress,
+                    });
+                  }}
+                />
+                <Input
+                  placeholder="Enter the address"
+                  label="Street Address"
+                  name="address"
+                  value={address.streetAddress}
+                  onChange={(e) => {
+                    const newAddress = { ...address, streetAddress: e.target.value };
+                    onDataChange?.({
+                      transactionType: selectedPostedBy,
+                      propertyType: selectedPropertyType || { id: '', name: '' },
+                      address: newAddress,
+                    });
+                  }}
+                  variant="address"
+                />
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-6 w-full">
-          <div className="flex flex-col gap-2">
-            <div className="title-xl">Location</div>
-            <div className="body-lg text-[var(--text-body-tint)]">
-              Tell us about your property&apos;s location
-            </div>
-          </div>
-
-          <div className="flex gap-4 w-full">
-            <Input
-              placeholder="Enter your address"
-              label="Region"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <Input
-              placeholder="Enter your address"
-              label="City"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <Input
-              placeholder="Enter your address"
-              label="Street Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              variant="address"
-            />
-          </div>
+          )}
         </div>
       </div>
-      {selectedPostedBy !== '' && <Footer onContinue={handleContinue} loading={footerLoading} />}
     </div>
   );
 };

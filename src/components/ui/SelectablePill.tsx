@@ -16,11 +16,11 @@ const SelectablePill = ({
   className = '',
 }: SelectablePillProps) => {
   const baseStyles =
-    'inline-flex items-center justify-center px-4 py-4 h-11 rounded-full border transition-colors cursor-pointer';
+    'items-center justify-center py-2.5 px-4 rounded-full border transition-colors cursor-pointer';
 
   const stateStyles = selected
     ? 'bg-[var(--color-black)] text-white border-[var(--color-black)]'
-    : 'bg-white text-[var(--text-pill)] border-[var(--border)] hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]';
+    : 'bg-[var(--bg-tint)] text-[var(--text-pill)] border-[var(--border)] hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]';
 
   const disabledStyles = disabled ? 'opacity-40 cursor-not-allowed' : '';
 
@@ -30,7 +30,7 @@ const SelectablePill = ({
       disabled={disabled}
       className={`${baseStyles} ${stateStyles} ${disabledStyles} ${className}`}
     >
-      <span className="body-lg">{children}</span>
+      <div className="flex items-center justify-center gap-2 body-lg">{children}</div>
     </button>
   );
 };

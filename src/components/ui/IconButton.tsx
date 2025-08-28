@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 type IconButtonVariant = 'base' | 'with-photo';
 type IconButtonState = 'default' | 'hover';
@@ -11,12 +11,15 @@ export type IconButtonProps = {
   imageUrl?: string;
   onClick?: () => void;
   onDelete?: () => void;
+  onImageUpload?: (file: File) => void;
   loading?: boolean;
   disabled?: boolean;
   className?: string;
+  accept?: string;
+  showDeleteButton?: boolean;
 };
 
-const IconButton: React.FC<IconButtonProps> = ({
+const IconButton = ({
   variant = 'base',
   state = 'default',
   icon,
@@ -24,68 +27,55 @@ const IconButton: React.FC<IconButtonProps> = ({
   imageUrl,
   onClick,
   onDelete,
+  onImageUpload,
   loading = false,
   disabled = false,
   className = '',
-}) => {
+  accept = 'image/*',
+  showDeleteButton = false,
+}: IconButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const currentState = isHovered ? 'hover' : state;
 
-  const baseStyles = `
-    flex flex-col justify-center items-center gap-4 p-8 rounded-[14px] 
-    transition-all duration-200 cursor-pointer
-    disabled:opacity-60 disabled:cursor-not-allowed
-    ${className}
-  `;
-
-  const getVariantStyles = () => {
-    if (variant === 'with-photo') {
-      if (currentState === 'hover') {
-        return 'relative bg-black/50 text-white';
-      }
-      return 'bg-white text-black';
-    }
-
-    // Base variant
-    if (currentState === 'hover') {
-      return 'bg-[var(--bg-tint)] border border-[var(--border)] text-[var(--accent-green)]';
-    }
-    return 'bg-[var(--bg-tint)] border border-[var(--border)] text-[var(--color-black)]';
+  const baseStyles = {
+    layout: 'flex flex-col justify-center items-center gap-4 p-8 rounded-[14px]',
+    interactions: 'transition-all duration-200 cursor-pointer group',
+    disabled: 'disabled:opacity-60 disabled:cursor-not-allowed',
   };
 
-  const getIconStyles = () => {
-    if (variant === 'with-photo' && currentState === 'hover') {
-      return 'text-white';
-    }
-    if (currentState === 'hover') {
-      return 'text-[var(--accent-green)]';
-    }
-    return 'text-[var(--color-black)]';
+  const variantStyles = {
+    base: 'bg-[var(--bg-tint)] border border-dashed border-[var(--border)] text-[var(--color-black)] group-hover:text-[var(--accent-green)]',
+    'with-photo':
+      'bg-white text-black group-hover:relative group-hover:bg-black/50 group-hover:text-white',
   };
 
-  const getLabelStyles = () => {
-    if (variant === 'with-photo' && currentState === 'hover') {
-      return 'text-white';
-    }
-    if (currentState === 'hover') {
-      return 'text-[var(--accent-green)]';
-    }
-    return 'text-[var(--color-black)]';
+  const iconStyles = {
+    base: 'text-[var(--color-black)] group-hover:text-[var(--accent-green)] transition-colors duration-200',
+    'with-photo': 'text-[var(--color-black)] group-hover:text-white transition-colors duration-200',
   };
 
-  const Spinner: React.FC = () => (
-    <svg
-      className="h-6 w-6 animate-spin"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-    >
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-    </svg>
-  );
+  const labelStyles = {
+    base: 'text-[var(--color-black)] group-hover:text-[var(--accent-green)] transition-colors duration-200',
+    'with-photo': 'text-[var(--color-black)] group-hover:text-white transition-colors duration-200',
+  };
 
+  const deleteButtonStyles = {
+    container: 'absolute top-1 right-1 flex justify-center items-center w-5 h-5 z-50',
+    base: 'bg-white border border-gray-300 rounded-lg shadow-lg',
+    hover: 'hover:bg-gray-100 transition-colors',
+    icon: 'w-5 h-5 text-red-500',
+  };
+
+  // Helper functions to get current styles
+  const getCurrentVariantStyles = () => variantStyles[variant];
+  const getCurrentIconStyles = () => iconStyles[variant];
+  const getCurrentLabelStyles = () => labelStyles[variant];
+
+  // Combine all base styles
+  const combinedBaseStyles = `${baseStyles.layout} ${baseStyles.interactions} ${baseStyles.disabled} ${className}`;
+
+  // Background style for photo variant
   const backgroundStyle =
     variant === 'with-photo' && imageUrl
       ? {
@@ -95,52 +85,94 @@ const IconButton: React.FC<IconButtonProps> = ({
         }
       : {};
 
-  return (
-    <div
-      className={`${baseStyles} ${getVariantStyles()}`}
-      style={backgroundStyle}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={onClick}
-    >
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          <div
-            className={`flex flex-col justify-center items-center gap-2 px-2.5 ${getIconStyles()}`}
-          >
-            {icon}
-            {label && <span className={`text-center body-lg ${getLabelStyles()}`}>{label}</span>}
-          </div>
+  // Handle click based on variant
+  const handleClick = () => {
+    if (variant === 'base' && onImageUpload) {
+      // For base variant with image upload, trigger file input
+      fileInputRef.current?.click();
+    } else if (onClick) {
+      // For other cases, use the provided onClick
+      onClick();
+    }
+    // If neither onImageUpload nor onClick is provided, do nothing
+  };
 
-          {variant === 'with-photo' && currentState === 'hover' && onDelete && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete();
-              }}
-              className="absolute top-2 right-2 flex justify-center items-center w-9 h-9 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:bg-[var(--border-input)] transition-colors"
-            >
-              <svg
-                className="w-5 h-5 text-[var(--error)]"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+  // Handle file selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && onImageUpload) {
+      onImageUpload(file);
+    }
+    // Reset input value to allow selecting the same file again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Delete button component
+  const DeleteButton: React.FC = () => (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onDelete?.();
+      }}
+      className={`${deleteButtonStyles.container} ${deleteButtonStyles.base} ${deleteButtonStyles.hover} h-10 w-10`}
+    >
+      <svg
+        className={deleteButtonStyles.icon}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+
+  return (
+    <>
+      {/* Hidden file input for image upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        onChange={handleFileChange}
+        className="hidden"
+        disabled={disabled || loading}
+      />
+
+      <div
+        className={`${combinedBaseStyles} ${getCurrentVariantStyles()} relative`}
+        style={backgroundStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={handleClick}
+      >
+        <div
+          className={`flex flex-col justify-center items-center gap-2 px-2.5 ${getCurrentIconStyles()}`}
+        >
+          {icon}
+          {label && (
+            <span className={`text-center whitespace-nowrap body-lg ${getCurrentLabelStyles()}`}>
+              {label}
+            </span>
           )}
-        </>
-      )}
-    </div>
+        </div>
+
+        {/* Show delete button for photo variant on hover OR for base variant when showDeleteButton is true */}
+        {currentState === 'hover' &&
+          onDelete &&
+          (variant === 'with-photo' || (variant === 'base' && showDeleteButton)) && (
+            <DeleteButton />
+          )}
+      </div>
+    </>
   );
 };
 

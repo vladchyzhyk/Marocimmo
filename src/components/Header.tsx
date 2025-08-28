@@ -1,9 +1,12 @@
+import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons';
+import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import LanguageDropdown from './LanguageDropdown';
-import Button from './ui/Button';
+import Button, { ButtonVariant } from './ui/Button';
+import Modal from './ui/Modal';
 import UserDropdown from './UserDropdown';
 
 type HeaderProps = {
@@ -12,9 +15,11 @@ type HeaderProps = {
 
 const Header = ({ className = '' }: HeaderProps) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ar'>('en');
+  const [isSaveExitOpen, setIsSaveExitOpen] = useState(false);
 
   const user = {
     name: 'John Doe',
@@ -74,12 +79,22 @@ const Header = ({ className = '' }: HeaderProps) => {
     setIsDropdownOpen(false);
   };
 
+  const getButtonInfo = () => {
+    if (pathname === '/add-property') {
+      return { text: 'Cancel', variant: 'outline', href: '/' };
+    }
+    if (pathname === '/add-property/base-property-info') {
+      return { text: 'Save & Exit', variant: 'outline', href: '/' };
+    }
+    return { text: 'Add your property', variant: 'primary', href: '/add-property' };
+  };
+
   return (
-    <div className="w-full ">
+    <div className="w-full fixed top-0 left-0 z-50">
       <header
         className={[
           'flex justify-center w-full border-b border-[var(--border)] bg-[var(--white)]',
-          'px-5 md:px-10 pb-2',
+          'px-5 md:px-6 lg:px-10 pb-2',
           className,
         ]
           .filter(Boolean)
@@ -90,13 +105,15 @@ const Header = ({ className = '' }: HeaderProps) => {
           <div className="w-full max-w-[1/3]">
             <Link href="/" className="flex items-center gap-2 h-14">
               <span className="inline-flex items-center justify-center w-[34px] h-[34px] rounded-[8px] bg-[var(--primarybutton-hover)]" />
-              <span className="title-xl uppercase text-[var(--color-black)]">Marocimmo</span>
+              <span className="hidden sm:block title-xl uppercase text-[var(--color-black)]">
+                Marocimmo
+              </span>
             </Link>
           </div>
 
           {/* Nav - grows and centers on larger screens */}
-          <nav className="w-full">
-            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-6 py-1">
+          <nav className="w-full hidden lg:block">
+            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-2 lg:gap-3 xl:gap-6 py-1">
               {[
                 { href: '#short-time', label: 'Short-time Rent' },
                 { href: '#long-time', label: 'Long-time Rent' },
@@ -105,7 +122,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="inline-flex items-center gap-2 px-2 py-2 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg"
+                    className="whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg"
                   >
                     <span>{item.label}</span>
                   </Link>
@@ -117,30 +134,73 @@ const Header = ({ className = '' }: HeaderProps) => {
           {/* Actions */}
           <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-4">
             {/* Add your property - primary */}
-            <Button
-              variant={pathname === '/add-property' ? 'outline' : 'primary'}
-              className="flex items-center justify-center max-w-[200px]"
-            >
-              <Link
-                className="flex items-center gap-1"
-                href={pathname === '/add-property' ? '/' : '/add-property'}
+            {getButtonInfo().text === 'Save & Exit' ? (
+              <Button
+                variant={getButtonInfo().variant as ButtonVariant}
+                className="!hidden md:!flex items-center justify-center max-w-[134px]"
+                onClick={() => setIsSaveExitOpen(true)}
               >
-                {pathname === '/add-property' ? (
-                  ''
-                ) : (
-                  <Image src="/icons/ic_plus.svg" alt="add" width={16} height={16} />
+                <span>Save & Exit</span>
+              </Button>
+            ) : (
+              <Button
+                variant={getButtonInfo().variant as ButtonVariant}
+                className={classNames(
+                  '!hidden md:!flex items-center justify-center ',
+                  getButtonInfo().text === 'Cancel'
+                    ? '!w-fit'
+                    : 'md:max-w-[200px] lg:max-w-[200px]',
                 )}
-                <span>{pathname === '/add-property' ? 'Cancel' : 'Add your property'}</span>
-              </Link>
-            </Button>
+              >
+                <Link
+                  className="w-full h-full flex justify-center items-center gap-1"
+                  href={getButtonInfo().href}
+                >
+                  {getButtonInfo().href === '/add-property' && (
+                    <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                  )}
+                  <span>{getButtonInfo().text}</span>
+                </Link>
+              </Button>
+            )}
+            {getButtonInfo().text !== 'Add your property' &&
+              (getButtonInfo().text === 'Save & Exit' ? (
+                <Button
+                  variant={getButtonInfo().variant as ButtonVariant}
+                  className="!w-fit !flex md:!hidden items-center justify-center max-w-[134px] whitespace-nowrap"
+                  onClick={() => setIsSaveExitOpen(true)}
+                >
+                  <span>Save & Exit</span>
+                </Button>
+              ) : (
+                <Button
+                  variant={getButtonInfo().variant as ButtonVariant}
+                  className={classNames(
+                    '!flex md:!hidden items-center justify-center whitespace-nowrap',
+                    getButtonInfo().text === 'Cancel'
+                      ? '!w-fit md:w-full lg:max-w-[134px] !bg-[var(--bg-tint)]'
+                      : 'md:max-w-[200px] lg:max-w-[200px]',
+                  )}
+                >
+                  <Link
+                    className="w-full h-full flex justify-center items-center gap-1"
+                    href={getButtonInfo().href}
+                  >
+                    {getButtonInfo().href === '/add-property' && (
+                      <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                    )}
+                    <span>{getButtonInfo().text}</span>
+                  </Link>
+                </Button>
+              ))}
             {/* Language icon button */}
             <button
               type="button"
               aria-label="Change language"
               onClick={handleLanguageButtonClick}
-              className="flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
+              className="hidden lg:flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
             >
-              <Image src="/icons/ic_language.svg" alt="Language" width={24} height={24} />
+              <LanguageIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
             </button>
             {user && (
               <button
@@ -150,6 +210,16 @@ const Header = ({ className = '' }: HeaderProps) => {
                 className="flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
               >
                 <Image src="/icons/ic_account.svg" alt="user" width={24} height={24} />
+              </button>
+            )}
+            {!user && (
+              <button
+                type="button"
+                aria-label="Account"
+                onClick={handleUserButtonClick}
+                className="flex md:hidden items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
+              >
+                <MenuIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
               </button>
             )}
             {/* Log in - secondary */}
@@ -170,11 +240,25 @@ const Header = ({ className = '' }: HeaderProps) => {
               />
             </div>
           </div>
-          <div className="absolute top-0 right-0 w-full max-w-[344px] z-[20]">
+          <div
+            className={classNames(
+              'absolute top-0 right-0 w-full max-w-[344px] z-[20] transition-all duration-300',
+              isDropdownOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0',
+            )}
+          >
             <UserDropdown
               isOpen={isDropdownOpen}
               onClose={handleCloseDropdown}
               userEmail={user.email}
+              selectedLanguage={selectedLanguage}
+              buttonInfo={
+                getButtonInfo() as {
+                  text: string;
+                  variant: ButtonVariant;
+                  href: string;
+                }
+              }
+              onLanguageChange={handleLanguageChange}
               onAddProperty={handleAddProperty}
               onFavorites={handleFavorites}
               onSavedFilters={handleSavedFilters}
@@ -184,6 +268,35 @@ const Header = ({ className = '' }: HeaderProps) => {
           </div>
         </div>
       </header>
+      {/* Save & Exit confirmation modal */}
+      <Modal
+        className="w-full max-w-[24.5rem]"
+        widthClassName="!mx-4 md:!mx-0"
+        isOpen={isSaveExitOpen}
+        onClose={() => setIsSaveExitOpen(false)}
+      >
+        <div className="flex flex-col items-center justify-center gap-6">
+          <SavedIcon className="w-14 h-14 text-[var(--color-black)] fill-white mt-6" />
+          <div className="flex flex-col items-center gap-4 px-7">
+            <h1 className="title-xl text-[var(--color-black)]">Draft saved</h1>
+            <p className="body-lg text-center text-[var(--color-black)]">
+              Your property draft has been saved to your account. Return and complete it at any
+              time.
+            </p>
+          </div>
+
+          <Button
+            variant="primary"
+            className="w-full !font-medium"
+            onClick={() => {
+              setIsSaveExitOpen(false);
+              router.push('/');
+            }}
+          >
+            Continue
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };

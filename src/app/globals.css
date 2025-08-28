@@ -108,7 +108,7 @@
 }
 
 body {
-  background: var(--background);
+  background: white;
   color: var(--color-black);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -206,4 +206,32 @@ body {
   line-height: var(--label-sm-medium-leading);
   font-weight: var(--label-sm-medium-weight);
   letter-spacing: var(--label-sm-medium-tracking);
+}
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Global scrollbar hiding */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }

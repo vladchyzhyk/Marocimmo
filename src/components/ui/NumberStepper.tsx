@@ -72,13 +72,13 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
           </label>
         )}
 
-        <div className="flex items-center w-full border border-[var(--border-input)] rounded-lg bg-white">
+        <div className="flex items-center w-full border border-[var(--border-input)] rounded-lg bg-white px-3">
           {/* Decrement Button */}
           <button
             type="button"
             onClick={handleDecrement}
             disabled={disabled || isMinDisabled}
-            className={`w-10 h-10 flex items-center justify-center rounded-lg transition-colors ${
+            className={`flex items-center justify-center transition-colors ${
               disabled || isMinDisabled
                 ? 'opacity-20 cursor-not-allowed'
                 : 'hover:bg-[var(--bg-tint)]'
@@ -88,7 +88,7 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
           </button>
 
           {/* Number Input */}
-          <div className="flex-1 flex items-center justify-center px-4 py-4">
+          <div className="flex-1 flex items-center justify-center px-4 py-3">
             <input
               ref={ref}
               id={id}
@@ -100,7 +100,7 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
               max={max}
               step={step}
               disabled={disabled}
-              className={`w-full text-center body-lg bg-transparent outline-none ${
+              className={`w-full text-center body-lg bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${
                 hasError ? 'text-[var(--error)]' : 'text-[var(--color-black)]'
               } ${disabled ? 'opacity-40 cursor-not-allowed' : ''}`}
             />
@@ -111,7 +111,7 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
             type="button"
             onClick={handleIncrement}
             disabled={disabled || isMaxDisabled}
-            className={`w-10 h-10 flex items-center justify-center rounded-lg transition-colors ${
+            className={`flex items-center justify-center transition-colors ${
               disabled || isMaxDisabled
                 ? 'opacity-20 cursor-not-allowed'
                 : 'hover:bg-[var(--bg-tint)]'

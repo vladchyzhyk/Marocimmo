@@ -1,16 +1,26 @@
+import { ArrowNextIcon } from '@/utils/icons';
 import classNames from 'classnames';
 import Button from './ui/Button';
 
 type FooterProps = {
+  currentStep?: number;
+  allSteps?: number;
   onContinue?: () => void;
   onBack?: () => void;
   loading?: boolean;
   disabled?: boolean;
 };
 
-const Footer = ({ onContinue, onBack, disabled = false, loading = false }: FooterProps) => {
+const Footer = ({
+  currentStep,
+  allSteps,
+  onContinue,
+  onBack,
+  disabled = false,
+  loading = false,
+}: FooterProps) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[var(--border)] z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[var(--border)] z-[35] px-6 md:px-6 lg:px-6 xl:px-0">
       <div
         className={classNames(
           'w-full flex items-center gap-6 py-4 max-w-[1200px] mx-auto',
@@ -19,15 +29,21 @@ const Footer = ({ onContinue, onBack, disabled = false, loading = false }: Foote
       >
         {onBack && (
           <Button className="max-w-24" onClick={onBack} variant="outline">
+            <ArrowNextIcon className="w-4 h-4 text-black rotate-180" />
             Back
           </Button>
         )}
 
-        <button
+        {currentStep && allSteps && currentStep > 0 && (
+          <div className="md:hidden flex items-center justify-center button-lg-bold">
+            <span className="text-[var(--accent-green)]">{currentStep}</span>/{allSteps}
+          </div>
+        )}
+        <Button
           onClick={onContinue}
           disabled={disabled || loading}
           className={`
-            flex items-center justify-center gap-2 px-6 py-4 h-12
+            flex items-center justify-center gap-2 max-w-[8.75rem]
             bg-[var(--accent-green)] text-white rounded-lg
             button-lg-medium transition-colors
             hover:bg-[var(--primarybutton-hover)]
@@ -60,23 +76,10 @@ const Footer = ({ onContinue, onBack, disabled = false, loading = false }: Foote
           ) : (
             <>
               <span>Continue</span>
-              <svg
-                className="w-6 h-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowNextIcon className="w-6 h-6" />
             </>
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

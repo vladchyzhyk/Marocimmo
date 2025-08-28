@@ -1,6 +1,12 @@
 import React from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline' | 'transparent';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'ghost'
+  | 'outline'
+  | 'transparent';
 
 type ButtonSize = 'lg' | 'md' | 'sm';
 
@@ -29,7 +35,8 @@ const sizeStyles: Record<ButtonSize, string> = {
 };
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-[var(--accent-green)] text-[var(--white)] hover:bg-[var(--primarybutton-hover)]',
+  primary:
+    'bg-[var(--accent-green)] text-[var(--white)] border border-transparent hover:bg-[var(--primarybutton-hover)]',
   secondary: 'bg-[var(--pill-active-bg)] text-[var(--color-black)] hover:bg-[var(--border-input)]',
   danger: 'bg-[var(--error)] text-[var(--white)] hover:bg-[var(--errorbutton-hover)]',
   ghost: 'bg-transparent text-[var(--color-black)] hover:bg-[var(--bg-tint)]',

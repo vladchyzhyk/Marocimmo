@@ -10,7 +10,7 @@ interface SelectCardProps {
   variant?: SelectCardVariant;
   selected?: boolean;
   disabled?: boolean;
-  icon?: React.ReactNode;
+  Icon?: React.ComponentType<{ className?: string }>;
   className?: string;
   onClick?: () => void;
 }
@@ -21,24 +21,24 @@ const SelectCard = ({
   variant = 'large',
   selected = false,
   disabled = false,
-  icon,
+  Icon,
   className = '',
   onClick,
 }: SelectCardProps) => {
   const visualStateClasses = [
     disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer',
     selected
-      ? 'border-primary bg-primary/5 ring-primary/20'
-      : 'border-gray-200 hover:border-gray-300',
+      ? 'border-primary bg-primary/5 '
+      : 'border-[var(--border-input)] hover:border-[var(--border-input)]',
   ].join(' ');
 
   const commonBaseClasses =
-    'w-full text-left bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 hover:shadow-sm';
+    'w-full text-left transition-colors focus-visible:outline-none hover:shadow-sm';
 
   const variantClasses = (() => {
     switch (variant) {
       case 'large':
-        return 'rounded-2xl';
+        return 'rounded-[0.5rem] lg:rounded-2xl';
       case 'small':
         return 'rounded-xl';
       case 'pill':
@@ -62,14 +62,14 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'px-5 py-5 inline-flex items-center gap-2 justify-center border-2',
+          'px-5 py-[1.125rem] inline-flex items-center gap-2 justify-start lg:justify-center border-2',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
           className,
         )}
       >
         <span
           className={classNames(
-            'w-full flex justify-center items-center truncate title-lg  !font-normal transition-colors',
+            'w-full flex justify-start lg:justify-center items-center body-lg transition-colors',
             selected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
           )}
         >
@@ -77,7 +77,7 @@ const SelectCard = ({
         </span>
         <div
           className={classNames(
-            'min-w-[1.125rem] min-h-[1.125rem] flex items-center justify-center rounded-full border-[1px]',
+            'min-w-[1.25rem] min-h-[1.25rem] flex items-center justify-center rounded-full border-[2px]',
             selected ? 'border-[var(--accent-green)]' : 'border-[var(--color-black)]',
           )}
         >
@@ -103,15 +103,17 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'relative p-4 flex flex-col items-center gap-4 justify-center border-2 max-w-[10.25rem]',
-          selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
+          'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-4 flex flex-col items-center gap-4 justify-center border-2 max-w-[10.25rem]',
+          selected
+            ? 'bg-[var(--bg-tint)] border-[var(--accent-green)]'
+            : 'border-[var(--border-input)]',
           className,
         )}
       >
         <Image src={'/icons/ic_agency.svg'} alt="ic_agency" width={64} height={64} />
         <span
           className={classNames(
-            'w-full flex justify-center items-center truncate title-lg !text-[1.5rem] transition-colors text-[var(--color-black)]',
+            'w-full flex justify-center items-center title-lg !text-[1.5rem] transition-colors text-[var(--color-black)]',
           )}
         >
           {title}
@@ -145,23 +147,24 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'relative p-4 flex flex-col items-center gap-4 justify-center border-2 max-w-[10.25rem]',
+          'relative p-3 flex flex-col items-center gap-2 justify-center border-2',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
           className,
         )}
       >
-        <Image
-          src={'/icons/ic_house.svg'}
-          alt="ic_house"
-          width={24}
-          height={24}
-          className={classNames(
-            selected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
-          )}
-        />
+        {Icon && (
+          <Icon
+            className={classNames(
+              'w-6 h-6',
+              selected
+                ? 'text-[var(--accent-green)] fill-white'
+                : 'text-[var(--color-black)] fill-white',
+            )}
+          />
+        )}
         <span
           className={classNames(
-            'w-full flex justify-center items-center truncate title-lg !text-[1.375rem] !font-normal transition-colors',
+            'w-full flex justify-center items-center body-lg transition-colors',
             selected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
           )}
         >
@@ -182,12 +185,14 @@ const SelectCard = ({
         commonBaseClasses,
         variantClasses,
         visualStateClasses,
-        'relative p-4 flex flex-col items-center gap-4 justify-center border-2',
-        selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
+        'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-4 flex flex-col items-center gap-4 justify-center border-2',
+        selected
+          ? 'bg-[var(--bg-tint)] border-[var(--accent-green)]'
+          : 'border-[var(--border-input)]',
         className,
       )}
     >
-      <Image src={'/icons/ic_agency.svg'} alt="ic_agency" width={64} height={64} />
+      {Icon && <Icon className="w-16 h-16" />}
       <span
         className={classNames(
           'w-full flex justify-center items-center truncate title-lg !text-[1.25rem] transition-colors text-[var(--color-black)]',

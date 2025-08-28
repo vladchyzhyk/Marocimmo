@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 interface Step {
   id: string;
   title: string;
@@ -13,15 +15,18 @@ const ProgressBar = ({ steps, currentStep, className = '' }: ProgressBarProps) =
   const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
 
   return (
-    <div className={`flex flex-col gap-2 p-2 mt-5 ${className}`}>
+    <div className={`flex flex-col gap-2 py-2 mt-5 ${className}`}>
       {/* Steps Display */}
       <div className="flex justify-stretch items-stretch gap-2">
         {steps.map((step, index) => (
           <div key={step.id} className="flex justify-center items-center gap-1 flex-1">
             <span
-              className={`label-md-medium text-center transition-colors duration-300 ${
-                index < currentStep ? 'text-[var(--color-black)]' : 'text-[var(--text-body-tint)]'
-              }`}
+              className={classNames(
+                'label-md-medium text-center transition-colors duration-300',
+                index < currentStep - 1 && 'text-[var(--accent-green)]',
+                index === currentStep - 1 && 'text-[var(--color-black)]',
+                index > currentStep - 1 && 'text-[var(--text-body-tint)]',
+              )}
             >
               {step.title}
             </span>
@@ -35,16 +40,12 @@ const ProgressBar = ({ steps, currentStep, className = '' }: ProgressBarProps) =
         {steps.map((_, index) => (
           <div
             key={index}
-            className={`h-1.5 rounded-full transition-all duration-500 ease-in-out ${
-              index < currentStep - 1
-                ? 'bg-[var(--color-black)] flex-1'
-                : index === currentStep - 1
-                  ? 'bg-[var(--color-black)] flex-1'
-                  : 'bg-[var(--border)] flex-1'
-            }`}
-            style={{
-              flex: index < currentStep ? 1 : 1,
-            }}
+            className={classNames(
+              'h-1.5 rounded-full transition-all duration-500 ease-in-out flex-1',
+              index < currentStep - 1 && 'bg-[var(--accent-green)]',
+              index === currentStep - 1 && 'bg-[var(--color-black)]',
+              index > currentStep - 1 && 'bg-[var(--border)]',
+            )}
           />
         ))}
       </div>
