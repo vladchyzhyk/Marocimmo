@@ -328,7 +328,7 @@ const MainInfoStep = ({
                     </div>
 
                     {/* Number Steppers Row */}
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <NumberStepper
                         label="Floor"
                         value={formData.floor}
@@ -382,7 +382,7 @@ const MainInfoStep = ({
                   </div>
 
                   {/* Number Steppers Row */}
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <NumberStepper
                       label="Floor"
                       value={formData.floor}
