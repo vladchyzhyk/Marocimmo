@@ -99,7 +99,10 @@ export default function PhoneInput({
           className="flex-1 outline-none placeholder:text-[var(--text-body-tint)] body-lg text-[var(--color-black)]"
           placeholder={placeholder}
           value={currentValue}
-          onChange={(e) => handleValueChange(e.target.value)}
+          onChange={(e) => {
+            const digitsOnly = e.target.value.replace(/\D/g, '');
+            handleValueChange(digitsOnly);
+          }}
         />
       </div>
     </div>

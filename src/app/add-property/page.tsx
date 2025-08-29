@@ -74,6 +74,9 @@ const Page = () => {
   };
 
   const handleSelectPostedBy = (value: 'owner' | 'agency') => {
+    if (value === selectedPostedBy) {
+      return;
+    }
     resetOwnerForm();
     resetAgencyForm();
     setSelectedPostedBy(value);
@@ -122,7 +125,11 @@ const Page = () => {
 
   // Validation functions
   const isOwnerFormValid = useMemo(() => {
-    return ownerFormData.contactPerson.trim() !== '' && ownerFormData.phoneNumber.trim() !== '';
+    return (
+      ownerFormData.contactPerson.trim() !== '' &&
+      ownerFormData.phoneNumber.trim() !== '' &&
+      ownerFormData.phoneNumber.trim().length > 6
+    );
   }, [ownerFormData]);
 
   const isAgencyFormValid = useMemo(() => {

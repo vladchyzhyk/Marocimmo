@@ -40,6 +40,8 @@ export type InputProps = {
   // Calendar variant
   calendar?: boolean;
   onCalendarClick?: () => void;
+  // Numeric-only input helper
+  numbersOnly?: boolean;
 };
 
 const baseContainer = 'flex flex-col gap-2 w-full';
@@ -109,6 +111,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onSegmentChange,
       calendar = false,
       onCalendarClick,
+      numbersOnly = false,
     },
     ref,
   ) => {
@@ -153,6 +156,53 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       setShowLocationDropdown(false);
     };
 
+    const handleFilteredChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+      if (!onChange) return;
+      if (!numbersOnly) {
+        onChange(e);
+        return;
+      }
+      const filteredValue = e.target.value.replace(/\D/g, '');
+      if (filteredValue === e.target.value) {
+        onChange(e);
+      } else {
+        const clonedEvent = {
+          ...e,
+          target: { ...e.target, value: filteredValue },
+          currentTarget: { ...e.currentTarget, value: filteredValue },
+        } as React.ChangeEvent<HTMLInputElement>;
+        onChange(clonedEvent);
+      }
+    };
+
+    const handleBeforeInput: React.FormEventHandler<HTMLInputElement> = (e) => {
+      if (!numbersOnly) return;
+      // @ts-expect-error beforeInput data exists on InputEvent
+      const data = e.nativeEvent && e.nativeEvent.data;
+      if (typeof data === 'string' && /\D/.test(data)) {
+        e.preventDefault();
+      }
+    };
+
+    const handlePaste: React.ClipboardEventHandler<HTMLInputElement> = (e) => {
+      if (!numbersOnly) return;
+      const pasted = e.clipboardData.getData('text');
+      if (/\D/.test(pasted)) {
+        e.preventDefault();
+        const digitsOnly = pasted.replace(/\D/g, '');
+        const target = e.target as HTMLInputElement;
+        const start = target.selectionStart ?? target.value.length;
+        const end = target.selectionEnd ?? target.value.length;
+        const newValue = target.value.slice(0, start) + digitsOnly + target.value.slice(end);
+        const clonedEvent = {
+          // minimal shape for our onChange consumer
+          target: { ...target, value: newValue },
+          currentTarget: { ...target, value: newValue },
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+        onChange?.(clonedEvent);
+      }
+    };
+
     return (
       <div className={[baseContainer, className].filter(Boolean).join(' ')}>
         {label ? (
@@ -192,14 +242,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             name={name}
             type={type}
             value={value}
-            onChange={onChange}
+            onChange={handleFilteredChange}
             onBlur={handleInputBlur}
             onFocus={handleInputFocus}
+            onBeforeInput={handleBeforeInput}
+            onPaste={handlePaste}
             placeholder={placeholder}
             disabled={disabled}
             aria-invalid={hasError || undefined}
             aria-describedby={helperText ? `${id}-help` : undefined}
             autoComplete={autoComplete}
+            inputMode={numbersOnly ? 'numeric' : undefined}
+            pattern={numbersOnly ? '[0-9]*' : undefined}
             ref={ref}
             className={computedInputClasses}
           />

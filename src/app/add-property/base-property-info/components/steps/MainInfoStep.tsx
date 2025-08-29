@@ -79,6 +79,7 @@ const MainInfoStep = ({
                       label="Living Area (m²)"
                       value={formData.livingArea}
                       onChange={(e) => handleInputChange('livingArea', e.target.value)}
+                      numbersOnly
                       placeholder="56"
                       required
                       className="flex-1"
@@ -87,6 +88,7 @@ const MainInfoStep = ({
                       label="Total area (m²)"
                       value={formData.totalArea}
                       onChange={(e) => handleInputChange('totalArea', e.target.value)}
+                      numbersOnly
                       placeholder="64"
                       className="flex-1"
                     />
@@ -137,6 +139,7 @@ const MainInfoStep = ({
                       value={formData.totalArea}
                       onChange={(e) => handleInputChange('totalArea', e.target.value)}
                       placeholder="64"
+                      numbersOnly
                       required
                       className="flex-1"
                     />{' '}
@@ -145,6 +148,7 @@ const MainInfoStep = ({
                       value={formData.livingArea}
                       onChange={(e) => handleInputChange('livingArea', e.target.value)}
                       placeholder="56"
+                      numbersOnly
                       className="flex-1"
                     />
                   </div>
@@ -200,6 +204,7 @@ const MainInfoStep = ({
                       onChange={(e) => handleInputChange('livingArea', e.target.value)}
                       placeholder="56"
                       required
+                      numbersOnly
                       className="flex-1"
                     />
                     <Input
@@ -207,6 +212,7 @@ const MainInfoStep = ({
                       value={formData.totalArea}
                       onChange={(e) => handleInputChange('totalArea', e.target.value)}
                       placeholder="64"
+                      numbersOnly
                       className="flex-1"
                     />
                   </div>
@@ -252,6 +258,7 @@ const MainInfoStep = ({
                       onChange={(e) => handleInputChange('livingArea', e.target.value)}
                       placeholder="56"
                       required
+                      numbersOnly
                       className="flex-1"
                     />
                     <Input
@@ -259,6 +266,7 @@ const MainInfoStep = ({
                       value={formData.totalArea}
                       onChange={(e) => handleInputChange('totalArea', e.target.value)}
                       placeholder="64"
+                      numbersOnly
                       className="flex-1"
                     />
                   </div>
@@ -306,6 +314,7 @@ const MainInfoStep = ({
                         onChange={(e) => handleInputChange('livingArea', e.target.value)}
                         placeholder="56"
                         required
+                        numbersOnly
                         className="flex-1"
                       />
                       <Input
@@ -313,6 +322,7 @@ const MainInfoStep = ({
                         value={formData.totalArea}
                         onChange={(e) => handleInputChange('totalArea', e.target.value)}
                         placeholder="64"
+                        numbersOnly
                         className="flex-1"
                       />
                     </div>
@@ -358,6 +368,7 @@ const MainInfoStep = ({
                       onChange={(e) => handleInputChange('livingArea', e.target.value)}
                       placeholder="56"
                       required
+                      numbersOnly
                       className="flex-1"
                     />
                     <Input
@@ -365,6 +376,7 @@ const MainInfoStep = ({
                       value={formData.totalArea}
                       onChange={(e) => handleInputChange('totalArea', e.target.value)}
                       placeholder="64"
+                      numbersOnly
                       className="flex-1"
                     />
                   </div>

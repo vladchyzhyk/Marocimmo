@@ -34,7 +34,7 @@ const helperTextStyles = 'label-sm-medium text-[var(--text-body-tint)]';
 const inputBase =
   'w-full h-12 rounded-[8px] px-4 border bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer pr-10 flex items-center relative ';
 
-const rightIconContainer = 'absolute right-2 top-1/2 -translate-y-1/2 p-2 z-[25]';
+const rightIconContainer = 'absolute right-2 top-1/2 -translate-y-1/2 p-2';
 
 const dropdownBase =
   'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] pt-2 ';
@@ -207,7 +207,10 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
           )}
 
           {/* Arrow Icon */}
-          <div className={rightIconContainer} onClick={handleToggle}>
+          <div
+            className={classNames(rightIconContainer, isOpen ? 'z-[32]' : 'z-[20]')}
+            onClick={handleToggle}
+          >
             <Image
               src="/icons/ic_arrow_down.svg"
               alt="Select"

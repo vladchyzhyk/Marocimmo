@@ -219,6 +219,9 @@ const TypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
                     variant="pill"
                     selected={selectedPostedBy === type.variant}
                     onClick={() => {
+                      if (selectedPostedBy === type.variant) {
+                        return;
+                      }
                       const clearedAddress = { region: '', city: '', streetAddress: '' };
                       onDataChange?.({
                         transactionType: type.variant,
@@ -250,6 +253,9 @@ const TypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
                             selectedPropertyType.id !== '' && selectedPropertyType.id === type.id
                           }
                           onClick={() => {
+                            if (selectedPropertyType.id === type.id) {
+                              return;
+                            }
                             const clearedAddress = { region: '', city: '', streetAddress: '' };
                             onDataChange?.({
                               transactionType: selectedPostedBy,
@@ -287,6 +293,9 @@ const TypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
                           selectedPropertyType.id !== '' && selectedPropertyType.id === type.id
                         }
                         onClick={() => {
+                          if (selectedPropertyType.id === type.id) {
+                            return;
+                          }
                           const clearedAddress = { region: '', city: '', streetAddress: '' };
                           onDataChange?.({
                             transactionType: selectedPostedBy,
