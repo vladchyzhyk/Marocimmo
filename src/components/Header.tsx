@@ -9,6 +9,15 @@ import Button, { ButtonVariant } from './ui/Button';
 import Modal from './ui/Modal';
 import UserDropdown from './UserDropdown';
 
+export const user = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  isLoggedIn: true,
+  // name: '',
+  // email: '',
+  // isLoggedIn: false,
+};
+
 type HeaderProps = {
   className?: string;
 };
@@ -20,11 +29,6 @@ const Header = ({ className = '' }: HeaderProps) => {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ar'>('en');
   const [isSaveExitOpen, setIsSaveExitOpen] = useState(false);
-
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-  };
 
   const handleUserButtonClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -206,7 +210,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             >
               <LanguageIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
             </button>
-            {user && (
+            {user.isLoggedIn && (
               <button
                 type="button"
                 aria-label="Account"
@@ -216,7 +220,15 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <Image src="/icons/ic_account.svg" alt="user" width={24} height={24} />
               </button>
             )}
-            {!user && (
+            {!user.isLoggedIn && (
+              <Link
+                href="/sign-up"
+                className="flex md:hidden items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
+              >
+                <span>Log in</span>
+              </Link>
+            )}
+            {!user.isLoggedIn && (
               <button
                 type="button"
                 aria-label="Account"
@@ -226,15 +238,15 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <MenuIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
               </button>
             )}
-            {/* Log in - secondary */}
-            {!user && (
+            {!user.isLoggedIn && (
               <Link
                 href="/sign-up"
-                className="flex items-center gap-2 h-12 px-4 rounded-[8px] border border-[var(--border)] bg-[var(--bg-tint)] text-[var(--color-black)] hover:bg-[var(--border-input)] button-lg-medium"
+                className="hidden md:flex items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)] whitespace-nowrap"
               >
                 <span>Log in</span>
               </Link>
             )}
+
             <div className="absolute top-15 right-[10%] w-full min-w-[138px] max-w-[138px]">
               <LanguageDropdown
                 isOpen={isLanguageDropdownOpen}
@@ -253,7 +265,6 @@ const Header = ({ className = '' }: HeaderProps) => {
             <UserDropdown
               isOpen={isDropdownOpen}
               onClose={handleCloseDropdown}
-              userEmail={user.email}
               selectedLanguage={selectedLanguage}
               buttonInfo={
                 getButtonInfo() as {

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { user } from './Header';
 import Button, { ButtonVariant } from './ui/Button';
 import Modal from './ui/Modal';
 
@@ -12,7 +13,7 @@ type Language = 'en' | 'ar';
 type UserDropdownProps = {
   isOpen?: boolean;
   onClose?: () => void;
-  userEmail?: string;
+
   selectedLanguage?: Language;
   onLanguageChange?: (language: Language) => void;
   buttonInfo?: {
@@ -30,7 +31,7 @@ type UserDropdownProps = {
 const UserDropdown: React.FC<UserDropdownProps> = ({
   isOpen = false,
   onClose,
-  userEmail = 'test@test.com',
+
   selectedLanguage = 'en',
   onLanguageChange,
   buttonInfo,
@@ -80,22 +81,29 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
         )}
       >
         {/* Header with User Profile */}
-        <div className="flex justify-center items-center gap-2 px-4 py-5">
-          <div className="flex items-center gap-2 p-2 flex-1">
-            <div className="w-[42px] h-[42px] bg-white border border-[var(--border)] rounded-lg flex items-center justify-center">
-              <Image
-                src="/icons/ic_account.svg"
-                alt="User account"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
+        <div
+          className={classNames(
+            'flex justify-center items-center gap-2 px-4 py-5',
+            user.isLoggedIn ? 'justify-between' : 'justify-end',
+          )}
+        >
+          {user.isLoggedIn && (
+            <div className="flex items-center gap-2 p-2 flex-1">
+              <div className="w-[42px] h-[42px] bg-white border border-[var(--border)] rounded-lg flex items-center justify-center">
+                <Image
+                  src="/icons/ic_account.svg"
+                  alt="User account"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="body-lg text-[var(--color-black)]">Welcome</div>
+                <div className="label-md-medium text-[var(--color-black)]">{user.email}</div>
+              </div>
             </div>
-            <div className="flex-1">
-              <div className="body-lg text-[var(--color-black)]">Welcome</div>
-              <div className="label-md-medium text-[var(--color-black)]">{userEmail}</div>
-            </div>
-          </div>
+          )}
           <button
             onClick={onClose}
             className="w-12 h-12 bg-white border border-[var(--border)] rounded-lg flex items-center justify-center hover:bg-[var(--bg-tint)] transition-colors"
@@ -144,16 +152,42 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
 
         <div className="flex flex-col overflow-y-auto scrollbar-none max-h-[calc(100vh-25rem)] sm:max-h-[calc(100vh-20rem)] md:max-h-none">
           {/* Menu Items */}
-          <div className="px-4 py-4 space-y-2">
-            {/* My Listings */}
-            {userEmail && (
+          {user.isLoggedIn && (
+            <div className="px-4 py-4 space-y-2">
+              {/* My Listings */}
+              {user.isLoggedIn && (
+                <button
+                  onClick={onProfileSettings}
+                  className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
+                >
+                  <ListIcon className="w-6 h-6 text-[var(--color-black)]" />
+                  <span className="flex-1 body-lg text-[var(--color-black)] text-left">
+                    My Listings
+                  </span>
+                  <Image
+                    src="/icons/ic_arrow_right.svg"
+                    alt="Arrow right"
+                    width={24}
+                    height={24}
+                    className="w-6 h-6"
+                  />
+                </button>
+              )}
+
+              {/* Favorites */}
               <button
-                onClick={onProfileSettings}
+                onClick={onFavorites}
                 className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
               >
-                <ListIcon className="w-6 h-6 text-[var(--color-black)]" />
+                <Image
+                  src="/icons/ic_favorites.svg"
+                  alt="Favorites"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
                 <span className="flex-1 body-lg text-[var(--color-black)] text-left">
-                  My Listings
+                  Favorites
                 </span>
                 <Image
                   src="/icons/ic_arrow_right.svg"
@@ -163,78 +197,56 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
                   className="w-6 h-6"
                 />
               </button>
-            )}
 
-            {/* Favorites */}
-            <button
-              onClick={onFavorites}
-              className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
-            >
-              <Image
-                src="/icons/ic_favorites.svg"
-                alt="Favorites"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-              <span className="flex-1 body-lg text-[var(--color-black)] text-left">Favorites</span>
-              <Image
-                src="/icons/ic_arrow_right.svg"
-                alt="Arrow right"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </button>
+              {/* Saved Filters */}
+              <button
+                onClick={onSavedFilters}
+                className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
+              >
+                <Image
+                  src="/icons/ic_notification.svg"
+                  alt="Saved filters"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+                <span className="flex-1 body-lg text-[var(--color-black)] text-left">
+                  Saved filters
+                </span>
+                <Image
+                  src="/icons/ic_arrow_right.svg"
+                  alt="Arrow right"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+              </button>
 
-            {/* Saved Filters */}
-            <button
-              onClick={onSavedFilters}
-              className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
-            >
-              <Image
-                src="/icons/ic_notification.svg"
-                alt="Saved filters"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-              <span className="flex-1 body-lg text-[var(--color-black)] text-left">
-                Saved filters
-              </span>
-              <Image
-                src="/icons/ic_arrow_right.svg"
-                alt="Arrow right"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </button>
-
-            {/* Profile Settings */}
-            <button
-              onClick={onProfileSettings}
-              className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
-            >
-              <Image
-                src="/icons/ic_settings.svg"
-                alt="Settings"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-              <span className="flex-1 body-lg text-[var(--color-black)] text-left">
-                Profile Settings
-              </span>
-              <Image
-                src="/icons/ic_arrow_right.svg"
-                alt="Arrow right"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </button>
-          </div>
+              {/* Profile Settings */}
+              <button
+                onClick={onProfileSettings}
+                className="w-full flex items-center gap-2 p-2 rounded-[8px] hover:bg-white transition-colors duration-300 cursor-pointer"
+              >
+                <Image
+                  src="/icons/ic_settings.svg"
+                  alt="Settings"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+                <span className="flex-1 body-lg text-[var(--color-black)] text-left">
+                  Profile Settings
+                </span>
+                <Image
+                  src="/icons/ic_arrow_right.svg"
+                  alt="Arrow right"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+              </button>
+            </div>
+          )}
           {/* Divider */}
           <div className="flex lg:hidden w-full border-t border-[var(--border)]" />
 
@@ -368,7 +380,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           <div className="block w-full border-t border-[var(--border)]" />
 
           {/* Exit Button */}
-          {userEmail && (
+          {user.isLoggedIn && (
             <div className="px-4 py-4">
               <button
                 onClick={onExit}

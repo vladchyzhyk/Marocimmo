@@ -160,7 +160,6 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
               type="button"
               className="label-md-medium text-[var(--accent-green)] underline"
               onClick={() => {
-                setResetEmail(email);
                 setIsForgotOpen(true);
               }}
             >
