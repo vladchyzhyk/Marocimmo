@@ -12,6 +12,8 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   showSocial?: boolean;
+  submitDisabled?: boolean;
+  onSubmitGuard?: () => void;
 };
 
 const AuthFormWrapper = ({
@@ -21,6 +23,8 @@ const AuthFormWrapper = ({
   children,
   className = '',
   showSocial = true,
+  submitDisabled = false,
+  onSubmitGuard,
 }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -58,9 +62,22 @@ const AuthFormWrapper = ({
       </div>
 
       {children}
-      <Button className="text-center title-md text-[var(--accent-green)]" type="submit">
-        {submitLabel}
-      </Button>
+      {submitDisabled ? (
+        <Button
+          className="text-center title-md text-[var(--accent-green)]"
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            onSubmitGuard?.();
+          }}
+        >
+          {submitLabel}
+        </Button>
+      ) : (
+        <Button className="text-center title-md text-[var(--accent-green)]" type="submit">
+          {submitLabel}
+        </Button>
+      )}
       <button
         className="text-center title-md text-[var(--accent-green)] cursor-pointer underline"
         onClick={(e) => {

@@ -134,65 +134,69 @@ const Header = ({ className = '' }: HeaderProps) => {
           {/* Actions */}
           <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-4">
             {/* Add your property - primary */}
-            {getButtonInfo().text === 'Save & Exit' ? (
-              <Button
-                variant={getButtonInfo().variant as ButtonVariant}
-                className="!hidden md:!flex items-center justify-center max-w-[134px]"
-                onClick={() => setIsSaveExitOpen(true)}
-              >
-                <span>Save & Exit</span>
-              </Button>
-            ) : (
-              <Button
-                variant={getButtonInfo().variant as ButtonVariant}
-                className={classNames(
-                  '!hidden md:!flex items-center justify-center ',
-                  getButtonInfo().text === 'Cancel'
-                    ? '!w-fit'
-                    : 'md:max-w-[200px] lg:max-w-[200px]',
-                )}
-              >
-                <Link
-                  className="w-full h-full flex justify-center items-center gap-1"
-                  href={getButtonInfo().href}
-                >
-                  {getButtonInfo().href === '/add-property' && (
-                    <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
-                  )}
-                  <span>{getButtonInfo().text}</span>
-                </Link>
-              </Button>
-            )}
-            {getButtonInfo().text !== 'Add your property' &&
-              (getButtonInfo().text === 'Save & Exit' ? (
-                <Button
-                  variant={getButtonInfo().variant as ButtonVariant}
-                  className="!w-fit !flex md:!hidden items-center justify-center max-w-[134px] whitespace-nowrap"
-                  onClick={() => setIsSaveExitOpen(true)}
-                >
-                  <span>Save & Exit</span>
-                </Button>
-              ) : (
-                <Button
-                  variant={getButtonInfo().variant as ButtonVariant}
-                  className={classNames(
-                    '!flex md:!hidden items-center justify-center whitespace-nowrap',
-                    getButtonInfo().text === 'Cancel'
-                      ? '!w-fit md:w-full lg:max-w-[134px] !bg-[var(--bg-tint)]'
-                      : 'md:max-w-[200px] lg:max-w-[200px]',
-                  )}
-                >
-                  <Link
-                    className="w-full h-full flex justify-center items-center gap-1"
-                    href={getButtonInfo().href}
+            {user && (
+              <div className="">
+                {getButtonInfo().text === 'Save & Exit' ? (
+                  <Button
+                    variant={getButtonInfo().variant as ButtonVariant}
+                    className="!hidden md:!flex items-center justify-center max-w-[134px]"
+                    onClick={() => setIsSaveExitOpen(true)}
                   >
-                    {getButtonInfo().href === '/add-property' && (
-                      <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                    <span>Save & Exit</span>
+                  </Button>
+                ) : (
+                  <Button
+                    variant={getButtonInfo().variant as ButtonVariant}
+                    className={classNames(
+                      '!hidden md:!flex items-center justify-center ',
+                      getButtonInfo().text === 'Cancel'
+                        ? '!w-fit'
+                        : 'md:max-w-[200px] lg:max-w-[200px]',
                     )}
-                    <span>{getButtonInfo().text}</span>
-                  </Link>
-                </Button>
-              ))}
+                  >
+                    <Link
+                      className="w-full h-full flex justify-center items-center gap-1"
+                      href={getButtonInfo().href}
+                    >
+                      {getButtonInfo().href === '/add-property' && (
+                        <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                      )}
+                      <span>{getButtonInfo().text}</span>
+                    </Link>
+                  </Button>
+                )}
+                {getButtonInfo().text !== 'Add your property' &&
+                  (getButtonInfo().text === 'Save & Exit' ? (
+                    <Button
+                      variant={getButtonInfo().variant as ButtonVariant}
+                      className="!w-fit !flex md:!hidden items-center justify-center max-w-[134px] whitespace-nowrap"
+                      onClick={() => setIsSaveExitOpen(true)}
+                    >
+                      <span>Save & Exit</span>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant={getButtonInfo().variant as ButtonVariant}
+                      className={classNames(
+                        '!flex md:!hidden items-center justify-center whitespace-nowrap',
+                        getButtonInfo().text === 'Cancel'
+                          ? '!w-fit md:w-full lg:max-w-[134px] !bg-[var(--bg-tint)]'
+                          : 'md:max-w-[200px] lg:max-w-[200px]',
+                      )}
+                    >
+                      <Link
+                        className="w-full h-full flex justify-center items-center gap-1"
+                        href={getButtonInfo().href}
+                      >
+                        {getButtonInfo().href === '/add-property' && (
+                          <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                        )}
+                        <span>{getButtonInfo().text}</span>
+                      </Link>
+                    </Button>
+                  ))}
+              </div>
+            )}
             {/* Language icon button */}
             <button
               type="button"

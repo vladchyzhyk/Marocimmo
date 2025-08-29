@@ -14,7 +14,7 @@ type Props = {
 };
 
 const SignUpForm = ({ onSubmit, className = '' }: Props) => {
-  const [name] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -23,16 +23,31 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
 
+  const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const isEmailValid = isValidEmail(email.trim());
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: typeof errors = {};
     if (!name.trim()) newErrors.name = 'Name is required';
     if (!email.trim()) newErrors.email = 'Email is required';
+    else if (!isValidEmail(email.trim())) newErrors.email = 'Enter a valid email';
     if (!password.trim()) newErrors.password = 'Password is required';
+    else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
     onSubmit?.({ name: name.trim(), email: email.trim(), password });
+  };
+
+  const guardSubmit = () => {
+    const newErrors: typeof errors = {};
+    if (!name.trim()) newErrors.name = 'Name is required';
+    if (!email.trim()) newErrors.email = 'Email is required';
+    else if (!isValidEmail(email.trim())) newErrors.email = 'Enter a valid email';
+    if (!password.trim()) newErrors.password = 'Password is required';
+    else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters';
+    setErrors(newErrors);
   };
 
   return (
@@ -42,6 +57,10 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
         submitLabel="Continue"
         onSubmit={handleSubmit}
         className={className}
+        submitDisabled={
+          !name.trim() || !email.trim() || !isEmailValid || !password.trim() || password.length < 8
+        }
+        onSubmitGuard={guardSubmit}
       >
         <div className="flex flex-col gap-4">
           <div>
@@ -49,6 +68,18 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
               Log in with Email
             </div>
             <div className="flex flex-col gap-3">
+              <Input
+                id="name"
+                type="text"
+                label="Name"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                clearable
+                onClear={() => setName('')}
+                required
+                error={errors.name}
+              />
               <Input
                 id="email"
                 type="email"

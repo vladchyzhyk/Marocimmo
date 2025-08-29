@@ -349,6 +349,58 @@ const MainInfoStep = ({
                     </div>
                   </>
                 )}
+              {transactionType === 'sale' && (
+                <>
+                  <div className="flex gap-4">
+                    <Input
+                      label="Living Area (m²)"
+                      value={formData.livingArea}
+                      onChange={(e) => handleInputChange('livingArea', e.target.value)}
+                      placeholder="56"
+                      required
+                      className="flex-1"
+                    />
+                    <Input
+                      label="Total area (m²)"
+                      value={formData.totalArea}
+                      onChange={(e) => handleInputChange('totalArea', e.target.value)}
+                      placeholder="64"
+                      className="flex-1"
+                    />
+                  </div>
+
+                  {/* Number Steppers Row */}
+                  <div className="grid grid-cols-4 gap-4">
+                    <NumberStepper
+                      label="Floor"
+                      value={formData.floor}
+                      onChange={(value) => handleInputChange('floor', value)}
+                      required
+                      className="flex-1"
+                    />
+                    <NumberStepper
+                      label="Number of floors"
+                      value={formData.numberOfFloors}
+                      onChange={(value) => handleInputChange('numberOfFloors', value)}
+                      required
+                      className="flex-1"
+                    />
+                    <NumberStepper
+                      label="Number of Rooms"
+                      value={formData.numberOfRooms}
+                      onChange={(value) => handleInputChange('numberOfRooms', value)}
+                      required
+                      className="flex-1"
+                    />
+                    <NumberStepper
+                      label="Number of Bathrooms"
+                      value={formData.numberOfBathrooms}
+                      onChange={(value) => handleInputChange('numberOfBathrooms', value)}
+                      className="flex-1"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
