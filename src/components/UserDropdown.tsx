@@ -236,7 +236,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
             </button>
           </div>
           {/* Divider */}
-          <div className="h-px bg-[var(--border)]" />
+          <div className="flex lg:hidden w-full border-t border-[var(--border)]" />
 
           <div className="flex lg:hidden flex-col gap-2 p-4">
             {[
@@ -255,7 +255,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-[var(--border)] lg:hidden" />
+          <div className="block w-full border-t border-[var(--border)] lg:hidden" />
 
           {/* Language Selector */}
           <div className="px-4 py-4 lg:hidden">
@@ -263,7 +263,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
               <button
                 onClick={toggleLanguageDropdown}
                 className={classNames(
-                  'w-full flex items-center gap-2 p-2 border-x border-t rounded-t-[8px]  bg-[var(--bg-tint)]  transition-all duration-300',
+                  'w-full flex items-center gap-2 p-2 border-x border-t rounded-t-[8px]  bg-white  transition-all duration-300',
                   isLanguageDropdownOpen
                     ? 'rounded-x-[8px] rounded-b-[0px] border-[var(--border)]'
                     : 'rounded-b-[8px] border-transparent',
@@ -365,7 +365,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-[var(--border)]" />
+          <div className="block w-full border-t border-[var(--border)]" />
 
           {/* Exit Button */}
           {userEmail && (

@@ -67,7 +67,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
             <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
               Log in with Email
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <Input
                 id="name"
                 type="text"

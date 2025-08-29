@@ -34,7 +34,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
         absolute top-full left-0 right-0 z-50 scrollbar-none
         bg-[var(--bg-tint)] border border-[var(--border)] 
         rounded-b-[16px] shadow-lg
-        max-h-64 overflow-y-auto
+        max-h-40 md:max-h-64 overflow-y-auto
         ${className}
       `}
     >

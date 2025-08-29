@@ -115,9 +115,9 @@ const Header = ({ className = '' }: HeaderProps) => {
           <nav className="w-full hidden lg:block">
             <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-2 lg:gap-3 xl:gap-6 py-1">
               {[
-                { href: '#short-time', label: 'Short-time Rent' },
-                { href: '#long-time', label: 'Long-time Rent' },
-                { href: '#buy', label: 'Buy' },
+                { href: '/', label: 'Short-time Rent' },
+                { href: '/', label: 'Long-time Rent' },
+                { href: '/', label: 'Buy' },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
@@ -132,7 +132,7 @@ const Header = ({ className = '' }: HeaderProps) => {
           </nav>
 
           {/* Actions */}
-          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-4">
+          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 lg:gap-4">
             {/* Add your property - primary */}
             {user && (
               <div className="">
@@ -161,7 +161,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                       {getButtonInfo().href === '/add-property' && (
                         <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
                       )}
-                      <span>{getButtonInfo().text}</span>
+                      <span className="whitespace-nowrap">{getButtonInfo().text}</span>
                     </Link>
                   </Button>
                 )}
@@ -191,7 +191,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                         {getButtonInfo().href === '/add-property' && (
                           <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
                         )}
-                        <span>{getButtonInfo().text}</span>
+                        <span className="whitespace-nowrap">{getButtonInfo().text}</span>
                       </Link>
                     </Button>
                   ))}

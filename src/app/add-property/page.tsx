@@ -221,7 +221,7 @@ const Page = () => {
   return (
     <div
       className={classNames(
-        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 min-h-screen md:min-h-fit scrollbar-none pb-25',
+        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 md:min-h-fit scrollbar-none pb-10',
       )}
     >
       <div className="flex flex-col gap-14 w-full max-w-[39.375rem] mt-[2.5rem]">
@@ -300,7 +300,7 @@ const Page = () => {
           )}
 
           {selectedPostedBy === 'agency' && (
-            <div className="flex flex-col gap-4 w-full pb-6 md:pb-0">
+            <div className="flex flex-col gap-6 w-full pb-60 md:pb-10 lg:pb-0">
               <div className="flex flex-col md:flex-row gap-4 w-full justify-end items-center md:items-end ">
                 <IconButton
                   variant={agencyFormData.logoUrl ? 'with-photo' : 'base'}

@@ -32,7 +32,7 @@ const AuthFormWrapper = ({
     <form
       onSubmit={onSubmit}
       className={[
-        'w-full flex flex-col gap-4 p-6 rounded-[24px] md:border bg-white md:border-[var(--border)]',
+        'w-full flex flex-col gap-6 p-6 rounded-[24px] md:border bg-white md:border-[var(--border)]',
         className,
       ]
         .filter(Boolean)
@@ -56,9 +56,9 @@ const AuthFormWrapper = ({
       ) : null}
 
       <div className="flex items-center gap-2">
-        <div className="h-px flex-1 bg-border" />
+        <div className="h-px flex-1 bg-[var(--border)]" />
         <span className="body-md text-[var(--color-black)]">or</span>
-        <div className="h-px flex-1 bg-border" />
+        <div className="h-px flex-1 bg-[var(--border)]" />
       </div>
 
       {children}
