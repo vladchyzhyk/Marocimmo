@@ -9,16 +9,21 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 
 type Props = {
-  onSubmit?: (data: { name: string; email: string; password: string }) => void;
+  onSubmit?: (data: { email: string; password: string }) => void;
   className?: string;
 };
 
 const SignUpForm = ({ onSubmit, className = '' }: Props) => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string }>({});
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
   const [isForgotOpen, setIsForgotOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
@@ -29,24 +34,26 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: typeof errors = {};
-    if (!name.trim()) newErrors.name = 'Name is required';
     if (!email.trim()) newErrors.email = 'Email is required';
     else if (!isValidEmail(email.trim())) newErrors.email = 'Enter a valid email';
     if (!password.trim()) newErrors.password = 'Password is required';
     else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters';
+    if (!confirmPassword.trim()) newErrors.confirmPassword = 'Confirm your password';
+    else if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    onSubmit?.({ name: name.trim(), email: email.trim(), password });
+    onSubmit?.({ email: email.trim(), password });
   };
 
   const guardSubmit = () => {
     const newErrors: typeof errors = {};
-    if (!name.trim()) newErrors.name = 'Name is required';
     if (!email.trim()) newErrors.email = 'Email is required';
     else if (!isValidEmail(email.trim())) newErrors.email = 'Enter a valid email';
     if (!password.trim()) newErrors.password = 'Password is required';
     else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters';
+    if (!confirmPassword.trim()) newErrors.confirmPassword = 'Confirm your password';
+    else if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
   };
 
@@ -58,7 +65,12 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
         onSubmit={handleSubmit}
         className={className}
         submitDisabled={
-          !name.trim() || !email.trim() || !isEmailValid || !password.trim() || password.length < 8
+          !email.trim() ||
+          !isEmailValid ||
+          !password.trim() ||
+          password.length < 8 ||
+          !confirmPassword.trim() ||
+          password !== confirmPassword
         }
         onSubmitGuard={guardSubmit}
       >
@@ -68,18 +80,6 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
               Log in with Email
             </div>
             <div className="flex flex-col gap-4">
-              <Input
-                id="name"
-                type="text"
-                label="Name"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                clearable
-                onClear={() => setName('')}
-                required
-                error={errors.name}
-              />
               <Input
                 id="email"
                 type="email"
@@ -121,6 +121,36 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
                   )
                 }
                 onRightIconClick={() => setShowPassword((v) => !v)}
+              />
+              <Input
+                id="confirm-password"
+                type={showConfirmPassword ? 'text' : 'password'}
+                label="Confirm password"
+                placeholder="Re-enter your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                clearable
+                onClear={() => setConfirmPassword('')}
+                required
+                error={errors.confirmPassword}
+                rightIcon={
+                  showConfirmPassword ? (
+                    <Image
+                      src="/icons/ic_opened_eye.svg"
+                      alt="Show password"
+                      width={24}
+                      height={24}
+                    />
+                  ) : (
+                    <Image
+                      src="/icons/ic_closed_eye.svg"
+                      alt="Show password"
+                      width={24}
+                      height={24}
+                    />
+                  )
+                }
+                onRightIconClick={() => setShowConfirmPassword((v) => !v)}
               />
             </div>
           </div>

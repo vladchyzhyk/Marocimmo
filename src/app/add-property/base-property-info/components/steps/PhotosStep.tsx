@@ -183,7 +183,7 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
           </div>
 
           {/* Photo grid - Fixed overflow issue by using responsive grid */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 overflow-y-auto max-w-[53rem] min-h-screen md:min-h-fit mx-auto py-2 pb-25">
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 max-w-[53rem]  md:min-h-fit mx-auto py-2 pb-25">
             {photos.map((photo, index) => (
               <div key={photo.id} className={index === 0 ? 'col-span-2 md:col-span-1 ' : undefined}>
                 <PhotoCard
