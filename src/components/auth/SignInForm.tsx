@@ -46,7 +46,7 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
     <div className="h-full min-h-screen w-full flex md:items-center justify-center">
       <AuthFormWrapper
         title="Welcome"
-        submitLabel={'Create account'}
+        submitLabel={'Continue'}
         onSubmit={handleSubmit}
         className={className}
         submitDisabled={!email.trim() || !isEmailValid || !password.trim() || password.length < 8}

@@ -222,7 +222,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             )}
             {!user.isLoggedIn && (
               <Link
-                href="/sign-up"
+                href="/sign-in"
                 className="flex md:hidden items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
               >
                 <span>Log in</span>
@@ -240,7 +240,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             )}
             {!user.isLoggedIn && (
               <Link
-                href="/sign-up"
+                href="/sign-in"
                 className="hidden md:flex items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)] whitespace-nowrap"
               >
                 <span>Log in</span>

@@ -85,7 +85,7 @@ const AuthFormWrapper = ({
           router.push(pathname === '/sign-in' ? '/sign-up' : '/sign-in');
         }}
       >
-        {pathname === '/sign-in' ? 'Log in' : 'Create account'}
+        {pathname === '/sign-up' ? 'Log in' : 'Create account'}
       </button>
     </form>
   );

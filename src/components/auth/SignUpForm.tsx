@@ -61,7 +61,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
     <div className="h-full min-h-screen w-full flex justify-center items-center">
       <AuthFormWrapper
         title="Welcome"
-        submitLabel="Continue"
+        submitLabel="Create account"
         onSubmit={handleSubmit}
         className={className}
         submitDisabled={
