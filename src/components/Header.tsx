@@ -10,12 +10,12 @@ import Modal from './ui/Modal';
 import UserDropdown from './UserDropdown';
 
 export const user = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  isLoggedIn: true,
-  // name: '',
-  // email: '',
-  // isLoggedIn: false,
+  // name: 'John Doe',
+  // email: 'john.doe@example.com',
+  // isLoggedIn: true,
+  name: '',
+  email: '',
+  isLoggedIn: false,
 };
 
 type HeaderProps = {
@@ -285,8 +285,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       </header>
       {/* Save & Exit confirmation modal */}
       <Modal
-        className="w-full max-w-[24.5rem]"
-        widthClassName="!mx-4 md:!mx-0"
+        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
         isOpen={isSaveExitOpen}
         onClose={() => setIsSaveExitOpen(false)}
       >

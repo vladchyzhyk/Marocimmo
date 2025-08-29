@@ -17,7 +17,6 @@ interface SelectCardProps {
 
 const SelectCard = ({
   title,
-  description,
   variant = 'large',
   selected = false,
   disabled = false,

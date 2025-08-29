@@ -115,7 +115,7 @@ interface FeaturesStepProps {
   initialFeatures?: string[];
 }
 
-const FeaturesStep = ({ onDataChange, onBack, initialFeatures = [] }: FeaturesStepProps) => {
+const FeaturesStep = ({ onDataChange, initialFeatures = [] }: FeaturesStepProps) => {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(initialFeatures);
 
   const handleFeatureToggle = (featureId: string) => {

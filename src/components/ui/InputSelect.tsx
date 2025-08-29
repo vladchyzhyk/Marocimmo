@@ -63,10 +63,10 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       isTyping = false,
       onInputChange,
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const containerRef = useRef<HTMLDivElement>(null);
     const hasError = Boolean(error);
@@ -110,7 +110,6 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       onChange(optionValue);
       setInputValue(optionValue);
       setIsOpen(false);
-      setIsFocused(false);
       onBlur?.();
     };
 
@@ -118,13 +117,11 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       // Delay to allow for option clicks
       setTimeout(() => {
         setIsOpen(false);
-        setIsFocused(false);
         onBlur?.();
       }, 150);
     };
 
     const handleFocus = () => {
-      setIsFocused(true);
       onFocus?.();
     };
 
@@ -138,7 +135,6 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       const handleClickOutside = (event: MouseEvent) => {
         if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
           setIsOpen(false);
-          setIsFocused(false);
         }
       };
 
@@ -178,6 +174,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               role="combobox"
               aria-expanded={isOpen}
               aria-haspopup="listbox"
+              aria-controls={`${id}-listbox`}
               aria-labelledby={label ? `${id}-label` : undefined}
               aria-describedby={helperText ? `${id}-help` : undefined}
               aria-invalid={hasError || undefined}
@@ -192,6 +189,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               role="combobox"
               aria-expanded={isOpen}
               aria-haspopup="listbox"
+              aria-controls={`${id}-listbox`}
               aria-labelledby={label ? `${id}-label` : undefined}
               aria-describedby={helperText ? `${id}-help` : undefined}
               aria-invalid={hasError || undefined}
@@ -222,7 +220,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
 
           {/* Dropdown */}
           {isOpen && (
-            <div className={dropdownBase} role="listbox">
+            <div className={dropdownBase} role="listbox" id={`${id}-listbox`}>
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => (
                   <div

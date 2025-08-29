@@ -28,7 +28,7 @@ type Props = {
   initialValues?: Partial<PricingStepValues>;
 };
 
-const PricingStep = ({ onDataChange, onBack, initialValues }: Props) => {
+const PricingStep = ({ onDataChange, initialValues }: Props) => {
   const [price, setPrice] = useState<string>(initialValues?.price ?? '');
   const [pricePeriod, setPricePeriod] = useState<PricingPeriod>(
     initialValues?.pricePeriod ?? 'per month',

@@ -171,9 +171,9 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
         {/* Forgot Password Modal */}
         <Modal
           isOpen={isForgotOpen}
-          widthClassName="w-full max-w-[24.5rem] !mx-4 md:!px-10 lg:!px-0"
+          widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
           onClose={() => setIsForgotOpen(false)}
-          title="Forgot password"
+          title="Password recovery"
           actionChildren={
             <>
               <Button variant="secondary" onClick={() => setIsForgotOpen(false)}>
@@ -212,7 +212,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
 
         <Modal
           isOpen={isConfirmOpen}
-          widthClassName="w-full max-w-[24.5rem]"
+          widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
           onClose={() => setIsConfirmOpen(false)}
           title="Check your email"
           actionChildren={

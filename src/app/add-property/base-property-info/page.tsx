@@ -54,7 +54,6 @@ interface PropertyFormData {
 }
 
 const Page = () => {
-  const [footerLoading, setFooterLoading] = useState(false);
   const [selectedStep, setSelectedStep] = useState(1);
   const [formData, setFormData] = useState<PropertyFormData>({
     typeAndLocation: null,
@@ -285,7 +284,6 @@ const Page = () => {
             currentStep={selectedStep}
             allSteps={steps.length}
             onContinue={handleContinue}
-            loading={footerLoading}
             onBack={selectedStep > 1 ? handleBack : undefined}
             disabled={!isStepValid(selectedStep)}
           />
@@ -295,7 +293,7 @@ const Page = () => {
         isOpen={isFeatureCreatedModalOpen}
         onClose={() => setIsFeatureCreatedModalOpen(false)}
         title="Your property has been created!"
-        className="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
+        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
         textCenter
         actionChildren={
           <Button

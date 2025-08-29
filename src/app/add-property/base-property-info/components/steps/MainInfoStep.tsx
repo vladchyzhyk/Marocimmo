@@ -31,7 +31,6 @@ export interface MainInfoData {
 
 const MainInfoStep = ({
   onDataChange,
-  onBack,
   initialData,
   selectedPropertyType,
   transactionType,

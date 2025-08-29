@@ -401,8 +401,8 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
       </div>
 
       <Modal
-        className="fixed top-0 left-0 w-full max-w-[24.5rem]"
-        widthClassName="!mx-4 md:!mx-0"
+        className="fixed top-0 left-0"
+        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
         isOpen={isSaveExitModalOpen}
         onClose={() => setIsSaveExitModalOpen(false)}
       >

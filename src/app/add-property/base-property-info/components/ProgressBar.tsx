@@ -12,8 +12,6 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ steps, currentStep, className = '' }: ProgressBarProps) => {
-  const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
-
   return (
     <div className={`flex flex-col gap-2 py-2 mt-5 ${className}`}>
       {/* Steps Display */}
