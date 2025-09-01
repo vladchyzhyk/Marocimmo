@@ -43,68 +43,66 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
   };
 
   return (
-    <div className="h-full min-h-screen w-full flex md:items-center justify-center">
-      <AuthFormWrapper
-        title="Welcome"
-        submitLabel={'Continue'}
-        onSubmit={handleSubmit}
-        className={className}
-        submitDisabled={!email.trim() || !isEmailValid || !password.trim() || password.length < 8}
-        onSubmitGuard={guardSubmit}
-      >
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
-              Create account with Email
-            </div>
-            <div className="flex flex-col gap-3">
-              <Input
-                id="email"
-                type="email"
-                label="Email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                clearable
-                onClear={() => setEmail('')}
-                required
-                error={errors.email}
-              />
-              <Input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                label="Password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                clearable
-                onClear={() => setPassword('')}
-                required
-                error={errors.password}
-                rightIcon={
-                  showPassword ? (
-                    <Image
-                      src="/icons/ic_opened_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  ) : (
-                    <Image
-                      src="/icons/ic_closed_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  )
-                }
-                onRightIconClick={() => setShowPassword((v) => !v)}
-              />
-            </div>
+    <AuthFormWrapper
+      title="Welcome"
+      submitLabel={'Continue'}
+      onSubmit={handleSubmit}
+      className={className}
+      submitDisabled={!email.trim() || !isEmailValid || !password.trim() || password.length < 8}
+      onSubmitGuard={guardSubmit}
+    >
+      <div className="flex flex-col gap-4">
+        <div>
+          <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
+            Log in with Email
+          </div>
+          <div className="flex flex-col gap-3">
+            <Input
+              id="email"
+              type="email"
+              label="Email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              clearable
+              onClear={() => setEmail('')}
+              required
+              error={errors.email}
+            />
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              label="Password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              clearable
+              onClear={() => setPassword('')}
+              required
+              error={errors.password}
+              rightIcon={
+                showPassword ? (
+                  <Image
+                    src="/icons/ic_opened_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/ic_closed_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                )
+              }
+              onRightIconClick={() => setShowPassword((v) => !v)}
+            />
           </div>
         </div>
-      </AuthFormWrapper>
-    </div>
+      </div>
+    </AuthFormWrapper>
   );
 };
 

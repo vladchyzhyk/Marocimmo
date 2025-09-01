@@ -1,6 +1,7 @@
 'use client';
 
 import { UploadIcon } from '@/utils/icons';
+import classNames from 'classnames';
 import Image from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PhotoCard from '../PhotoCard';
@@ -125,7 +126,12 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
   }, [photos.length]);
 
   return (
-    <div className="flex flex-col gap-6 w-full px-4 md:px-6 lg:px-0">
+    <div
+      className={classNames(
+        'flex flex-col gap-6 w-full px-4 md:px-6 lg:px-0 ',
+        photos.length > 0 ? 'sm:mb-4' : 'sm:mb-10 md:mb-25',
+      )}
+    >
       <div className="flex flex-col gap-2 w-full max-w-[53rem] mx-auto">
         <h2 className="title-xl text-[var(--color-black)]">Add a few photos of your property</h2>
         <p className="body-md text-[var(--text-body-tint)]">

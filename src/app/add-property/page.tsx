@@ -228,7 +228,7 @@ const Page = () => {
   return (
     <div
       className={classNames(
-        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 md:min-h-fit scrollbar-none pb-10',
+        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 sm:mb-20 md:mb-80 md:min-h-fit scrollbar-none pb-10',
       )}
     >
       <div className="flex flex-col gap-14 w-full max-w-[39.375rem] mt-[2.5rem]">

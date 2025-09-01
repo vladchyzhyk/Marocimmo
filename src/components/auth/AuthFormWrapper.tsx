@@ -32,7 +32,7 @@ const AuthFormWrapper = ({
     <form
       onSubmit={onSubmit}
       className={[
-        'w-full flex flex-col gap-6 p-6 rounded-[24px] md:border bg-white md:border-[var(--border)]',
+        'w-full flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 rounded-[24px] sm:rounded-[20px] md:rounded-[24px] md:border bg-white md:border-[var(--border)]',
         className,
       ]
         .filter(Boolean)

@@ -58,181 +58,179 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
   };
 
   return (
-    <div className="h-full min-h-screen w-full flex justify-center items-center">
-      <AuthFormWrapper
-        title="Welcome"
-        submitLabel="Create account"
-        onSubmit={handleSubmit}
-        className={className}
-        submitDisabled={
-          !email.trim() ||
-          !isEmailValid ||
-          !password.trim() ||
-          password.length < 8 ||
-          !confirmPassword.trim() ||
-          password !== confirmPassword
-        }
-        onSubmitGuard={guardSubmit}
-      >
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
-              Log in with Email
-            </div>
-            <div className="flex flex-col gap-4">
-              <Input
-                id="email"
-                type="email"
-                label="Email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                clearable
-                onClear={() => setEmail('')}
-                required
-                error={errors.email}
-              />
-              <Input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                label="Password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                clearable
-                onClear={() => setPassword('')}
-                required
-                error={errors.password}
-                rightIcon={
-                  showPassword ? (
-                    <Image
-                      src="/icons/ic_opened_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  ) : (
-                    <Image
-                      src="/icons/ic_closed_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  )
-                }
-                onRightIconClick={() => setShowPassword((v) => !v)}
-              />
-              <Input
-                id="confirm-password"
-                type={showConfirmPassword ? 'text' : 'password'}
-                label="Confirm password"
-                placeholder="Re-enter your password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                clearable
-                onClear={() => setConfirmPassword('')}
-                required
-                error={errors.confirmPassword}
-                rightIcon={
-                  showConfirmPassword ? (
-                    <Image
-                      src="/icons/ic_opened_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  ) : (
-                    <Image
-                      src="/icons/ic_closed_eye.svg"
-                      alt="Show password"
-                      width={24}
-                      height={24}
-                    />
-                  )
-                }
-                onRightIconClick={() => setShowConfirmPassword((v) => !v)}
-              />
-            </div>
+    <AuthFormWrapper
+      title="Welcome"
+      submitLabel="Create account"
+      onSubmit={handleSubmit}
+      className={className}
+      submitDisabled={
+        !email.trim() ||
+        !isEmailValid ||
+        !password.trim() ||
+        password.length < 8 ||
+        !confirmPassword.trim() ||
+        password !== confirmPassword
+      }
+      onSubmitGuard={guardSubmit}
+    >
+      <div className="flex flex-col gap-4">
+        <div>
+          <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
+            Create account with Email
           </div>
-
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="label-md-medium text-[var(--accent-green)] underline"
-              onClick={() => {
-                setIsForgotOpen(true);
-              }}
-            >
-              Forgot password?
-            </button>
-          </div>
-        </div>
-
-        {/* Forgot Password Modal */}
-        <Modal
-          isOpen={isForgotOpen}
-          widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
-          onClose={() => setIsForgotOpen(false)}
-          title="Password recovery"
-          actionChildren={
-            <>
-              <Button variant="secondary" onClick={() => setIsForgotOpen(false)}>
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  if (!resetEmail.trim()) return;
-                  setIsForgotOpen(false);
-                  setIsConfirmOpen(true);
-                }}
-              >
-                Continue
-              </Button>
-            </>
-          }
-        >
-          <div className="flex flex-col gap-3">
-            <p className="body-md text-[var(--text-body-tint)]">
-              Enter the email associated with your account and we will send you a link to reset your
-              password.
-            </p>
+          <div className="flex flex-col gap-4">
             <Input
-              id="reset-email"
+              id="email"
               type="email"
               label="Email"
               placeholder="Enter your email"
-              value={resetEmail}
-              onChange={(e) => setResetEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               clearable
-              onClear={() => setResetEmail('')}
+              onClear={() => setEmail('')}
               required
+              error={errors.email}
+            />
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              label="Password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              clearable
+              onClear={() => setPassword('')}
+              required
+              error={errors.password}
+              rightIcon={
+                showPassword ? (
+                  <Image
+                    src="/icons/ic_opened_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/ic_closed_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                )
+              }
+              onRightIconClick={() => setShowPassword((v) => !v)}
+            />
+            <Input
+              id="confirm-password"
+              type={showConfirmPassword ? 'text' : 'password'}
+              label="Confirm password"
+              placeholder="Re-enter your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              clearable
+              onClear={() => setConfirmPassword('')}
+              required
+              error={errors.confirmPassword}
+              rightIcon={
+                showConfirmPassword ? (
+                  <Image
+                    src="/icons/ic_opened_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/ic_closed_eye.svg"
+                    alt="Show password"
+                    width={24}
+                    height={24}
+                  />
+                )
+              }
+              onRightIconClick={() => setShowConfirmPassword((v) => !v)}
             />
           </div>
-        </Modal>
+        </div>
 
-        <Modal
-          isOpen={isConfirmOpen}
-          widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
-          onClose={() => setIsConfirmOpen(false)}
-          title="Check your email"
-          actionChildren={
-            <Button onClick={() => setIsConfirmOpen(false)} variant="primary">
-              Return
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="label-md-medium text-[var(--accent-green)] underline"
+            onClick={() => {
+              setIsForgotOpen(true);
+            }}
+          >
+            Forgot password?
+          </button>
+        </div>
+      </div>
+
+      {/* Forgot Password Modal */}
+      <Modal
+        isOpen={isForgotOpen}
+        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
+        onClose={() => setIsForgotOpen(false)}
+        title="Password recovery"
+        actionChildren={
+          <>
+            <Button variant="secondary" onClick={() => setIsForgotOpen(false)}>
+              Cancel
             </Button>
-          }
-        >
-          <div className="flex flex-col gap-3">
-            <p className="body-md text-[var(--color-black)]">
-              We’ve sent you an email with instructions to reset your password. Check your inbox and
-              follow the steps there
-            </p>
-            <p className="body-md text-[var(--color-black)]">
-              Not your request? Or want to log in to another account? Select Return to login
-            </p>
-          </div>
-        </Modal>
-      </AuthFormWrapper>
-    </div>
+            <Button
+              onClick={() => {
+                if (!resetEmail.trim()) return;
+                setIsForgotOpen(false);
+                setIsConfirmOpen(true);
+              }}
+            >
+              Continue
+            </Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-3">
+          <p className="body-md text-[var(--text-body-tint)]">
+            Enter the email associated with your account and we will send you a link to reset your
+            password.
+          </p>
+          <Input
+            id="reset-email"
+            type="email"
+            label="Email"
+            placeholder="Enter your email"
+            value={resetEmail}
+            onChange={(e) => setResetEmail(e.target.value)}
+            clearable
+            onClear={() => setResetEmail('')}
+            required
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isConfirmOpen}
+        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
+        onClose={() => setIsConfirmOpen(false)}
+        title="Check your email"
+        actionChildren={
+          <Button onClick={() => setIsConfirmOpen(false)} variant="primary">
+            Return
+          </Button>
+        }
+      >
+        <div className="flex flex-col gap-3">
+          <p className="body-md text-[var(--color-black)]">
+            We’ve sent you an email with instructions to reset your password. Check your inbox and
+            follow the steps there
+          </p>
+          <p className="body-md text-[var(--color-black)]">
+            Not your request? Or want to log in to another account? Select Return to login
+          </p>
+        </div>
+      </Modal>
+    </AuthFormWrapper>
   );
 };
 

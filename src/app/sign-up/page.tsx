@@ -11,8 +11,8 @@ export default function SignUpPage() {
     if (user.isLoggedIn) router.push('/');
   }, [router]);
   return (
-    <div className="bg-white flex md:items-center justify-center">
-      <SignUpForm className="w-full max-w-[25.875rem]" />
+    <div className="bg-white flex items-center justify-center sm:min-h-[100vh-20rem] md:min-h-[100vh-7rem] mt-[7rem] mb-[2rem]">
+      <SignUpForm className="w-full max-w-[22rem] sm:max-w-[25.875rem]" />
     </div>
   );
 }
