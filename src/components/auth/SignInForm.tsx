@@ -1,9 +1,9 @@
 'use client';
 
-import AuthFormWrapper from '@/components/auth/AuthFormWrapper';
-import Input from '@/components/ui/Input';
-import Image from 'next/image';
-import React, { useState } from 'react';
+import AuthFormWrapper from '@/components/auth/AuthFormWrapper'
+import Input from '@/components/ui/Input'
+import Image from 'next/image'
+import React, { useState } from 'react'
 
 type Props = {
   onSubmit?: (data: { email: string; password: string }) => void;
@@ -51,12 +51,12 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
       submitDisabled={!email.trim() || !isEmailValid || !password.trim() || password.length < 8}
       onSubmitGuard={guardSubmit}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
         <div>
-          <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
+          <div className="flex items-center justify-center title-md mb-2 md:mb-2 lg:mb-3 xl:mb-3 text-[var(--color-black)]">
             Log in with Email
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
             <Input
               id="email"
               type="email"
@@ -87,6 +87,7 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 ) : (
                   <Image
@@ -94,6 +95,7 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 )
               }

@@ -1,8 +1,8 @@
 'use client';
 
-import SelectablePill from '@/components/ui/SelectablePill';
-import classNames from 'classnames';
-import { useState } from 'react';
+import SelectablePill from '@/components/ui/SelectablePill'
+import classNames from 'classnames'
+import { useState } from 'react'
 
 // Import all icons from utility
 import {
@@ -36,7 +36,7 @@ import {
   TvIcon,
   WashingMachineIcon,
   WifiIcon,
-} from '@/utils/icons';
+} from '@/utils/icons'
 
 interface Feature {
   id: string;
@@ -131,20 +131,20 @@ const FeaturesStep = ({ onDataChange, initialFeatures = [] }: FeaturesStepProps)
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full px-4 md:px-6 lg:px-0">
+    <div className="flex flex-col gap-6 w-full px-4 md:px-4 lg:px-6 xl:px-0">
       <div className="flex flex-col gap-1">
         <h1 className="title-xl text-[var(--color-black)]">
           What are you offering in your property?
         </h1>
       </div>
 
-      <div className="flex flex-col gap-8 min-h-screen md:min-h-fit pb-25">
+      <div className="flex flex-col gap-8 md:gap-6 lg:gap-8 xl:gap-8 min-h-screen md:min-h-fit pb-25">
         {categories.map((category) => (
-          <div key={category.id} className="flex flex-col gap-4">
+          <div key={category.id} className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
             <h2 className="label-lg-medium text-[var(--color-black)] whitespace-nowrap">
               {category.name}
             </h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-4 md:gap-2 lg:gap-3 xl:gap-4">
               {getFeaturesByCategory(category.id).map((feature) => (
                 <SelectablePill
                   key={feature.id}

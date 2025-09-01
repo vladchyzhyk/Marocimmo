@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import Button from '@/components/ui/Button'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import React from 'react'
 
 type Props = {
   title: string;
@@ -32,30 +32,30 @@ const AuthFormWrapper = ({
     <form
       onSubmit={onSubmit}
       className={[
-        'w-full flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 rounded-[24px] sm:rounded-[20px] md:rounded-[24px] md:border bg-white md:border-[var(--border)]',
+        'w-full flex flex-col gap-4 p-4 md:gap-3 md:p-3 lg:gap-4 lg:p-4 xl:gap-4 xl:p-4 rounded-[24px] md:rounded-[24px] lg:rounded-[24px] xl:rounded-[24px] md:border bg-white md:border-[var(--border)]',
         className,
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      <div className="flex flex-col items-center gap-1">
+      <div className="flex flex-col items-center gap-1 md:gap-0.5 lg:gap-1 xl:gap-1">
         <h1 className="heading-h3 text-[var(--color-black)]">{title}</h1>
       </div>
 
       {showSocial ? (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 md:gap-1 lg:gap-2 xl:gap-2">
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <Image src="/icons/ic_google.svg" alt="google" width={20} height={20} /> Continue with
+            <Image src="/icons/ic_google.svg" alt="google" width={20} height={20} className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5" /> Continue with
             Google
           </Button>
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <Image src="/icons/ic_apple.svg" alt="apple" width={20} height={20} /> Continue with
+            <Image src="/icons/ic_apple.svg" alt="apple" width={20} height={20} className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5" /> Continue with
             Apple
           </Button>
         </div>
       ) : null}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 md:gap-1 lg:gap-2 xl:gap-2">
         <div className="h-px flex-1 bg-[var(--border)]" />
         <span className="body-md text-[var(--color-black)]">or</span>
         <div className="h-px flex-1 bg-[var(--border)]" />

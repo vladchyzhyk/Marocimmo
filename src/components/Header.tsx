@@ -1,13 +1,13 @@
-import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons';
-import classNames from 'classnames';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import LanguageDropdown from './LanguageDropdown';
-import Button, { ButtonVariant } from './ui/Button';
-import Modal from './ui/Modal';
-import UserDropdown from './UserDropdown';
+import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons'
+import classNames from 'classnames'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import LanguageDropdown from './LanguageDropdown'
+import Button, { ButtonVariant } from './ui/Button'
+import Modal from './ui/Modal'
+import UserDropdown from './UserDropdown'
 
 export const user = {
   // name: 'John Doe',
@@ -98,13 +98,13 @@ const Header = ({ className = '' }: HeaderProps) => {
       <header
         className={[
           'flex justify-center w-full border-b border-[var(--border)] bg-[var(--white)]',
-          'px-5 md:px-6 lg:px-10 pb-2',
+          'px-5 md:px-4 lg:px-6 xl:px-10 pb-2',
           className,
         ]
           .filter(Boolean)
           .join(' ')}
       >
-        <div className="relative w-full max-w-[1200px] flex justify-between items-center gap-4 md:gap-6 pt-4">
+        <div className="relative w-full max-w-[1200px] flex justify-between items-center gap-4 md:gap-3 lg:gap-4 xl:gap-6 pt-4">
           {/* Logo */}
           <div className="w-full max-w-[1/3]">
             <Link href="/" className="flex items-center gap-2 h-14">
@@ -136,7 +136,7 @@ const Header = ({ className = '' }: HeaderProps) => {
           </nav>
 
           {/* Actions */}
-          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 lg:gap-4">
+          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-2 lg:gap-3 xl:gap-4">
             {/* Add your property - primary */}
             {user && (
               <div className="">
@@ -289,9 +289,9 @@ const Header = ({ className = '' }: HeaderProps) => {
         isOpen={isSaveExitOpen}
         onClose={() => setIsSaveExitOpen(false)}
       >
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-4 lg:gap-6 xl:gap-6">
           <SavedIcon className="w-14 h-14 text-[var(--color-black)] fill-white mt-6" />
-          <div className="flex flex-col items-center gap-4 px-7">
+          <div className="flex flex-col items-center gap-4 md:gap-2 lg:gap-3 xl:gap-4 px-7">
             <h1 className="title-xl text-[var(--color-black)]">Draft saved</h1>
             <p className="body-lg text-center text-[var(--color-black)]">
               Your property draft has been saved to your account. Return and complete it at any

@@ -207,6 +207,61 @@ body {
   font-weight: var(--label-sm-medium-weight);
   letter-spacing: var(--label-sm-medium-tracking);
 }
+
+/* Tablet responsive typography (10% smaller for screens below md) */
+@media (max-width: 767px) {
+  .heading-h3 {
+    font-size: calc(var(--h3-size) * 0.9);
+  }
+
+  .title-xl {
+    font-size: calc(var(--title-xl-size) * 0.9);
+  }
+
+  .title-lg {
+    font-size: calc(var(--title-lg-size) * 0.9);
+  }
+
+  .title-md {
+    font-size: calc(var(--title-md-size) * 0.9);
+  }
+
+  .title-sm {
+    font-size: calc(var(--title-sm-size) * 0.9);
+  }
+
+  .body-lg {
+    font-size: calc(var(--body-lg-size) * 0.9);
+  }
+
+  .body-md {
+    font-size: calc(var(--body-md-size) * 0.9);
+  }
+
+  .body-sm {
+    font-size: calc(var(--body-sm-size) * 0.9);
+  }
+
+  .button-lg-medium {
+    font-size: calc(var(--button-lg-medium-size) * 0.9);
+  }
+
+  .button-lg-bold {
+    font-size: calc(var(--button-lg-bold-size) * 0.9);
+  }
+
+  .label-lg-medium {
+    font-size: calc(var(--label-lg-medium-size) * 0.9);
+  }
+
+  .label-md-medium {
+    font-size: calc(var(--label-md-medium-size) * 0.9);
+  }
+
+  .label-sm-medium {
+    font-size: calc(var(--label-sm-medium-size) * 0.9);
+  }
+}
 .scrollbar-none {
   scrollbar-width: none;
 }

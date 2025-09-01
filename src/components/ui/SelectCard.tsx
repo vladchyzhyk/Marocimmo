@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import Image from 'next/image';
-import React from 'react';
+import classNames from 'classnames'
+import Image from 'next/image'
+import React from 'react'
 
 type SelectCardVariant = 'large' | 'small' | 'pill' | 'type';
 
@@ -61,14 +61,14 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'px-5 py-[1.125rem] inline-flex items-center gap-2 justify-start lg:justify-center border-2',
+          'px-5 md:px-4 lg:px-4 xl:px-5 py-[1.125rem] inline-flex items-center gap-2 justify-start lg:justify-center border-2',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
           className,
         )}
       >
         <span
           className={classNames(
-            'w-full flex justify-start lg:justify-center items-center body-lg transition-colors',
+            'w-full flex justify-start lg:justify-center items-center body-lg transition-colors whitespace-nowrap',
             selected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
           )}
         >
@@ -76,13 +76,13 @@ const SelectCard = ({
         </span>
         <div
           className={classNames(
-            'min-w-[1.25rem] min-h-[1.25rem] flex items-center justify-center rounded-full border-[2px]',
+            'min-w-[1.25rem] min-h-[1.25rem] md:min-w-[1.125rem] md:min-h-[1.125rem] lg:min-w-[1.25rem] lg:min-h-[1.25rem] xl:min-w-[1.25rem] xl:min-h-[1.25rem] flex items-center justify-center rounded-full border-[2px]',
             selected ? 'border-[var(--accent-green)]' : 'border-[var(--color-black)]',
           )}
         >
           <div
             className={classNames(
-              'w-3 h-3 rounded-full transition-colors',
+              'w-3 h-3 md:w-2.5 md:h-2.5 lg:w-3 lg:h-3 xl:w-3 xl:h-3 rounded-full transition-colors',
               selected ? 'bg-[var(--accent-green)]' : 'bg-transparent',
             )}
           ></div>

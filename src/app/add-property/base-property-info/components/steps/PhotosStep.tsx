@@ -1,10 +1,10 @@
 'use client';
 
-import { UploadIcon } from '@/utils/icons';
-import classNames from 'classnames';
-import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PhotoCard from '../PhotoCard';
+import { UploadIcon } from '@/utils/icons'
+import classNames from 'classnames'
+import Image from 'next/image'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import PhotoCard from '../PhotoCard'
 
 type SelectedPhoto = {
   id: string;
@@ -128,11 +128,11 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
   return (
     <div
       className={classNames(
-        'flex flex-col gap-6 w-full px-4 md:px-6 lg:px-0 ',
+        'flex flex-col gap-6 w-full px-4 md:px-4 lg:px-6 xl:px-0 ',
         photos.length > 0 ? 'sm:mb-4' : 'sm:mb-10 md:mb-25',
       )}
     >
-      <div className="flex flex-col gap-2 w-full max-w-[53rem] mx-auto">
+      <div className="flex flex-col gap-2 w-full md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem] mx-auto">
         <h2 className="title-xl text-[var(--color-black)]">Add a few photos of your property</h2>
         <p className="body-md text-[var(--text-body-tint)]">
           To get started, you need to upload 3 photos. (MAX 20)
@@ -142,7 +142,7 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
       {photos.length === 0 ? (
         <div
           className={[
-            'flex flex-col items-center justify-center gap-2 md:gap-3 border rounded-xl bg-white w-full max-w-[53rem] mx-auto',
+            'flex flex-col items-center justify-center gap-2 md:gap-2 lg:gap-3 xl:gap-3 border rounded-xl bg-white w-full md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem] mx-auto',
             'border-dashed py-[4.625rem]',
             'shadow-sm',
             isDragging
@@ -189,7 +189,7 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
           </div>
 
           {/* Photo grid - Fixed overflow issue by using responsive grid */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 max-w-[53rem]  md:min-h-fit mx-auto py-2 pb-25">
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-2 lg:gap-3 xl:gap-4 md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem] md:min-h-fit mx-auto py-2 pb-25">
             {photos.map((photo, index) => (
               <div key={photo.id} className={index === 0 ? 'col-span-2 md:col-span-1 ' : undefined}>
                 <PhotoCard
@@ -204,7 +204,7 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
             {/* Add more photos button */}
             {photos.length < MAX_PHOTOS && (
               <div
-                className="h-[196px] border border-dashed border-[var(--border-input)] rounded-lg bg-white flex flex-col items-center justify-center gap-2 cursor-pointer transition-all duration-200 ease-in-out hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)] "
+                className="h-[196px] border border-dashed border-[var(--border-input)] rounded-lg bg-white flex flex-col items-center justify-center gap-2 md:gap-1 lg:gap-2 xl:gap-2 cursor-pointer transition-all duration-200 ease-in-out hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)] "
                 onClick={() => inputRef.current?.click()}
                 role="button"
                 tabIndex={0}

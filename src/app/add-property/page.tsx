@@ -1,16 +1,16 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import IconButton from '@/components/ui/IconButton';
-import Input from '@/components/ui/Input';
-import { LocationSuggestion } from '@/components/ui/LocationDropdown';
-import PhoneInput from '@/components/ui/PhoneInput';
-import SelectCard from '@/components/ui/SelectCard';
-import { AgencyIcon, OwnerIcon } from '@/utils/icons';
-import { cleanupImagePreview, processImageUpload } from '@/utils/imageUtils';
-import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import Footer from '@/components/Footer'
+import IconButton from '@/components/ui/IconButton'
+import Input from '@/components/ui/Input'
+import { LocationSuggestion } from '@/components/ui/LocationDropdown'
+import PhoneInput from '@/components/ui/PhoneInput'
+import SelectCard from '@/components/ui/SelectCard'
+import { AgencyIcon, OwnerIcon } from '@/utils/icons'
+import { cleanupImagePreview, processImageUpload } from '@/utils/imageUtils'
+import classNames from 'classnames'
+import { useRouter } from 'next/navigation'
+import { useMemo, useState } from 'react'
 
 // Types for form data
 interface OwnerFormData {
@@ -231,12 +231,12 @@ const Page = () => {
         'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 sm:mb-20 md:mb-80 md:min-h-fit scrollbar-none pb-10',
       )}
     >
-      <div className="flex flex-col gap-14 w-full max-w-[39.375rem] mt-[2.5rem]">
+      <div className="flex flex-col gap-14 w-full md:max-w-[32rem] lg:max-w-[34rem] xl:max-w-[39.375rem] mt-[2.5rem]">
         <div className="flex flex-col gap-6">
           <div className="title-xl ">Listing posted by</div>
 
           <div className="flex flex-col gap-3">
-            <div className="hidden md:flex justify-center items-center gap-4">
+            <div className="hidden md:flex justify-center items-center gap-4 md:gap-3 lg:gap-4 xl:gap-4">
               <SelectCard
                 title="Owner"
                 Icon={OwnerIcon}
@@ -281,8 +281,8 @@ const Page = () => {
 
           {selectedPostedBy === 'owner' && (
             <div className="flex flex-col gap-4 w-full">
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <div className="flex-1 flex flex-col gap-2">
+              <div className="flex flex-col items-center md:flex-row gap-4 md:gap-3 lg:gap-4 w-full">
+                <div className="w-full flex-1">
                   <Input
                     value={ownerFormData.contactPerson}
                     onChange={(e) => handleOwnerContactPersonChange(e.target.value)}
@@ -294,7 +294,7 @@ const Page = () => {
                   />
                 </div>
 
-                <div className="flex-1">
+                <div className="w-full flex-1 min-w-0">
                   <PhoneInput
                     value={ownerFormData.phoneNumber}
                     onChange={handleOwnerPhoneChange}
@@ -343,7 +343,7 @@ const Page = () => {
                   />
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <PhoneInput
                     value={agencyFormData.phoneNumber}
                     onChange={handleAgencyPhoneChange}

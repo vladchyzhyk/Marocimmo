@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from 'next/image'
+import React from 'react'
 
 export type NumberStepperProps = {
   id?: string;
@@ -62,7 +62,7 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
     return (
       <div className={`flex flex-col gap-2 w-full ${className}`}>
         {label && (
-          <label htmlFor={id} className="body-md text-[var(--color-black)]">
+          <label htmlFor={id} className="body-md whitespace-nowrap text-[var(--color-black)]">
             {label}
             {required && (
               <span className="ml-1 font-medium text-[var(--error)]" aria-hidden>

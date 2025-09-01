@@ -1,12 +1,12 @@
 'use client';
 
-import AuthFormWrapper from '@/components/auth/AuthFormWrapper';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Modal from '@/components/ui/Modal';
-import Image from 'next/image';
+import AuthFormWrapper from '@/components/auth/AuthFormWrapper'
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import Modal from '@/components/ui/Modal'
+import Image from 'next/image'
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 type Props = {
   onSubmit?: (data: { email: string; password: string }) => void;
@@ -73,12 +73,12 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
       }
       onSubmitGuard={guardSubmit}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
         <div>
-          <div className="flex items-center justify-center title-md mb-2 text-[var(--color-black)]">
+          <div className="flex items-center justify-center title-md mb-2 md:mb-1 lg:mb-2 xl:mb-2 text-[var(--color-black)]">
             Create account with Email
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
             <Input
               id="email"
               type="email"
@@ -109,6 +109,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 ) : (
                   <Image
@@ -116,6 +117,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 )
               }
@@ -139,6 +141,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 ) : (
                   <Image
@@ -146,6 +149,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
                     alt="Show password"
                     width={24}
                     height={24}
+                    className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
                   />
                 )
               }
@@ -170,7 +174,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
       {/* Forgot Password Modal */}
       <Modal
         isOpen={isForgotOpen}
-        widthClassName="w-full max-w-[24.5rem] !mx-4 md:!mx-0"
+        widthClassName="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl !mx-4 md:!mx-0"
         onClose={() => setIsForgotOpen(false)}
         title="Password recovery"
         actionChildren={
@@ -190,7 +194,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
           </>
         }
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 md:gap-2 lg:gap-3 xl:gap-3">
           <p className="body-md text-[var(--text-body-tint)]">
             Enter the email associated with your account and we will send you a link to reset your
             password.
@@ -220,9 +224,9 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
           </Button>
         }
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 md:gap-2 lg:gap-3 xl:gap-3">
           <p className="body-md text-[var(--color-black)]">
-            We’ve sent you an email with instructions to reset your password. Check your inbox and
+            We&apos;ve sent you an email with instructions to reset your password. Check your inbox and
             follow the steps there
           </p>
           <p className="body-md text-[var(--color-black)]">
