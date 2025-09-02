@@ -1,8 +1,9 @@
-import { ArrowNextIcon } from '@/utils/icons'
-import classNames from 'classnames'
-import Button from './ui/Button'
+import { ArrowNextIcon } from '@/utils/icons';
+import classNames from 'classnames';
+import Button from './ui/Button';
 
 type FooterProps = {
+  type?: 'edit' | 'add';
   currentStep?: number;
   allSteps?: number;
   onContinue?: () => void;
@@ -12,6 +13,7 @@ type FooterProps = {
 };
 
 const Footer = ({
+  type = 'add',
   currentStep,
   allSteps,
   onContinue,
@@ -28,13 +30,12 @@ const Footer = ({
         )}
       >
         {onBack && (
-          <Button className="max-w-24" onClick={onBack} variant="outline">
+          <Button className="!w-fit" onClick={onBack} variant="outline">
             <ArrowNextIcon className="w-4 h-4 text-black rotate-180" />
-            Back
+            {type === 'edit' ? 'Cancel' : 'Back'}
           </Button>
         )}
-
-        {currentStep && allSteps && currentStep > 0 && (
+        {type !== 'edit' && currentStep && allSteps && currentStep > 0 && (
           <div className="md:hidden flex items-center justify-center button-lg-bold">
             <span className="text-[var(--accent-green)]">{currentStep}</span>/{allSteps}
           </div>
@@ -43,9 +44,9 @@ const Footer = ({
           onClick={onContinue}
           disabled={disabled || loading}
           className={`
-            flex items-center justify-center gap-2 max-w-[8.75rem]
+            flex items-center justify-center gap-2 !w-fit
             bg-[var(--accent-green)] text-white rounded-lg
-            button-lg-medium transition-colors
+            button-lg-medium transition-colors whitespace-nowrap
             hover:bg-[var(--primarybutton-hover)]
             disabled:opacity-60 disabled:cursor-not-allowed
             ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
@@ -75,7 +76,7 @@ const Footer = ({
             </svg>
           ) : (
             <>
-              <span>Continue</span>
+              <span>{type === 'edit' ? 'Save and Exit' : 'Continue'}</span>
               <ArrowNextIcon className="w-6 h-6" />
             </>
           )}

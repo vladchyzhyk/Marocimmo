@@ -1,13 +1,13 @@
-import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons'
-import classNames from 'classnames'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import LanguageDropdown from './LanguageDropdown'
-import Button, { ButtonVariant } from './ui/Button'
-import Modal from './ui/Modal'
-import UserDropdown from './UserDropdown'
+import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons';
+import classNames from 'classnames';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import LanguageDropdown from './LanguageDropdown';
+import Button, { ButtonVariant } from './ui/Button';
+import Modal from './ui/Modal';
+import UserDropdown from './UserDropdown';
 
 export const user = {
   // name: 'John Doe',

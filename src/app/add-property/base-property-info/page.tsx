@@ -1,17 +1,17 @@
 'use client';
 
-import Footer from '@/components/Footer'
-import Button from '@/components/ui/Button'
-import Modal from '@/components/ui/Modal'
-import classNames from 'classnames'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import ProgressBar from './components/ProgressBar'
-import FeaturesStep from './components/steps/FeaturesStep'
-import MainInfoStep, { MainInfoData } from './components/steps/MainInfoStep'
-import PhotosStep from './components/steps/PhotosStep'
-import PricingStep from './components/steps/PricingStep'
-import TypeAndLocationStep from './components/steps/TypeAndLocationStep'
+import Footer from '@/components/Footer';
+import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
+import classNames from 'classnames';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import ProgressBar from './components/ProgressBar';
+import FeaturesStep from './components/steps/FeaturesStep';
+import MainInfoStep, { MainInfoData } from './components/steps/MainInfoStep';
+import PhotosStep from './components/steps/PhotosStep';
+import PricingStep from './components/steps/PricingStep';
+import TypeAndLocationStep from './components/steps/TypeAndLocationStep';
 
 interface TypeAndLocationData {
   transactionType: string;

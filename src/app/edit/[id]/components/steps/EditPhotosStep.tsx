@@ -24,7 +24,7 @@ interface Props {
 const MAX_PHOTOS = 20;
 const MIN_REQUIRED = 3;
 
-const PhotosStep = ({ onDataChange, initialData }: Props) => {
+const EditPhotosStep = ({ onDataChange, initialData }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [photos, setPhotos] = useState<SelectedPhoto[]>(initialData?.photos || []);
   const [isDragging, setIsDragging] = useState(false);
@@ -244,4 +244,4 @@ const PhotosStep = ({ onDataChange, initialData }: Props) => {
   );
 };
 
-export default PhotosStep;
+export default EditPhotosStep;

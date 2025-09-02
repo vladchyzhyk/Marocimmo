@@ -25,16 +25,57 @@ export type InputSelectProps = {
   inputClassName?: string;
   isTyping?: boolean;
   onInputChange?: (value: string) => void;
+  variant?: 'default' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
 };
 
-const baseContainer = 'flex flex-col gap-2 w-full';
+const baseContainer = 'flex flex-col gap-2';
 const labelStyles = 'body-md text-[var(--color-black)]';
 const helperTextStyles = 'label-sm-medium text-[var(--text-body-tint)]';
 
-const inputBase =
-  'w-full h-12 rounded-[8px] px-4 border bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer pr-10 flex items-center relative ';
+const getInputStyles = (variant: 'default' | 'outline', size: 'sm' | 'md' | 'lg') => {
+  const base =
+    'rounded-[8px] px-4 border bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer flex items-center relative whitespace-nowrap';
 
-const rightIconContainer = 'absolute right-2 top-1/2 -translate-y-1/2 p-2';
+  const sizeStyles = {
+    sm: 'h-10',
+    md: 'h-12',
+    lg: 'h-14',
+  };
+
+  const paddingStyles = {
+    sm: 'pr-8',
+    md: 'pr-10',
+    lg: 'pr-12',
+  };
+
+  const variantStyles = {
+    default: 'border-[var(--border-input)]',
+    outline:
+      'border border-[var(--border)] hover:border-[var(--accent-green)] focus:border-[var(--accent-green)]',
+  };
+
+  return `${base} ${sizeStyles[size]} ${paddingStyles[size]} ${variantStyles[variant]}`;
+};
+
+const getIconSize = (size: 'sm' | 'md' | 'lg') => {
+  const sizeMap = {
+    sm: 20,
+    md: 24,
+    lg: 28,
+  };
+  return sizeMap[size];
+};
+
+const getRightIconContainer = (size: 'sm' | 'md' | 'lg') => {
+  const sizeMap = {
+    sm: 'absolute right-2 top-1/2 -translate-y-1/2 p-1.5',
+    md: 'absolute right-2 top-1/2 -translate-y-1/2 p-2',
+    lg: 'absolute right-2 top-1/2 -translate-y-1/2 p-2.5',
+  };
+  return sizeMap[size];
+};
 
 const dropdownBase =
   'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] pt-2 ';
@@ -62,6 +103,9 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       inputClassName = '',
       isTyping = false,
       onInputChange,
+      variant = 'default',
+      size = 'md',
+      fullWidth = true,
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ref,
@@ -79,11 +123,16 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       : options;
 
     const computedInputClasses = [
-      inputBase,
-      hasError ? 'border-[var(--error)]' : 'border-[var(--border-input)]',
+      getInputStyles(variant, size),
+      fullWidth ? 'w-full' : '',
+      hasError ? 'border-[var(--error)]' : '',
       disabled ? 'opacity-40 cursor-not-allowed' : '',
       inputClassName,
     ]
+      .filter(Boolean)
+      .join(' ');
+
+    const containerClasses = [baseContainer, fullWidth ? 'w-full' : '', className]
       .filter(Boolean)
       .join(' ');
 
@@ -145,7 +194,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
     }, []);
 
     return (
-      <div className={[baseContainer, className].filter(Boolean).join(' ')} ref={containerRef}>
+      <div className={containerClasses} ref={containerRef}>
         {label ? (
           <label htmlFor={id} className={labelStyles}>
             {label}
@@ -157,7 +206,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
           </label>
         ) : null}
 
-        <div className="relative">
+        <div className={fullWidth ? 'relative w-full' : 'relative inline-block'}>
           {isTyping ? (
             <input
               id={id}
@@ -206,14 +255,14 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
 
           {/* Arrow Icon */}
           <div
-            className={classNames(rightIconContainer, isOpen ? 'z-[32]' : 'z-[20]')}
+            className={classNames(getRightIconContainer(size), isOpen ? 'z-[36]' : 'z-[20]')}
             onClick={handleToggle}
           >
             <Image
               src="/icons/ic_arrow_down.svg"
               alt="Select"
-              width={24}
-              height={24}
+              width={getIconSize(size)}
+              height={getIconSize(size)}
               className={` transition-transform ${isOpen ? 'rotate-180' : ''}`}
             />
           </div>
