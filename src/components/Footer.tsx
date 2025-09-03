@@ -22,7 +22,7 @@ const Footer = ({
   loading = false,
 }: FooterProps) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[var(--border)] z-[35] px-6 md:px-4 lg:px-6 xl:px-6">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[var(--border)] z-[35] px-4 md:px-4">
       <div
         className={classNames(
           'w-full flex items-center gap-6 py-4 md:py-3 lg:py-4 xl:py-4 max-w-[1200px] mx-auto',

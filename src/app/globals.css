@@ -209,8 +209,8 @@ body {
   letter-spacing: var(--label-sm-medium-tracking);
 }
 
-/* Tablet responsive typography (10% smaller for screens below md) */
-@media (max-width: 767px) {
+/* Below lg responsive typography (10% smaller for screens below lg) */
+@media (max-width: 1023px) {
   .heading-h3 {
     font-size: calc(var(--h3-size) * 0.9);
   }
@@ -261,6 +261,61 @@ body {
 
   .label-sm-medium {
     font-size: calc(var(--label-sm-medium-size) * 0.9);
+  }
+}
+
+/* Mobile typography (reset to 1.0 below md to override lg rule) */
+@media (max-width: 767px) {
+  .heading-h3 {
+    font-size: var(--h3-size);
+  }
+
+  .title-xl {
+    font-size: var(--title-xl-size);
+  }
+
+  .title-lg {
+    font-size: var(--title-lg-size);
+  }
+
+  .title-md {
+    font-size: var(--title-md-size);
+  }
+
+  .title-sm {
+    font-size: var(--title-sm-size);
+  }
+
+  .body-lg {
+    font-size: var(--body-lg-size);
+  }
+
+  .body-md {
+    font-size: var(--body-md-size);
+  }
+
+  .body-sm {
+    font-size: var(--body-sm-size);
+  }
+
+  .button-lg-medium {
+    font-size: var(--button-lg-medium-size);
+  }
+
+  .button-lg-bold {
+    font-size: var(--button-lg-bold-size);
+  }
+
+  .label-lg-medium {
+    font-size: var(--label-lg-medium-size);
+  }
+
+  .label-md-medium {
+    font-size: var(--label-md-medium-size);
+  }
+
+  .label-sm-medium {
+    font-size: var(--label-sm-medium-size);
   }
 }
 .scrollbar-none {

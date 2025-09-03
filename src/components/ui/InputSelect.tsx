@@ -78,10 +78,10 @@ const getRightIconContainer = (size: 'sm' | 'md' | 'lg') => {
 };
 
 const dropdownBase =
-  'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] pt-2 ';
+  'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] pt-2';
 
 const dropdownOptionBase =
-  'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors';
+  'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
 
 const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
   (
@@ -269,12 +269,16 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
 
           {/* Dropdown */}
           {isOpen && (
-            <div className={dropdownBase} role="listbox" id={`${id}-listbox`}>
+            <div
+              className={classNames(dropdownBase, isOpen ? 'z-[31]' : 'z-[25]')}
+              role="listbox"
+              id={`${id}-listbox`}
+            >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => (
                   <div
                     key={option.value}
-                    className={classNames(dropdownOptionBase, isOpen ? 'z-[31]' : 'z-[20]')}
+                    className={classNames(dropdownOptionBase, isOpen ? 'z-[31]' : 'z-[25]')}
                     onClick={() => handleOptionSelect(option.value)}
                     role="option"
                     aria-selected={option.value === value}

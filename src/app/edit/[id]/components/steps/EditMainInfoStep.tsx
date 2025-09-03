@@ -93,7 +93,7 @@ const MainInfoStep = ({
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-2 lg:gap-3 xl:gap-4">
                     <NumberStepper
                       label="Max number of people"
                       value={formData.floor}
@@ -152,7 +152,7 @@ const MainInfoStep = ({
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     <NumberStepper
                       label="Floor"
                       value={formData.floor}
@@ -217,7 +217,7 @@ const MainInfoStep = ({
                   </div>
 
                   {/* Number Steppers Row */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     <NumberStepper
                       label="Floor"
                       value={formData.floor}
@@ -271,7 +271,7 @@ const MainInfoStep = ({
                   </div>
 
                   {/* Number Steppers Row */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     <NumberStepper
                       label="Floor"
                       value={formData.floor}
@@ -327,7 +327,7 @@ const MainInfoStep = ({
                     </div>
 
                     {/* Number Steppers Row */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                       <NumberStepper
                         label="Floor"
                         value={formData.floor}
@@ -381,7 +381,7 @@ const MainInfoStep = ({
                   </div>
 
                   {/* Number Steppers Row */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     <NumberStepper
                       label="Floor"
                       value={formData.floor}
@@ -430,8 +430,8 @@ const MainInfoStep = ({
 
             {/* View from the window */}
             {transactionType === 'short-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row gap-4 md:gap-2 lg:gap-3 xl:gap-4">
-                <div className="w-full md:w-[140px]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+                <div className="w-full md:max-w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">View from the window</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -452,8 +452,8 @@ const MainInfoStep = ({
 
             {/* Year Built */}
             {transactionType === 'long-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-2">
-                <div className="w-full md:w-[140px]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-2">
+                <div className="w-full md:max-w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">Year built</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -474,8 +474,8 @@ const MainInfoStep = ({
 
             {/* Condition */}
             {transactionType === 'long-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-2">
-                <div className="w-full md:w-[140px]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-2">
+                <div className="w-full md:max-w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">Condition</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -494,8 +494,8 @@ const MainInfoStep = ({
 
             {/* Property Type */}
             {transactionType === 'long-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-2">
-                <div className="w-full md:w-[140px]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-2">
+                <div className="w-full md:max-w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">Property type</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -514,8 +514,8 @@ const MainInfoStep = ({
 
             {/* Renovation Level */}
             {transactionType === 'long-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-2">
-                <div className="w-full md:w-[140px]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-2">
+                <div className="w-full md:max-w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">Level renovation</span>
                 </div>
                 <div className="flex flex-wrap gap-2">

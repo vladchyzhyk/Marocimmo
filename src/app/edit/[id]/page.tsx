@@ -3,9 +3,11 @@
 import Footer from '@/components/Footer';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
+import { ArrowNextIcon } from '@/utils/icons';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import EditSidebar from './components/EditSidebar';
+import ErrorMessageCard from './components/ErrorMessageCard';
 import EditFeaturesStep from './components/steps/EditFeaturesStep';
 import EditMainInfoStep from './components/steps/EditMainInfoStep';
 import EditPhotosStep from './components/steps/EditPhotosStep';
@@ -140,6 +142,116 @@ const Page = () => {
     }
   };
 
+  const isStepValid = (stepIndex: number): boolean => {
+    const stepNumber = steps[stepIndex]?.number;
+    switch (stepNumber) {
+      case 1:
+        return !!(
+          formState.typeAndLocation?.transactionType &&
+          formState.typeAndLocation?.propertyType &&
+          formState.typeAndLocation?.address.region &&
+          formState.typeAndLocation?.address.city
+        );
+      case 2: {
+        const transactionType = formState.typeAndLocation?.transactionType;
+        const propertyName = formState.typeAndLocation?.propertyType?.name;
+        const mi = formState.mainInfo;
+        if (!mi) return false;
+
+        // Short-term + Apartment
+        if (transactionType === 'short-term' && propertyName === 'Apartment') {
+          return !!(mi.livingArea && mi.floor !== 0 && mi.numberOfRooms !== 0 && mi.windowView);
+        }
+
+        // Long-term + Office
+        if (transactionType === 'long-term' && propertyName === 'Office') {
+          return !!(mi.totalArea && mi.floor !== 0 && mi.numberOfFloors !== 0);
+        }
+
+        // Long-term + Apartment
+        if (transactionType === 'long-term' && propertyName === 'Apartment') {
+          return !!(
+            mi.livingArea &&
+            mi.floor !== 0 &&
+            mi.numberOfFloors !== 0 &&
+            mi.numberOfRooms !== 0 &&
+            mi.yearBuilt &&
+            mi.condition &&
+            mi.propertyType &&
+            mi.renovationLevel
+          );
+        }
+
+        // Short-term + non-Apartment
+        if (transactionType === 'short-term' && propertyName !== 'Apartment') {
+          return !!(
+            mi.livingArea &&
+            mi.floor !== 0 &&
+            mi.numberOfFloors !== 0 &&
+            mi.numberOfRooms !== 0
+          );
+        }
+
+        // Long-term + not Apartment/Office
+        if (
+          transactionType === 'long-term' &&
+          propertyName !== 'Apartment' &&
+          propertyName !== 'Office'
+        ) {
+          return !!(
+            mi.livingArea &&
+            mi.floor !== 0 &&
+            mi.numberOfFloors !== 0 &&
+            mi.numberOfRooms !== 0
+          );
+        }
+
+        return false;
+      }
+      case 3:
+        return formState.features.length > 0;
+      case 4:
+        return !!(formState.photos && formState.photos.photos.length >= 3);
+      case 5:
+        return !!(
+          formState.pricing?.price &&
+          formState.pricing?.listingTitle &&
+          formState.pricing?.description &&
+          formState.pricing.listingTitle.trim().length >= 10 &&
+          formState.pricing.description.trim().length >= 10
+        );
+      default:
+        return false;
+    }
+  };
+
+  const getErrorTitleForStepIndex = (stepIndex: number): string | null => {
+    const stepNumber = steps[stepIndex]?.number;
+    switch (stepNumber) {
+      case 1:
+        return 'Please complete Type & Location details';
+      case 2:
+        return 'Please complete the Main Info for your property';
+      case 3:
+        return 'Please select at least one feature';
+      case 4:
+        return 'Photos don’t reflect the real property. Please upload correct ones';
+      case 5:
+        return 'Please complete Pricing and Availability details';
+      default:
+        return null;
+    }
+  };
+
+  const getFirstErrorTitle = (): string | null => {
+    for (let i = 0; i < steps.length; i += 1) {
+      if (!isStepValid(i)) {
+        return getErrorTitleForStepIndex(i);
+      }
+    }
+    return null;
+  };
+
   const renderCurrentStep = () => {
     const current = steps[currentStepIndex];
     switch (current.number) {
@@ -210,12 +322,45 @@ const Page = () => {
 
   return (
     <div className="w-full max-w-[1200px] flex flex-col gap-8 mx-auto mt-[7rem]">
-      <div>
-        <h1 className="title-xl">Edit Property</h1>
-        <p className="body-md">Update your property details</p>
+      <div className="hidden md:flex justify-between md:px-4 lg:px-6 xl:px-0">
+        <div className="flex flex-col gap-2">
+          <h1 className="title-xl">Edit Property</h1>
+          <p className="body-md">Update your property details</p>
+        </div>
+        <div className="w-full md:max-w-[70%] lg:max-w-[70%] xl:max-w-[53rem]">
+          {getFirstErrorTitle() && <ErrorMessageCard title={getFirstErrorTitle() as string} />}
+        </div>
       </div>
-      <div className="flex gap-[3.375rem]">
-        <div className="w-full max-w-[19.375rem]">
+      <div className="flex md:hidden justify-between px-4">
+        <Button
+          variant="outline"
+          className="!text-[var(--color-black)] max-w-fit rounded-lg !px-2.75"
+          size="md"
+          fullWidth={false}
+          onClick={() => setCurrentStepIndex((p) => Math.max(0, p - 1))}
+          disabled={currentStepIndex === 0}
+        >
+          <ArrowNextIcon className="w-4 h-4 rotate-180" />
+        </Button>
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="label-md-medium text-[var(--accent-green)]">
+            Step {currentStepIndex + 1}/{steps.length}
+          </h1>
+          <p className="label-lg-medium">{steps[currentStepIndex].title}</p>
+        </div>
+        <Button
+          variant="outline"
+          className="!text-[var(--color-black)] max-w-fit rounded-lg !px-2.75"
+          size="md"
+          fullWidth={false}
+          onClick={() => setCurrentStepIndex((p) => Math.min(steps.length - 1, p + 1))}
+          disabled={currentStepIndex === steps.length - 1}
+        >
+          <ArrowNextIcon className="w-4 h-4" />
+        </Button>
+      </div>
+      <div className="flex flex-col md:flex-row gap-4 md:gap-4 lg:gap-10 xl:gap-[3.375rem]">
+        <div className="hidden md:block w-full md:max-w-[14.375rem] lg:max-w-[17.375rem] xl:max-w-[19.375rem] md:pl-4 lg:pl-6 xl:pl-0">
           <EditSidebar
             currentStep={currentStepIndex}
             steps={steps}
@@ -230,7 +375,7 @@ const Page = () => {
             allSteps={steps.length}
             onContinue={goNext}
             onBack={goBack}
-            // disabled={!isStepValid(currentStepIndex)}
+            disabled={!isStepValid(currentStepIndex)}
           />
         </div>
       </div>
