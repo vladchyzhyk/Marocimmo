@@ -126,13 +126,7 @@ const Page = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const goNext = () => {
-    setCurrentStepIndex((i) => {
-      if (i === steps.length - 1) {
-        setIsModalOpen(true);
-        return i;
-      }
-      return Math.min(i + 1, steps.length - 1);
-    });
+    setIsModalOpen(true);
   };
   const goBack = () => {
     if (currentStepIndex === 0) {

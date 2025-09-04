@@ -1,10 +1,11 @@
-import { LanguageIcon, MenuIcon, PlusIcon, SavedIcon } from '@/utils/icons';
+import { LanguageIcon, MenuIcon, NotificationIcon, PlusIcon, SavedIcon } from '@/utils/icons';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import LanguageDropdown from './LanguageDropdown';
+import NotificationsDropdown from './NotificationDropdown';
 import Button, { ButtonVariant } from './ui/Button';
 import Modal from './ui/Modal';
 import UserDropdown from './UserDropdown';
@@ -27,17 +28,26 @@ const Header = ({ className = '' }: HeaderProps) => {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ar'>('en');
   const [isSaveExitOpen, setIsSaveExitOpen] = useState(false);
 
   const handleUserButtonClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     setIsLanguageDropdownOpen(false); // Close language dropdown when user dropdown opens
+    setIsNotificationsDropdownOpen(false);
   };
 
   const handleLanguageButtonClick = () => {
     setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
     setIsDropdownOpen(false); // Close user dropdown when language dropdown opens
+    setIsNotificationsDropdownOpen(false);
+  };
+
+  const handleNotificationsButtonClick = () => {
+    setIsDropdownOpen(false);
+    setIsLanguageDropdownOpen(false);
+    setIsNotificationsDropdownOpen(!isNotificationsDropdownOpen);
   };
 
   const handleCloseDropdown = () => {
@@ -46,6 +56,10 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const handleCloseLanguageDropdown = () => {
     setIsLanguageDropdownOpen(false);
+  };
+
+  const handleCloseNotificationsDropdown = () => {
+    setIsNotificationsDropdownOpen(false);
   };
 
   const handleLanguageChange = (language: 'en' | 'ar') => {
@@ -201,6 +215,15 @@ const Header = ({ className = '' }: HeaderProps) => {
                   ))}
               </div>
             )}
+            {/* Notifications icon button */}
+            <button
+              type="button"
+              aria-label="Notifications"
+              onClick={handleNotificationsButtonClick}
+              className="hidden lg:flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
+            >
+              <NotificationIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
+            </button>
             {/* Language icon button */}
             <button
               type="button"
@@ -255,6 +278,12 @@ const Header = ({ className = '' }: HeaderProps) => {
                 onLanguageChange={handleLanguageChange}
               />
             </div>
+          </div>
+          <div className="absolute top-3 right-20 w-full min-w-[22.875rem] max-w-[22.875rem]">
+            <NotificationsDropdown
+              isOpen={isNotificationsDropdownOpen}
+              onClose={handleCloseNotificationsDropdown}
+            />
           </div>
           <div
             className={classNames(

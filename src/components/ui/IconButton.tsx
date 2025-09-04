@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react';
+import { DeleteIcon } from '@/utils/icons';
+import classNames from 'classnames';
+import React, { useEffect, useRef, useState } from 'react';
 
 type IconButtonVariant = 'base' | 'with-photo';
 type IconButtonState = 'default' | 'hover';
@@ -11,12 +13,14 @@ export type IconButtonProps = {
   imageUrl?: string;
   onClick?: () => void;
   onDelete?: () => void;
+  deleteButtonClassName?: string;
   onImageUpload?: (file: File) => void;
   loading?: boolean;
   disabled?: boolean;
   className?: string;
   accept?: string;
   showDeleteButton?: boolean;
+  isDeleteButtonOverlay?: boolean;
 };
 
 const IconButton = ({
@@ -27,7 +31,9 @@ const IconButton = ({
   imageUrl,
   onClick,
   onDelete,
+  deleteButtonClassName = '',
   onImageUpload,
+  isDeleteButtonOverlay = false,
   loading = false,
   disabled = false,
   className = '',
@@ -37,6 +43,20 @@ const IconButton = ({
   const [isHovered, setIsHovered] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const currentState = isHovered ? 'hover' : state;
+  const [shouldAnimateDeleteButton, setShouldAnimateDeleteButton] = useState(false);
+  const previousImageUrlRef = useRef<string | undefined>(undefined);
+
+  // Animate delete button only when image changes
+  useEffect(() => {
+    if (imageUrl !== previousImageUrlRef.current) {
+      if (imageUrl) {
+        setShouldAnimateDeleteButton(true);
+        const timeoutId = window.setTimeout(() => setShouldAnimateDeleteButton(false), 300);
+        return () => window.clearTimeout(timeoutId);
+      }
+    }
+    previousImageUrlRef.current = imageUrl;
+  }, [imageUrl]);
 
   const baseStyles = {
     layout: 'flex flex-col justify-center items-center gap-4 p-8 rounded-[14px]',
@@ -51,7 +71,7 @@ const IconButton = ({
   };
 
   const iconStyles = {
-    base: 'text-[var(--color-black)] group-hover:text-[var(--accent-green)] transition-colors duration-200',
+    base: 'text-[var(--color-black)] group-hover:text-[var(--accent-green)] transition-colors duration-200 overflow-hidden',
     'with-photo': 'text-[var(--color-black)] group-hover:text-white transition-colors duration-200',
   };
 
@@ -110,28 +130,15 @@ const IconButton = ({
   };
 
   // Delete button component
-  const DeleteButton: React.FC = () => (
+  const DeleteButton = ({ className }: { className?: string }) => (
     <button
       onClick={(e) => {
         e.stopPropagation();
         onDelete?.();
       }}
-      className={`${deleteButtonStyles.container} ${deleteButtonStyles.base} ${deleteButtonStyles.hover} h-10 w-10`}
+      className={`${deleteButtonStyles.container} ${deleteButtonStyles.base} ${deleteButtonStyles.hover} h-10 w-10 ${className}`}
     >
-      <svg
-        className={deleteButtonStyles.icon}
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <DeleteIcon className={deleteButtonStyles.icon} />
     </button>
   );
 
@@ -148,7 +155,7 @@ const IconButton = ({
       />
 
       <div
-        className={`${combinedBaseStyles} ${getCurrentVariantStyles()} relative`}
+        className={`${combinedBaseStyles} ${getCurrentVariantStyles()} relative overflow-hidden`}
         style={backgroundStyle}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -166,11 +173,33 @@ const IconButton = ({
         </div>
 
         {/* Show delete button for photo variant on hover OR for base variant when showDeleteButton is true */}
-        {currentState === 'hover' &&
-          onDelete &&
-          (variant === 'with-photo' || (variant === 'base' && showDeleteButton)) && (
-            <DeleteButton />
+
+        <div
+          className={classNames(
+            'w-full h-full absolute !top-0 !right-0 flex justify-center items-center bg-black/60 transition-opacity duration-300',
+            isDeleteButtonOverlay &&
+              currentState === 'hover' &&
+              onDelete &&
+              (variant === 'with-photo' || (variant === 'base' && showDeleteButton))
+              ? 'opacity-100'
+              : 'opacity-0',
           )}
+        >
+          <DeleteButton className={classNames(deleteButtonClassName, 'static')} />
+        </div>
+
+        <DeleteButton
+          className={classNames(
+            deleteButtonClassName,
+            shouldAnimateDeleteButton ? 'transition-opacity duration-300' : 'transition-none',
+            !isDeleteButtonOverlay &&
+              currentState === 'hover' &&
+              onDelete &&
+              (variant === 'with-photo' || (variant === 'base' && showDeleteButton))
+              ? 'opacity-100'
+              : 'opacity-0',
+          )}
+        />
       </div>
     </>
   );

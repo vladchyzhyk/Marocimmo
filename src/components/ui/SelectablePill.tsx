@@ -1,6 +1,7 @@
 import React from 'react';
 
 export type SelectablePillProps = {
+  variant?: 'default' | 'half-square';
   children: React.ReactNode;
   selected?: boolean;
   onClick?: () => void;
@@ -9,6 +10,7 @@ export type SelectablePillProps = {
 };
 
 const SelectablePill = ({
+  variant = 'default',
   children,
   selected = false,
   onClick,
@@ -18,9 +20,24 @@ const SelectablePill = ({
   const baseStyles =
     'items-center justify-center py-2.5 px-4 rounded-full border transition-colors cursor-pointer';
 
+  const halfSquareStyles =
+    'items-center justify-center py-2.5 px-4 rounded-[8px] border transition-colors cursor-pointer';
+
+  const selectedDefaultStyles = 'bg-[var(--color-black)] text-white border-[var(--color-black)]';
+  const selectedHalfSquareStyles =
+    'bg-[var(--color-black)] text-[var(--color-white)] border-[var(--color-border)]';
+  const unselectedDefaultStyles =
+    'bg-[var(--bg-tint)] text-[var(--text-pill)] border-[var(--border)] hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]';
+  const unselectedHalfSquareStyles =
+    'bg-[var(--color-white)] text-[var(--color-black)] border-[var(--border)] hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]';
+
   const stateStyles = selected
-    ? 'bg-[var(--color-black)] text-white border-[var(--color-black)]'
-    : 'bg-[var(--bg-tint)] text-[var(--text-pill)] border-[var(--border)] hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]';
+    ? variant === 'half-square'
+      ? selectedHalfSquareStyles
+      : selectedDefaultStyles
+    : variant === 'half-square'
+      ? unselectedHalfSquareStyles
+      : unselectedDefaultStyles;
 
   const disabledStyles = disabled ? 'opacity-40 cursor-not-allowed' : '';
 
@@ -28,7 +45,7 @@ const SelectablePill = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyles} ${stateStyles} ${disabledStyles} ${className}`}
+      className={`${variant === 'default' ? baseStyles : halfSquareStyles} ${stateStyles} ${disabledStyles} ${className}`}
     >
       <div className="flex items-center justify-center gap-2 body-lg">{children}</div>
     </button>

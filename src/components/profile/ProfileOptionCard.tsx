@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from '@/utils/icons';
 import classNames from 'classnames';
 
 type ProfileOptionCardProps = {
@@ -26,20 +27,38 @@ const ProfileOptionCard = ({
       disabled={disabled}
       aria-pressed={isSelected}
       className={classNames(
-        'w-full text-left transition-colors focus-visible:outline-none relative p-4 flex flex-col gap-2 justify-center rounded-r-2xl',
+        'w-full text-left transition-colors focus-visible:outline-none relative px-4 py-3 flex flex-col gap-2 justify-center rounded-r-2xl',
         isSelected ? 'bg-[var(--bg-tint)] border-[var(--accent-green)]' : '',
         disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:shadow-sm',
         className,
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        {Icon && <Icon className="w-6 h-6" />}
-        <div className="flex-1 min-w-0">
-          <div className="title-lg text-[var(--color-black)] truncate">{title}</div>
+      {isSelected && (
+        <div className="absolute top-0 left-0 w-1 min-h-0 h-full bg-[var(--accent-green)]"></div>
+      )}
+      <div className="flex gap-3">
+        {Icon && (
+          <Icon
+            className={classNames(
+              'w-6 h-6',
+              isSelected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
+            )}
+          />
+        )}
+        <div className="flex flex-col flex-1 gap-2 min-w-0">
+          <div
+            className={classNames(
+              'button-lg-medium  truncate',
+              isSelected ? 'text-[var(--accent-green)]' : 'text-[var(--color-black)]',
+            )}
+          >
+            {title}
+          </div>
           {description ? (
-            <p className="body-md text-[var(--text-body-tint)] mt-1 break-words">{description}</p>
+            <p className="body-md text-[var(--text-body-tint)] break-words">{description}</p>
           ) : null}
         </div>
+        <ArrowRightIcon className="w-6 h-6 md:hidden" />
       </div>
     </button>
   );

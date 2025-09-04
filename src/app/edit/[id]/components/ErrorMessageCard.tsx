@@ -14,16 +14,7 @@ type Props = {
   icon?: React.ReactNode;
 };
 
-const ErrorMessageCard = ({
-  title = 'Something went wrong',
-  description = 'Please try again. If the problem persists, come back later.',
-  retryLabel = 'Try again',
-  onRetry,
-  backLabel = 'Go back',
-  onBack,
-  className = '',
-  icon,
-}: Props) => {
+const ErrorMessageCard = ({ title = 'Something went wrong', className = '' }: Props) => {
   return (
     <div
       className={[
@@ -38,7 +29,7 @@ const ErrorMessageCard = ({
       aria-live="polite"
     >
       <div className="flex items-center text-center gap-2 md:gap-2 w-full">
-        <WarningIcon className="w-5 h-5" />
+        <WarningIcon className="w-5 h-5 text-[var(--error)]" />
 
         <h3 className="label-lg-medium text-[var(--error)]">{title}</h3>
       </div>

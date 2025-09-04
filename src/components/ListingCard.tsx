@@ -13,7 +13,14 @@ export type PropertyType =
   | 'land'
   | 'commercial'
   | string;
-export type ListingStatus = 'active' | 'pending' | 'inactive' | 'sold' | 'rented' | string;
+export type ListingStatus =
+  | 'active'
+  | 'pending'
+  | 'inactive'
+  | 'sold'
+  | 'rented'
+  | 'connected'
+  | string;
 
 export type ListingCardProps = {
   propertyId: string;
@@ -29,21 +36,27 @@ export type ListingCardProps = {
   onClick?: () => void;
 };
 
-const StatusLabel = ({ status }: { status: ListingStatus }) => {
+export const StatusLabel = ({ status }: { status: ListingStatus }) => {
   const statusLabel = {
     active: 'active',
     pending: 'pending',
     inactive: 'inactive',
     sold: 'sold',
     rented: 'rented',
+    rejected: 'rejected',
+    expired: 'expired',
+    connected: 'connected',
   };
   return (
     <span
       className={classNames(
         'label-sm-medium px-2 py-1 rounded-full capitalize',
         statusLabel.active === status ? 'bg-[var(--pill-active-bg)] text-[var(--pill-active)]' : '',
+        statusLabel.connected === status
+          ? 'bg-[var(--pill-active-bg)] text-[var(--pill-active)]'
+          : '',
         statusLabel.pending === status
-          ? 'bg-[var(--pill-archived-bg)] text-[var(--color-black)]'
+          ? 'bg-[var(--pill-pending-bg)] text-[var(--color-black)]'
           : '',
         statusLabel.inactive === status
           ? 'bg-[var(--pill-archived-bg)] text-[var(--color-black)]'
@@ -52,6 +65,8 @@ const StatusLabel = ({ status }: { status: ListingStatus }) => {
         statusLabel.rented === status
           ? 'bg-[var(--pill-archived-bg)] text-[var(--color-black)]'
           : '',
+        statusLabel.rejected === status ? 'bg-[#FFE2E2] text-[var(--color-black)]' : '',
+        statusLabel.expired === status ? 'bg-[#E3E3FF] text-[var(--color-black)]' : '',
       )}
     >
       {status}

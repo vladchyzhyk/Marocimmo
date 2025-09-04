@@ -4,6 +4,7 @@ export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'danger'
+  | 'dangerBorderless'
   | 'ghost'
   | 'outline'
   | 'transparent';
@@ -39,6 +40,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     'bg-[var(--accent-green)] text-[var(--white)] border border-transparent hover:bg-[var(--primarybutton-hover)]',
   secondary: 'bg-[var(--pill-active-bg)] text-[var(--color-black)] hover:bg-[var(--border-input)]',
   danger: 'bg-[var(--error)] text-[var(--white)] hover:bg-[var(--errorbutton-hover)]',
+  dangerBorderless: 'text-[var(--error)] border-none underline',
   ghost: 'bg-transparent text-[var(--color-black)] hover:bg-[var(--bg-tint)]',
   outline:
     'bg-transparent text-[var(--color-black)] border border-[var(--border)] hover:bg-[var(--bg-tint)]',
