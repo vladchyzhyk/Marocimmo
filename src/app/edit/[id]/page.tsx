@@ -1,18 +1,18 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
-import { ArrowNextIcon } from '@/utils/icons';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import EditSidebar from './components/EditSidebar';
-import ErrorMessageCard from './components/ErrorMessageCard';
-import EditFeaturesStep from './components/steps/EditFeaturesStep';
-import EditMainInfoStep from './components/steps/EditMainInfoStep';
-import EditPhotosStep from './components/steps/EditPhotosStep';
-import EditPricingStep from './components/steps/EditPricingStep';
-import EditTypeAndLocationStep from './components/steps/EditTypeAndLocationStep';
+import Footer from '@/components/Footer'
+import Button from '@/components/ui/Button'
+import Modal from '@/components/ui/Modal'
+import { ArrowNextIcon } from '@/utils/icons'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import EditSidebar from './components/EditSidebar'
+import ErrorMessageCard from './components/ErrorMessageCard'
+import EditFeaturesStep from './components/steps/EditFeaturesStep'
+import EditMainInfoStep from './components/steps/EditMainInfoStep'
+import EditPhotosStep from './components/steps/EditPhotosStep'
+import EditPricingStep from './components/steps/EditPricingStep'
+import EditTypeAndLocationStep from './components/steps/EditTypeAndLocationStep'
 
 const steps = [
   {

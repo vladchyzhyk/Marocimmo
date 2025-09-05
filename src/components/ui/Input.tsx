@@ -1,7 +1,7 @@
-import SegmentControl, { SegmentControlOption } from '@/components/SegmentControl';
-import Image from 'next/image';
-import React from 'react';
-import LocationDropdown, { LocationSuggestion } from './LocationDropdown';
+import SegmentControl, { SegmentControlOption } from '@/components/SegmentControl'
+import Image from 'next/image'
+import React from 'react'
+import LocationDropdown, { LocationSuggestion } from './LocationDropdown'
 
 type InputAppearance = 'default' | 'filled';
 type InputVariant = 'default' | 'address';
@@ -49,7 +49,7 @@ const labelStyles = 'body-md text-[var(--color-black)]';
 const helperTextStyles = 'label-sm-medium text-[var(--text-body-tint)]';
 
 const inputBase = [
-  'relative w-full h-12 rounded-[8px] px-4 z-[5]',
+  'relative w-full h-12 md:h-10 lg:h-10 xl:h-10 rounded-[8px] px-4 z-[5]',
   'border',
   'placeholder-[var(--text-body-tint)]',
   'text-[var(--color-black)] body-lg',
@@ -69,10 +69,10 @@ const inputBorders = {
 };
 
 const leftIconBase =
-  'absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 text-[var(--text-body-tint)] z-[10]';
+  'absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 md:w-7 md:h-7 lg:w-7 lg:h-7 xl:w-7 xl:h-7 text-[var(--text-body-tint)] z-[10]';
 
 const rightIconButtonBase =
-  'absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)] z-[10]';
+  'absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 md:w-7 md:h-7 lg:w-7 lg:h-7 xl:w-7 xl:h-7 rounded-[8px] hover:bg-[var(--bg-tint)] z-[10]';
 
 const clearButtonBase =
   'absolute top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-8 h-8 rounded-[8px] hover:bg-[var(--bg-tint)] text-[var(--text-body-tint)] z-[10]';

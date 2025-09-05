@@ -57,23 +57,23 @@ const MainInfoStep = ({
   };
 
   return (
-    <div className="flex justify-center w-full bg-white px-4 md:px-4 lg:px-6 xl:px-0">
-      <div className="flex flex-col gap-6 w-full md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem]">
-        <div className="flex flex-col gap-14 md:gap-10 lg:gap-14 xl:gap-14 w-full max-w-[848px] min-h-screen md:min-h-fit scrollbar-none pb-25">
+    <div className="flex justify-center w-full bg-white px-4 md:px-4 lg:px-0 xl:px-0">
+      <div className="flex flex-col gap-6 md:gap-4 w-full md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem]">
+        <div className="flex flex-col gap-14 md:gap-10 lg:gap-10 xl:gap-10 w-full max-w-[848px] min-h-screen md:min-h-fit scrollbar-none pb-25">
           {/* Main Property Info Section */}
-          <div className="flex flex-col gap-6 md:gap-4 lg:gap-6 xl:gap-6">
+          <div className="flex flex-col gap-6 md:gap-4 lg:gap-4 xl:gap-4">
             <div className="flex flex-col gap-1 pb-2">
               <h2 className="title-xl text-[var(--color-black)]">
                 Add the main info about property
               </h2>
             </div>
 
-            <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+            <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3">
               {/* Area Row */}
 
               {transactionType === 'short-term' && selectedPropertyType?.name === 'Apartment' && (
                 <>
-                  <div className="flex gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+                  <div className="flex gap-4 md:gap-3 lg:gap-3 xl:gap-3">
                     <Input
                       label="Living Area (m²)"
                       value={formData.livingArea}
@@ -93,7 +93,7 @@ const MainInfoStep = ({
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-3 lg:gap-3 xl:gap-3">
                     <NumberStepper
                       label="Max number of people"
                       value={formData.floor}
@@ -416,7 +416,7 @@ const MainInfoStep = ({
           </div>
 
           {/* Additional Details Section */}
-          <div className="flex flex-col gap-8 md:gap-4 lg:gap-6 xl:gap-8">
+          <div className="flex flex-col gap-8 md:gap-6 lg:gap-6 xl:gap-6">
             {selectedPropertyType?.name === 'Apartment' && (
               <div className="hidden md:flex flex-col gap-1 pb-2">
                 <h2 className="title-xl text-[var(--color-black)]">Add more details</h2>
@@ -430,7 +430,7 @@ const MainInfoStep = ({
 
             {/* View from the window */}
             {transactionType === 'short-term' && selectedPropertyType?.name === 'Apartment' && (
-              <div className="flex flex-col md:flex-row gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3">
                 <div className="w-full md:w-[140px]">
                   <span className="title-sm text-[var(--color-black)]">View from the window</span>
                 </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/ui/Button'
-import Image from 'next/image'
+import { AppleIcon, GoogleIcon } from '@/utils/icons'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -45,11 +45,11 @@ const AuthFormWrapper = ({
       {showSocial ? (
         <div className="flex flex-col gap-2 md:gap-1 lg:gap-2 xl:gap-2">
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <Image src="/icons/ic_google.svg" alt="google" width={20} height={20} className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5" /> Continue with
+            <GoogleIcon className="w-4 h-4"/> Continue with
             Google
           </Button>
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <Image src="/icons/ic_apple.svg" alt="apple" width={20} height={20} className="md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5" /> Continue with
+            <AppleIcon className="w-4 h-4"/> Continue with
             Apple
           </Button>
         </div>

@@ -6,12 +6,12 @@ import {
   KeyIcon,
   RenewIcon,
   SoldIcon,
-} from '@/utils/icons';
-import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import Button from './ui/Button';
-import Modal from './ui/Modal';
+} from '@/utils/icons'
+import classNames from 'classnames'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import Button from './ui/Button'
+import Modal from './ui/Modal'
 
 const MenuItems = [
   {
@@ -56,7 +56,7 @@ const MenuItem = ({
     <div
       role="menuitem"
       className={classNames(
-        'w-full flex items-center gap-2 p-4 rounded-lg hover:bg-white transition-colors duration-300 cursor-pointer',
+        'w-full flex items-center gap-2 p-4 md:p-3 rounded-lg hover:bg-white transition-colors duration-300 cursor-pointer',
         Icon === DeleteIcon ? 'text-[var(--error)]' : '',
       )}
       onClick={onClick}

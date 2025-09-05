@@ -1,12 +1,12 @@
 'use client';
 
-import FilterPopup from '@/components/FilterPopup';
-import ListingCard from '@/components/ListingCard';
-import Button from '@/components/ui/Button';
-import ButtonFilter from '@/components/ui/ButtonFilter';
-import InputSelect, { type SelectOption } from '@/components/ui/InputSelect';
-import Modal from '@/components/ui/Modal';
-import SearchInput from '@/components/ui/SearchInput';
+import FilterPopup from '@/components/FilterPopup'
+import ListingCard from '@/components/ListingCard'
+import Button from '@/components/ui/Button'
+import ButtonFilter from '@/components/ui/ButtonFilter'
+import InputSelect, { type SelectOption } from '@/components/ui/InputSelect'
+import Modal from '@/components/ui/Modal'
+import SearchInput from '@/components/ui/SearchInput'
 import {
   ArrowNextIcon,
   CheckIcon,
@@ -14,10 +14,10 @@ import {
   FilterIcon,
   PlusIcon,
   SearchIcon,
-} from '@/utils/icons';
-import classNames from 'classnames';
-import Link from 'next/link';
-import { useMemo, useState } from 'react';
+} from '@/utils/icons'
+import classNames from 'classnames'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
 
 const dealTypeOptions: SelectOption[] = [
   { label: 'All deals', value: '' },
@@ -365,7 +365,7 @@ const Page = () => {
         {/* Listings grid */}
         {visibleListings.length > 0 && (
           <div className="flex flex-col justify-center items-center">
-            <div className="w-full hidden lg:flex lg:justify-between gap-4 xl:gap-8 p-4 pl-2 bg-[var(--bg-tint)] rounded-t-[1.25rem] label-md-medium">
+            <div className="w-full hidden lg:flex lg:justify-between gap-4 md:gap-8 p-4 pl-2 bg-[var(--bg-tint)] rounded-t-[1.25rem] label-md-medium">
               <div className="w-full lg:max-w-[16rem] xl:max-w-[19.75rem]">Property</div>
               <div className="w-full lg:max-w-[7rem] xl:max-w-[10rem]">Deal type</div>
               <div className="w-full lg:max-w-[5.5rem] xl:max-w-[7.5rem]">Property type</div>

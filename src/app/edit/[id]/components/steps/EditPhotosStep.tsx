@@ -1,10 +1,10 @@
 'use client';
 
-import PhotoCard from '@/components/PhotoCard';
-import { UploadIcon } from '@/utils/icons';
-import classNames from 'classnames';
-import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import PhotoCard from '@/components/PhotoCard'
+import { UploadIcon } from '@/utils/icons'
+import classNames from 'classnames'
+import Image from 'next/image'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 type SelectedPhoto = {
   id: string;
@@ -128,7 +128,7 @@ const EditPhotosStep = ({ onDataChange, initialData }: Props) => {
   return (
     <div
       className={classNames(
-        'flex flex-col gap-6 w-full px-4 md:px-4 lg:px-6 xl:px-0 ',
+        'flex flex-col gap-6 md:gap-4 w-full px-4 md:px-3 lg:px-3 xl:px-0 ',
         photos.length > 0 ? 'sm:mb-4' : 'sm:mb-10 md:mb-25',
       )}
     >
@@ -157,7 +157,7 @@ const EditPhotosStep = ({ onDataChange, initialData }: Props) => {
           onClick={() => inputRef.current?.click()}
           aria-label="Upload photos"
         >
-          <UploadIcon className="w-12 h-12 text-[var(--text-body-tint)]" />
+          <UploadIcon className="w-12 h-12 md:w-10 md:h-10 text-[var(--text-body-tint)]" />
           <h3 className="title-xl text-[var(--color-black)]">Upload Photos</h3>
           <p className="max-w-[80%] md:max-w-full text-center body-md text-[var(--color-black)]">
             Drag and drop photos here, or click to select files
@@ -189,7 +189,7 @@ const EditPhotosStep = ({ onDataChange, initialData }: Props) => {
           </div>
 
           {/* Photo grid - Fixed overflow issue by using responsive grid */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-2 lg:gap-3 xl:gap-4 md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem] md:min-h-fit mx-auto py-2 pb-25">
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-3 xl:gap-3 md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem] md:min-h-fit mx-auto py-2 pb-25">
             {photos.map((photo, index) => (
               <div key={photo.id} className={index === 0 ? 'col-span-2 md:col-span-1 ' : undefined}>
                 <PhotoCard

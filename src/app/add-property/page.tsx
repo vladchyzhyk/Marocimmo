@@ -228,15 +228,15 @@ const Page = () => {
   return (
     <div
       className={classNames(
-        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 sm:mb-20 md:mb-80 md:min-h-fit scrollbar-none pb-10',
+        'px-4 md:px-0 h-full flex justify-center w-full bg-white mt-20 sm:mb-18 md:mb-64 md:min-h-fit scrollbar-none pb-10',
       )}
     >
-      <div className="flex flex-col gap-14 w-full md:max-w-[32rem] lg:max-w-[34rem] xl:max-w-[39.375rem] mt-[2.5rem]">
+      <div className="flex flex-col gap-14 md:gap-10 lg:gap-10 xl:gap-10 w-full md:max-w-[30rem] lg:max-w-[32rem] xl:max-w-[34rem] mt-[2.5rem]">
         <div className="flex flex-col gap-6">
           <div className="title-xl ">Listing posted by</div>
 
           <div className="flex flex-col gap-3">
-            <div className="hidden md:flex justify-center items-center gap-4 md:gap-3 lg:gap-4 xl:gap-4">
+            <div className="hidden md:flex justify-center items-center gap-4 md:gap-2 lg:gap-3 xl:gap-3">
               <SelectCard
                 title="Owner"
                 Icon={OwnerIcon}
@@ -269,7 +269,7 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 w-full">
+        <div className="flex flex-col gap-8 md:gap-6 lg:gap-6 xl:gap-5 w-full">
           {selectedPostedBy !== '' && (
             <div className="flex flex-col gap-2">
               <div className="title-xl">Add your contact info</div>
@@ -281,7 +281,7 @@ const Page = () => {
 
           {selectedPostedBy === 'owner' && (
             <div className="flex flex-col gap-4 w-full">
-              <div className="flex flex-col items-center md:flex-row gap-4 md:gap-3 lg:gap-4 w-full">
+              <div className="flex flex-col items-center md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
                 <div className="w-full flex-1">
                   <Input
                     value={ownerFormData.contactPerson}
@@ -307,8 +307,8 @@ const Page = () => {
           )}
 
           {selectedPostedBy === 'agency' && (
-            <div className="flex flex-col gap-6 w-full pb-60 md:pb-10 lg:pb-0">
-              <div className="flex flex-col md:flex-row gap-4 w-full justify-end items-center md:items-end ">
+            <div className="flex flex-col gap-6 md:gap-5 lg:gap-5 xl:gap-4 w-full pb-60 md:pb-8 lg:pb-0">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-2 w-full justify-end items-center md:items-end ">
                 <IconButton
                   variant={agencyFormData.logoUrl ? 'with-photo' : 'base'}
                   icon={agencyFormData.logoUrl ? undefined : <PlusIcon />}
@@ -318,7 +318,7 @@ const Page = () => {
                   onImageUpload={agencyFormData.logoUrl ? undefined : handleAgencyLogoUpload}
                   onDelete={handleAgencyLogoDelete}
                   showDeleteButton={!!agencyFormData.logoUrl}
-                  className="w-full max-w-[6.25rem] h-[6.25rem]"
+                  className="w-full max-w-[6.25rem] h-[6.25rem] md:max-w-[5.5rem] md:h-[5.5rem] lg:max-w-[5.5rem] lg:h-[5.5rem] xl:max-w-[5.5rem] xl:h-[5.5rem]"
                 />
                 <Input
                   value={agencyFormData.agencyName}
@@ -330,7 +330,7 @@ const Page = () => {
                   placeholder="Enter the name of your agency"
                 />
               </div>
-              <div className="flex flex-col md:flex-row gap-4 w-full">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-2 w-full">
                 <div className="flex-1 flex flex-col">
                   <Input
                     value={agencyFormData.contactPerson}

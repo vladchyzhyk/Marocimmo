@@ -61,7 +61,7 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'px-5 md:px-4 lg:px-4 xl:px-5 py-[1.125rem] inline-flex items-center gap-2 justify-start lg:justify-center border-2',
+          'px-5 md:px-4 lg:px-4 xl:px-4 py-[1.125rem] md:py-3.5 inline-flex items-center gap-2 justify-start lg:justify-center border-2',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
           className,
         )}
@@ -76,13 +76,13 @@ const SelectCard = ({
         </span>
         <div
           className={classNames(
-            'min-w-[1.25rem] min-h-[1.25rem] md:min-w-[1.125rem] md:min-h-[1.125rem] lg:min-w-[1.25rem] lg:min-h-[1.25rem] xl:min-w-[1.25rem] xl:min-h-[1.25rem] flex items-center justify-center rounded-full border-[2px]',
+            'min-w-[1.25rem] min-h-[1.25rem] md:min-w-[1.125rem] md:min-h-[1.125rem] lg:min-w-[1.125rem] lg:min-h-[1.125rem] xl:min-w-[1.125rem] xl:min-h-[1.125rem] flex items-center justify-center rounded-full border-[2px]',
             selected ? 'border-[var(--accent-green)]' : 'border-[var(--color-black)]',
           )}
         >
           <div
             className={classNames(
-              'w-3 h-3 md:w-2.5 md:h-2.5 lg:w-3 lg:h-3 xl:w-3 xl:h-3 rounded-full transition-colors',
+              'w-3 h-3 md:w-2.5 md:h-2.5 lg:w-2.5 lg:h-2.5 xl:w-2.5 xl:h-2.5 rounded-full transition-colors',
               selected ? 'bg-[var(--accent-green)]' : 'bg-transparent',
             )}
           ></div>
@@ -102,7 +102,7 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-4 flex flex-col items-center gap-4 justify-center border-2 max-w-[10.25rem]',
+          'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-3 flex flex-col items-center gap-4 justify-center border-2 max-w-[10.25rem]',
           selected
             ? 'bg-[var(--bg-tint)] border-[var(--accent-green)]'
             : 'border-[var(--border-input)]',
@@ -120,13 +120,13 @@ const SelectCard = ({
 
         <div
           className={classNames(
-            'absolute top-4 right-3 min-w-[1.125rem] min-h-[1.125rem] flex items-center justify-center rounded-full border-[1px]',
+            'absolute top-4 right-3 min-w-[1.125rem] min-h-[1.125rem] md:min-w-4 md:min-h-4 lg:min-w-4 lg:min-h-4 xl:min-w-4 xl:min-h-4 flex items-center justify-center rounded-full border-[1px]',
             selected ? 'border-[var(--accent-green)]' : 'border-[var(--color-black)]',
           )}
         >
           <div
             className={classNames(
-              'w-3 h-3 rounded-full transition-colors',
+              'w-3 h-3 md:w-2.5 md:h-2.5 lg:w-2.5 lg:h-2.5 xl:w-2.5 xl:h-2.5 rounded-full transition-colors',
               selected ? 'bg-[var(--accent-green)]' : 'bg-transparent',
             )}
           ></div>
@@ -146,7 +146,7 @@ const SelectCard = ({
           commonBaseClasses,
           variantClasses,
           visualStateClasses,
-          'relative p-3 flex flex-col items-center gap-2 justify-center border-2',
+          'relative p-3 md:p-2.5 lg:p-2.5 xl:p-2.5 flex flex-col items-center gap-2 md:gap-1.5 justify-center border-2',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--border-input)]',
           className,
         )}
@@ -184,7 +184,7 @@ const SelectCard = ({
         commonBaseClasses,
         variantClasses,
         visualStateClasses,
-        'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-4 flex flex-col items-center gap-4 justify-center border-2',
+        'relative pt-2 pb-3 md:pt-1.5 md:pb-2.5 xl:p-2.5 flex flex-col items-center gap-4 justify-center border-2',
         selected
           ? 'bg-[var(--bg-tint)] border-[var(--accent-green)]'
           : 'border-[var(--border-input)]',
@@ -203,13 +203,13 @@ const SelectCard = ({
 
       <div
         className={classNames(
-          'absolute top-4 right-3 min-w-[1.125rem] min-h-[1.125rem] flex items-center justify-center rounded-full border-[1px]',
+          'absolute top-4 right-3 min-w-[1.125rem] min-h-[1.125rem] md:min-w-4 md:min-h-4 lg:min-w-4 lg:min-h-4 xl:min-w-4 xl:min-h-4 flex items-center justify-center rounded-full border-[1px]',
           selected ? 'border-[var(--accent-green)]' : 'border-[var(--color-black)]',
         )}
       >
         <div
           className={classNames(
-            'w-3 h-3 rounded-full transition-colors',
+            'w-3 h-3 md:w-2.5 md:h-2.5 lg:w-2.5 lg:h-2.5 xl:w-2.5 xl:h-2.5 rounded-full transition-colors',
             selected ? 'bg-[var(--accent-green)]' : 'bg-transparent',
           )}
         ></div>

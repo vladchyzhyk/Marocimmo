@@ -1,8 +1,8 @@
-import { ButtonIcon } from '@/utils/icons';
-import classNames from 'classnames';
-import Image from 'next/image';
-import React from 'react';
-import ListingActionDropdown from './ListingActionDropdown';
+import { ButtonIcon } from '@/utils/icons'
+import classNames from 'classnames'
+import Image from 'next/image'
+import React from 'react'
+import ListingActionDropdown from './ListingActionDropdown'
 
 export type DealType = 'short-term' | 'long-term' | 'sale';
 export type PropertyType =

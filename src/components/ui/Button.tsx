@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export type ButtonVariant =
   | 'primary'
@@ -30,9 +30,9 @@ const baseStyles =
   'inline-flex w-full items-center justify-center gap-2 rounded-[12px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-green)] focus-visible:ring-offset-[var(--white)] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer';
 
 const sizeStyles: Record<ButtonSize, string> = {
-  lg: 'h-12 px-4 button-lg-bold',
-  md: 'h-10 px-4 button-lg-medium',
-  sm: 'h-9 px-3 label-sm-medium',
+  lg: 'h-12 px-4 button-lg-bold md:h-10 md:px-3 lg:h-10 lg:px-3 xl:h-10 xl:px-3',
+  md: 'h-10 px-4 button-lg-medium md:h-8 md:px-3 lg:h-8 lg:px-3 xl:h-8 xl:px-3',
+  sm: 'h-9 px-3 label-sm-medium md:h-7 md:px-2 lg:h-7 lg:px-2 xl:h-7 xl:px-2',
 };
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -87,7 +87,7 @@ const Button = ({
         .join(' ')}
     >
       {loading ? (
-        <Spinner className="h-5 w-5 animate-spin" />
+        <Spinner className="h-5 w-5 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5 xl:h-3 xl:w-3 animate-spin" />
       ) : (
         <>
           {leftIcon ? <span className="shrink-0">{leftIcon}</span> : null}

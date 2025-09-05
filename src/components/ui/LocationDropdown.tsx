@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from 'next/image'
+import React from 'react'
 
 export type LocationSuggestion = {
   id: string;
@@ -40,9 +40,9 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     >
       {loading ? (
         <div className="flex justify-center items-center py-3 px-4">
-          <div className="w-12 h-12 flex items-center justify-center">
+          <div className="w-12 h-12 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-10 xl:h-10 flex items-center justify-center">
             <svg
-              className="w-8 h-8 animate-spin"
+              className="w-8 h-8 md:w-7 md:h-7 lg:w-7 lg:h-7 xl:w-7 xl:h-7 animate-spin"
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -72,13 +72,13 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
             key={suggestion.id}
             onClick={() => onSelect(suggestion)}
             className={`
-            w-full flex items-center gap-2 px-4 py-4
+            w-full flex items-center gap-2 p-4 md:p-3 lg:p-3 xl:p-3
             hover:bg-white transition-colors
             ${value === suggestion.street ? 'bg-white' : ''}
           `}
           >
             {/* Location Icon */}
-            <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
+            <div className="flex-shrink-0 w-8 h-8 md:w-7 md:h-7 lg:w-7 lg:h-7 xl:w-7 xl:h-7 flex items-center justify-center">
               <Image src="/icons/ic_location.svg" alt="Location" width={24} height={24} />
             </div>
 

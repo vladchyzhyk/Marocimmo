@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { MinusIcon, PlusIcon } from '@/utils/icons'
 import React from 'react'
 
 export type NumberStepperProps = {
@@ -84,11 +84,11 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
                 : 'hover:bg-[var(--bg-tint)]'
             }`}
           >
-            <Image src="/icons/ic_minus.svg" alt="Decrease" width={24} height={24} />
+            <MinusIcon className="w-6 h-6 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"/>
           </button>
 
           {/* Number Input */}
-          <div className="flex-1 flex items-center justify-center px-4 py-3">
+          <div className="flex-1 flex items-center justify-center px-4 py-3 md:py-2 md:px-3">
             <input
               ref={ref}
               id={id}
@@ -117,7 +117,8 @@ const NumberStepper = React.forwardRef<HTMLInputElement, NumberStepperProps>(
                 : 'hover:bg-[var(--bg-tint)]'
             }`}
           >
-            <Image src="/icons/ic_plus.svg" alt="Increase" width={24} height={24} />
+            <PlusIcon className="w-6 h-6 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5"/>
+ 
           </button>
         </div>
 

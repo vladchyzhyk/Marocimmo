@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState } from 'react'
 
 type PhoneInputProps = {
   label?: string;
@@ -47,7 +47,7 @@ export default function PhoneInput({
         {required && <div className="body-md font-medium text-[var(--error)]">*</div>}
       </div>
 
-      <div className="flex items-center gap-2 border border-[var(--border)] rounded-[8px] px-4 py-3 w-full">
+      <div className="flex items-center gap-2 border border-[var(--border)] rounded-[8px] px-4 py-3 md:px-3 md:py-2 w-full">
         <div className="relative">
           <button
             type="button"

@@ -1,7 +1,7 @@
-import Button from '@/components/ui/Button';
-import classNames from 'classnames';
-import Image from 'next/image';
-import React from 'react';
+import Button from '@/components/ui/Button'
+import classNames from 'classnames'
+import Image from 'next/image'
+import React from 'react'
 
 type CalendarProps = {
   id?: string;
@@ -176,7 +176,7 @@ const Calendar = ({
         </label>
       ) : null}
 
-      <div className="w-full h-full flex flex-col gap-6 bg-white">
+      <div className="w-full h-full flex flex-col gap-6 md:gap-4 bg-white">
         <div className="w-full h-full flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <Button
@@ -210,7 +210,7 @@ const Calendar = ({
               {weekdayLabels.map((w) => (
                 <div
                   key={w.value}
-                  className="flex items-center justify-center w-8 h-8 button-lg-medium text-center text-[var(--accent-green)]"
+                  className="flex items-center justify-center w-8 h-8 md:w-7 md:h-7 button-lg-medium text-center text-[var(--accent-green)]"
                 >
                   {w.label}
                 </div>

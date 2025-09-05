@@ -1,12 +1,12 @@
 'use client';
 
-import AuthFormWrapper from '@/components/auth/AuthFormWrapper'
-import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
-import Modal from '@/components/ui/Modal'
-import Image from 'next/image'
+import AuthFormWrapper from '@/components/auth/AuthFormWrapper';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Modal from '@/components/ui/Modal';
+import Image from 'next/image';
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 type Props = {
   onSubmit?: (data: { email: string; password: string }) => void;
@@ -73,12 +73,12 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
       }
       onSubmitGuard={guardSubmit}
     >
-      <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+      <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3">
         <div>
           <div className="flex items-center justify-center title-md mb-2 md:mb-1 lg:mb-2 xl:mb-2 text-[var(--color-black)]">
             Create account with Email
           </div>
-          <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4">
+          <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3">
             <Input
               id="email"
               type="email"

@@ -1,8 +1,8 @@
 'use client';
 
-import Input from '@/components/ui/Input';
-import InputSelect from '@/components/ui/InputSelect';
-import SelectCard from '@/components/ui/SelectCard';
+import Input from '@/components/ui/Input'
+import InputSelect from '@/components/ui/InputSelect'
+import SelectCard from '@/components/ui/SelectCard'
 import {
   ApartmentIcon,
   CommercialIcon,
@@ -10,8 +10,8 @@ import {
   LandIcon,
   OfficeIcon,
   VillaIcon,
-} from '@/utils/icons';
-import classNames from 'classnames';
+} from '@/utils/icons'
+import classNames from 'classnames'
 
 const transactionTypes = [
   {
@@ -204,14 +204,14 @@ const EditTypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
   const selectedZoningCategory = initialData?.zoningCategory || '';
 
   return (
-    <div className="flex justify-center w-full bg-white pb-10 px-4 md:px-4 lg:px-6 xl:px-0">
+    <div className="flex justify-center w-full bg-white pb-10 px-4 md:pr-4 md:pl-0 lg:px-0 xl:px-0">
       <div className="h-full flex flex-col gap-6 w-full min-h-screen md:min-h-fit pb-[14rem]">
-        <div className="flex flex-col gap-14 md:gap-10 lg:gap-14 xl:gap-14">
+        <div className="flex flex-col gap-14 md:gap-10 lg:gap-10 xl:gap-10">
           <div className="flex flex-col gap-6 md:gap-4 lg:gap-6 xl:gap-6">
             <div className="title-xl ">Choose transaction type</div>
 
             <div className="flex flex-col gap-3">
-              <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-2 lg:gap-4 xl:gap-4">
+              <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-3 lg:gap-3 xl:gap-3">
                 {transactionTypes.map((type) => (
                   <SelectCard
                     key={type.id}
@@ -235,7 +235,7 @@ const EditTypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
               </div>
               {selectedPostedBy !== '' && (
                 <div
-                  className={classNames('gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full hidden md:grid', {
+                  className={classNames('gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full hidden md:grid', {
                     'grid-cols-2 md:grid-cols-3': selectedPostedBy === 'short-term',
                     'grid-cols-2 md:grid-cols-6':
                       selectedPostedBy === 'sale' || selectedPostedBy === 'long-term',
@@ -275,7 +275,7 @@ const EditTypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
             {selectedPostedBy !== '' && <div className="title-xl ">Choose property type</div>}
             {selectedPostedBy !== '' && (
               <div
-                className={classNames('grid gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full', {
+                className={classNames('grid gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full', {
                   'grid-cols-2 md:grid-cols-3': selectedPostedBy === 'short-term',
                   'grid-cols-2 md:grid-cols-6':
                     selectedPostedBy === 'sale' || selectedPostedBy === 'long-term',
@@ -324,7 +324,7 @@ const EditTypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:flex gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+                <div className="grid grid-cols-2 md:flex gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
                   {transactionTypes
                     .find((type) => type.variant === selectedPostedBy)
                     ?.propertyTypes.find((type) => type.id === selectedPropertyType.id)
@@ -362,7 +362,7 @@ const EditTypeAndLocationStep = ({ onDataChange, initialData }: Props) => {
                 </div>
               </div>
 
-              <div className="flex flex-col md:flex-row gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
                 <InputSelect
                   options={regions.map((region) => ({
                     label: region.title,

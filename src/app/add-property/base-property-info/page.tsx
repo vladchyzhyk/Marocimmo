@@ -1,17 +1,17 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
-import classNames from 'classnames';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import ProgressBar from './components/ProgressBar';
-import FeaturesStep from './components/steps/FeaturesStep';
-import MainInfoStep, { MainInfoData } from './components/steps/MainInfoStep';
-import PhotosStep from './components/steps/PhotosStep';
-import PricingStep from './components/steps/PricingStep';
-import TypeAndLocationStep from './components/steps/TypeAndLocationStep';
+import Footer from '@/components/Footer'
+import Button from '@/components/ui/Button'
+import Modal from '@/components/ui/Modal'
+import classNames from 'classnames'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import ProgressBar from './components/ProgressBar'
+import FeaturesStep from './components/steps/FeaturesStep'
+import MainInfoStep, { MainInfoData } from './components/steps/MainInfoStep'
+import PhotosStep from './components/steps/PhotosStep'
+import PricingStep from './components/steps/PricingStep'
+import TypeAndLocationStep from './components/steps/TypeAndLocationStep'
 
 interface TypeAndLocationData {
   transactionType: string;
@@ -265,20 +265,20 @@ const Page = () => {
     <div className="flex justify-center w-full bg-white mt-12">
       <div
         className={classNames(
-          `flex flex-col gap-6 w-full mt-[2rem]`,
+          `flex flex-col gap-6 md:gap-4 w-full mt-[2rem]`,
           selectedStep === 4 ? '' : 'md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem]',
         )}
       >
         <div
           className={classNames(
-            'hidden md:block w-full mx-auto px-4 md:px-6 lg:px-0',
+            'hidden md:block w-full mx-auto px-4 md:px-3 lg:px-0',
             selectedStep === 4 ? 'md:max-w-[50rem] lg:max-w-[51rem] xl:max-w-[53rem]' : '',
           )}
         >
           <ProgressBar steps={steps} currentStep={selectedStep} />
         </div>
 
-        <div className="flex flex-col gap-3 mt-[2rem]">{renderCurrentStep()}</div>
+        <div className="flex flex-col gap-3 md:gap-2 mt-[2rem] md:mt-6">{renderCurrentStep()}</div>
         {selectedStep && (
           <Footer
             currentStep={selectedStep}
@@ -306,7 +306,7 @@ const Page = () => {
           </Button>
         }
       >
-        <div className="flex flex-col justify-center items-center gap-3">
+        <div className="flex flex-col justify-center items-center gap-3 md:gap-2">
           <p className="body-md text-[var(--color-black)]">
             &ldquo;Property name&rdquo; is now under review.
           </p>

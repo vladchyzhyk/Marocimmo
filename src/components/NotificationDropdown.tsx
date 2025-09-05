@@ -49,13 +49,10 @@ const defaultNotifications: NotificationItem[] = [
 ];
 
 const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({
-  isOpen = false,
   onClose,
   notifications,
   onItemClick,
 }) => {
-  if (!isOpen) return null;
-
   const items = notifications && notifications.length > 0 ? notifications : defaultNotifications;
 
   return (
@@ -80,9 +77,9 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({
       <div className="flex flex-col max-h-[22rem] overflow-y-auto scrollbar-none py-2">
         {items.map((item, index) => {
           return (
-            <>
+            <React.Fragment key={item.id + item.title + item.description + index}>
               <button
-                key={item.id + index}
+                key={item.id + item.title + item.description + index}
                 onClick={() => onItemClick?.(item.id)}
                 className={classNames(
                   'w-full flex items-start gap-3 px-4 py-3 text-left transition-colors',
@@ -118,7 +115,7 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({
               {index !== items.length - 1 && (
                 <div className="w-full h-px border-t border-[var(--border)]" />
               )}
-            </>
+            </React.Fragment>
           );
         })}
         {items.length === 0 && (

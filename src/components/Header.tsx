@@ -112,17 +112,17 @@ const Header = ({ className = '' }: HeaderProps) => {
       <header
         className={[
           'flex justify-center w-full border-b border-[var(--border)] bg-[var(--white)]',
-          'px-5 md:px-4 lg:px-6 xl:px-10 pb-2',
+          'px-5 md:px-4 lg:px-4 xl:px-3 pb-2',
           className,
         ]
           .filter(Boolean)
           .join(' ')}
       >
-        <div className="relative w-full max-w-[1200px] flex justify-between items-center gap-4 md:gap-3 lg:gap-4 xl:gap-6 pt-4">
+        <div className="relative w-full max-w-[1200px] flex justify-between items-center gap-4 md:gap-3 lg:gap-3 xl:gap-2 pt-4">
           {/* Logo */}
           <div className="w-full max-w-[1/3]">
-            <Link href="/" className="flex items-center gap-2 h-14">
-              <span className="inline-flex items-center justify-center w-[34px] h-[34px] rounded-[8px] bg-[var(--primarybutton-hover)]" />
+            <Link href="/" className="flex items-center gap-2 h-14 lg:h-12 xl:h-11">
+              <span className="inline-flex items-center justify-center w-[34px] h-[34px] lg:w-[30px] lg:h-[30px] xl:w-[28px] xl:h-[28px] rounded-[8px] bg-[var(--primarybutton-hover)]" />
               <span className="hidden sm:block title-xl uppercase text-[var(--color-black)]">
                 Marocimmo
               </span>
@@ -131,7 +131,7 @@ const Header = ({ className = '' }: HeaderProps) => {
 
           {/* Nav - grows and centers on larger screens */}
           <nav className="w-full hidden lg:block">
-            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-2 lg:gap-3 xl:gap-6 py-1">
+            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-2 lg:gap-2 xl:gap-1 py-1">
               {[
                 { href: '/', label: 'Short-time Rent' },
                 { href: '/', label: 'Long-time Rent' },
@@ -140,7 +140,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg"
+                    className="whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md"
                   >
                     <span>{item.label}</span>
                   </Link>
@@ -150,7 +150,7 @@ const Header = ({ className = '' }: HeaderProps) => {
           </nav>
 
           {/* Actions */}
-          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-2 lg:gap-3 xl:gap-4">
+          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-2 lg:gap-2 xl:gap-2">
             {/* Add your property - primary */}
             {user && (
               <div className="">
@@ -177,7 +177,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                       href={getButtonInfo().href}
                     >
                       {getButtonInfo().href === '/add-property' && (
-                        <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                        <PlusIcon className="w-4 h-4 lg:w-3.5 lg:h-3.5 xl:w-3.5 xl:h-3.5 text-[var(--color-black)] fill-white" />
                       )}
                       <span className="whitespace-nowrap">{getButtonInfo().text}</span>
                     </Link>
@@ -207,7 +207,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                         href={getButtonInfo().href}
                       >
                         {getButtonInfo().href === '/add-property' && (
-                          <PlusIcon className="w-4 h-4 text-[var(--color-black)] fill-white" />
+                          <PlusIcon className="w-4 h-4 lg:w-3.5 lg:h-3.5 xl:w-3.5 xl:h-3.5 text-[var(--color-black)] fill-white" />
                         )}
                         <span className="whitespace-nowrap">{getButtonInfo().text}</span>
                       </Link>
@@ -220,33 +220,39 @@ const Header = ({ className = '' }: HeaderProps) => {
               type="button"
               aria-label="Notifications"
               onClick={handleNotificationsButtonClick}
-              className="hidden lg:flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
+              className="hidden lg:flex items-center justify-center w-12 h-12 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-10 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
             >
-              <NotificationIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
+              <NotificationIcon className="w-6 h-6 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5 text-[var(--color-black)] fill-white" />
             </button>
             {/* Language icon button */}
             <button
               type="button"
               aria-label="Change language"
               onClick={handleLanguageButtonClick}
-              className="hidden lg:flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
+              className="hidden lg:flex items-center justify-center w-12 h-12 md:w-10 md:h-10 lg:w-10 lg:h-10 xl:w-10 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:bg-[var(--bg-tint)] hover:border-[var(--accent-green)]"
             >
-              <LanguageIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
+              <LanguageIcon className="w-6 h-6 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5 text-[var(--color-black)] fill-white" />
             </button>
             {user.isLoggedIn && (
               <button
                 type="button"
                 aria-label="Account"
                 onClick={handleUserButtonClick}
-                className="flex items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
+                className="flex items-center justify-center w-12 h-12 lg:w-10 lg:h-10 xl:w-10 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
               >
-                <Image src="/icons/ic_account.svg" alt="user" width={24} height={24} />
+                <Image
+                  src="/icons/ic_account.svg"
+                  alt="user"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6 lg:w-5 lg:h-5 xl:w-5 xl:h-5"
+                />
               </button>
             )}
             {!user.isLoggedIn && (
               <Link
                 href="/sign-in"
-                className="flex md:hidden items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
+                className="flex md:hidden items-center justify-center px-4 h-12 lg:px-3 lg:h-9 xl:px-3 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
               >
                 <span>Log in</span>
               </Link>
@@ -256,15 +262,15 @@ const Header = ({ className = '' }: HeaderProps) => {
                 type="button"
                 aria-label="Account"
                 onClick={handleUserButtonClick}
-                className="flex md:hidden items-center justify-center w-12 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
+                className="flex md:hidden items-center justify-center w-12 h-12 lg:w-10 lg:h-10 xl:w-10 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)]"
               >
-                <MenuIcon className="w-6 h-6 text-[var(--color-black)] fill-white" />
+                <MenuIcon className="w-6 h-6 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5 text-[var(--color-black)] fill-white" />
               </button>
             )}
             {!user.isLoggedIn && (
               <Link
                 href="/sign-in"
-                className="hidden md:flex items-center justify-center px-4 h-12 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)] whitespace-nowrap"
+                className="hidden md:flex items-center justify-center px-4 h-12 md:px-3 md:h-10 lg:h-10 lg:px-3 xl:px-3 xl:h-10 rounded-[8px] bg-[var(--bg-tint)] border border-[var(--border)] hover:border-[var(--accent-green)] whitespace-nowrap"
               >
                 <span>Log in</span>
               </Link>
@@ -279,7 +285,14 @@ const Header = ({ className = '' }: HeaderProps) => {
               />
             </div>
           </div>
-          <div className="absolute top-3 right-20 w-full min-w-[22.875rem] max-w-[22.875rem]">
+          <div
+            className={classNames(
+              'absolute top-3 right-20 w-full min-w-[22.875rem] max-w-[22.875rem] transition-all duration-300',
+              isNotificationsDropdownOpen
+                ? 'opacity-100 pointer-events-auto'
+                : 'opacity-0 pointer-events-none',
+            )}
+          >
             <NotificationsDropdown
               isOpen={isNotificationsDropdownOpen}
               onClose={handleCloseNotificationsDropdown}
@@ -318,9 +331,9 @@ const Header = ({ className = '' }: HeaderProps) => {
         isOpen={isSaveExitOpen}
         onClose={() => setIsSaveExitOpen(false)}
       >
-        <div className="flex flex-col items-center justify-center gap-6 md:gap-4 lg:gap-6 xl:gap-6">
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-4 lg:gap-4 xl:gap-4">
           <SavedIcon className="w-14 h-14 text-[var(--color-black)] fill-white mt-6" />
-          <div className="flex flex-col items-center gap-4 md:gap-2 lg:gap-3 xl:gap-4 px-7">
+          <div className="flex flex-col items-center gap-4 md:gap-3 lg:gap-3 xl:gap-3 px-7">
             <h1 className="title-xl text-[var(--color-black)]">Draft saved</h1>
             <p className="body-lg text-center text-[var(--color-black)]">
               Your property draft has been saved to your account. Return and complete it at any

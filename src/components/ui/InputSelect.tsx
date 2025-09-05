@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames'
+import Image from 'next/image'
+import React, { useEffect, useRef, useState } from 'react'
 
 export type SelectOption = {
   label: string;
@@ -39,9 +39,9 @@ const getInputStyles = (variant: 'default' | 'outline', size: 'sm' | 'md' | 'lg'
     'rounded-[8px] px-4 border bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer flex items-center relative whitespace-nowrap';
 
   const sizeStyles = {
-    sm: 'h-10',
-    md: 'h-12',
-    lg: 'h-14',
+    sm: 'h-10 md:h-8 lg:h-8 xl:h-8',
+    md: 'h-12 md:h-10 lg:h-10 xl:h-10',
+    lg: 'h-14 md:h-12 lg:h-12 xl:h-12',
   };
 
   const paddingStyles = {
@@ -78,7 +78,7 @@ const getRightIconContainer = (size: 'sm' | 'md' | 'lg') => {
 };
 
 const dropdownBase =
-  'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] pt-2';
+  'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] md:mt-[-0.125rem] pt-2 md:pt-1';
 
 const dropdownOptionBase =
   'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';

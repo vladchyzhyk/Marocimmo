@@ -1,6 +1,6 @@
-import { DeleteIcon } from '@/utils/icons';
-import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { DeleteIcon } from '@/utils/icons'
+import classNames from 'classnames'
+import React, { useEffect, useRef, useState } from 'react'
 
 type IconButtonVariant = 'base' | 'with-photo';
 type IconButtonState = 'default' | 'hover';
@@ -59,7 +59,7 @@ const IconButton = ({
   }, [imageUrl]);
 
   const baseStyles = {
-    layout: 'flex flex-col justify-center items-center gap-4 p-8 rounded-[14px]',
+    layout: 'flex flex-col justify-center items-center gap-4 md:gap-3 p-8 md:p-6 rounded-[14px]',
     interactions: 'transition-all duration-200 cursor-pointer group',
     disabled: 'disabled:opacity-60 disabled:cursor-not-allowed',
   };
@@ -81,10 +81,10 @@ const IconButton = ({
   };
 
   const deleteButtonStyles = {
-    container: 'absolute top-1 right-1 flex justify-center items-center w-5 h-5 z-50',
+    container: 'absolute top-1 right-1 flex justify-center items-center w-5 h-5 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-4 xl:h-4 z-50',
     base: 'bg-white border border-gray-300 rounded-lg shadow-lg',
     hover: 'hover:bg-gray-100 transition-colors',
-    icon: 'w-5 h-5 text-red-500',
+    icon: 'w-5 h-5 md:w-4 md:h-4 lg:w-4 lg:h-4 xl:w-4 xl:h-4 text-red-500',
   };
 
   // Helper functions to get current styles
@@ -136,7 +136,7 @@ const IconButton = ({
         e.stopPropagation();
         onDelete?.();
       }}
-      className={`${deleteButtonStyles.container} ${deleteButtonStyles.base} ${deleteButtonStyles.hover} h-10 w-10 ${className}`}
+      className={`${deleteButtonStyles.container} ${deleteButtonStyles.base} ${deleteButtonStyles.hover} h-10 w-10 md:h-8 md:w-8 lg:h-8 lg:w-8 xl:h-8 xl:w-8 ${className}`}
     >
       <DeleteIcon className={deleteButtonStyles.icon} />
     </button>
@@ -162,7 +162,7 @@ const IconButton = ({
         onClick={handleClick}
       >
         <div
-          className={`flex flex-col justify-center items-center gap-2 px-2.5 ${getCurrentIconStyles()}`}
+          className={`flex flex-col justify-center items-center gap-2 px-2.5 md:gap-1.5 md:px-1.5 lg:gap-1.5 lg:px-1.5 xl:gap-1 xl:px-1.5 ${getCurrentIconStyles()}`}
         >
           {icon}
           {label && (

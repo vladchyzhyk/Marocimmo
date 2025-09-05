@@ -1,5 +1,5 @@
-import { CloseIcon, SearchIcon } from '@/utils/icons';
-import React, { useRef } from 'react';
+import { CloseIcon, SearchIcon } from '@/utils/icons'
+import React, { useRef } from 'react'
 
 export type SearchInputProps = {
   id?: string;
@@ -24,9 +24,9 @@ const getInputStyles = (
   const base = 'flex items-center gap-2 border rounded-lg bg-white px-3';
 
   const sizeStyles = {
-    sm: 'h-10',
-    md: 'h-12',
-    lg: 'h-14',
+    sm: 'h-10 md:h-8',
+    md: 'h-12 md:h-10',
+    lg: 'h-14 md:h-12',
   };
 
   const paddingStyles = {
@@ -79,7 +79,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           aria-label={ariaLabel}
           ref={inputRef}
         />
-        {iconPosition === 'right' && iconSrc ? <SearchIcon className="w-6 h-6" /> : null}
+        {iconPosition === 'right' && iconSrc ? <SearchIcon className="w-6 h-6 md:w-4 md:h-4" /> : null}
         {iconPosition === 'left' && value !== '' ? (
           <button
             type="button"
@@ -87,7 +87,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
             aria-label="Clear search"
             className="p-1 rounded hover:bg-[var(--bg-default-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-green)]"
           >
-            <CloseIcon className="w-6 h-6" />
+            <CloseIcon className="w-6 h-6 md:w-4 md:h-4" />
           </button>
         ) : null}
       </div>

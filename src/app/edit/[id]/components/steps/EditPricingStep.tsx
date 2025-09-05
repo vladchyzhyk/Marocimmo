@@ -1,11 +1,11 @@
 'use client';
 
-import ToggleCard from '@/components/ToggleCard';
-import Calendar from '@/components/ui/Calendar';
-import Input from '@/components/ui/Input';
-import InputSelect from '@/components/ui/InputSelect';
-import Modal from '@/components/ui/Modal';
-import { useState } from 'react';
+import ToggleCard from '@/components/ToggleCard'
+import Calendar from '@/components/ui/Calendar'
+import Input from '@/components/ui/Input'
+import InputSelect from '@/components/ui/InputSelect'
+import Modal from '@/components/ui/Modal'
+import { useState } from 'react'
 
 type PricingPeriod = 'per month' | 'per week';
 
@@ -118,13 +118,13 @@ const EditPricingStep = ({ onDataChange, initialValues }: Props) => {
   return (
     <div className="flex flex-col gap-12 md:gap-8 lg:gap-12 xl:gap-12 w-full min-h-screen md:min-h-fit pb-25 scrollbar-none px-4 md:px-4 lg:px-6 xl:px-0">
       {/* Pricing */}
-      <div className="flex flex-col gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+      <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
         <div className="flex flex-col gap-1">
           <h2 className="title-xl text-[var(--color-black)]">Pricing</h2>
         </div>
 
         {/* Row 1: Price, Syndic fees, Deposit + segmented controls */}
-        <div className="flex flex-col md:flex-row  gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+        <div className="flex flex-col md:flex-row  gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
           <div className="flex-1 flex flex-col gap-2">
             <div className="flex items-center justify-between gap-2">
               <Input
@@ -181,7 +181,7 @@ const EditPricingStep = ({ onDataChange, initialValues }: Props) => {
         </div>
 
         {/* Row 2: Available from */}
-        <div className="flex flex-row gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+        <div className="flex flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
           <div className="w-full md:flex-1 flex flex-col gap-2">
             <Input
               id="availableFrom"
@@ -205,7 +205,7 @@ const EditPricingStep = ({ onDataChange, initialValues }: Props) => {
           <h2 className="md:hidden title-xl text-[var(--color-black)]">Rules</h2>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 md:gap-2 lg:gap-3 xl:gap-4 w-full">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
           <div className="md:max-w-[12.5rem]">
             <ToggleCard
               label="Pets allowed"
@@ -295,7 +295,7 @@ const EditPricingStep = ({ onDataChange, initialValues }: Props) => {
       <Modal
         isOpen={calendarOpen}
         onClose={() => setCalendarOpen(false)}
-        widthClassName="max-w-[24.5rem] md:w-[calc(100%-32px)] md:!px-10 !py-8"
+        widthClassName="max-w-[24.5rem] md:w-[calc(100%-32px)] md:!px-8 !py-6"
       >
         <Calendar
           value={availableFrom}

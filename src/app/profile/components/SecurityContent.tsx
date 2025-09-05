@@ -1,13 +1,13 @@
 'use client';
 
-import { StatusLabel } from '@/components/ListingCard';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Modal from '@/components/ui/Modal';
-import { AppleIcon, CheckIcon, GoogleIcon, WarningIcon } from '@/utils/icons';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { StatusLabel } from '@/components/ListingCard'
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import Modal from '@/components/ui/Modal'
+import { AppleIcon, CheckIcon, GoogleIcon, WarningIcon } from '@/utils/icons'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const maskEmailAddress = (address: string): string => {
   const [local, domain] = address.split('@');
@@ -435,8 +435,8 @@ const SecurityContent = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
       >
-        <div className="flex flex-col items-center justify-center gap-6 md:gap-4 lg:gap-6 xl:gap-6">
-          <div className="flex flex-col items-center gap-4 md:gap-2 lg:gap-3 xl:gap-4 px-7">
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-4 lg:gap-4 xl:gap-4">
+          <div className="flex flex-col items-center gap-4 md:gap-3 lg:gap-3 xl:gap-3 px-7">
             <h1 className="title-xl text-[var(--color-black)]">Delete account</h1>
             <p className="body-lg text-center text-[var(--color-black)]">
               Are you sure you want to delete your account? This action cannot be undone.

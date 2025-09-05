@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export type SelectablePillProps = {
   variant?: 'default' | 'half-square';
@@ -18,10 +18,10 @@ const SelectablePill = ({
   className = '',
 }: SelectablePillProps) => {
   const baseStyles =
-    'items-center justify-center py-2.5 px-4 rounded-full border transition-colors cursor-pointer';
+    'items-center justify-center py-2.5 px-4 md:py-1.5 md:px-3 rounded-full border transition-colors cursor-pointer';
 
   const halfSquareStyles =
-    'items-center justify-center py-2.5 px-4 rounded-[8px] border transition-colors cursor-pointer';
+    'items-center justify-center py-2.5 px-4 md:py-1.5 md:px-3 rounded-[8px] border transition-colors cursor-pointer';
 
   const selectedDefaultStyles = 'bg-[var(--color-black)] text-white border-[var(--color-black)]';
   const selectedHalfSquareStyles =
