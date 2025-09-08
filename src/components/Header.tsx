@@ -131,7 +131,7 @@ const Header = ({ className = '' }: HeaderProps) => {
 
           {/* Nav - grows and centers on larger screens */}
           <nav className="w-full hidden lg:block">
-            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-2 lg:gap-2 xl:gap-1 py-1">
+            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-4 lg:gap-6 xl:gap-8 py-1">
               {[
                 { href: '/', label: 'Short-time Rent' },
                 { href: '/', label: 'Long-time Rent' },

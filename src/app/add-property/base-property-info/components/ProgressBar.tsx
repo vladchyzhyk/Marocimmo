@@ -35,9 +35,9 @@ const ProgressBar = ({ steps, currentStep, className = '' }: ProgressBarProps) =
       {/* Progress Bar */}
       <div className="flex items-center gap-1">
         {/* Filled progress sections */}
-        {steps.map((_, index) => (
+        {steps.map((step, index) => (
           <div
-            key={index}
+            key={step.id}
             className={classNames(
               'h-1.5 rounded-full transition-all duration-500 ease-in-out flex-1',
               index < currentStep - 1 && 'bg-[var(--accent-green)]',

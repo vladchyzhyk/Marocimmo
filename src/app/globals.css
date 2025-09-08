@@ -325,24 +325,3 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
-
-/* Global scrollbar hiding */
-* {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-*::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
-
-html,
-body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-}

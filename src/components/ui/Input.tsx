@@ -1,7 +1,7 @@
-import SegmentControl, { SegmentControlOption } from '@/components/SegmentControl'
-import Image from 'next/image'
-import React from 'react'
-import LocationDropdown, { LocationSuggestion } from './LocationDropdown'
+import SegmentControl, { SegmentControlOption } from '@/components/SegmentControl';
+import Image from 'next/image';
+import React from 'react';
+import LocationDropdown, { LocationSuggestion } from './LocationDropdown';
 
 type InputAppearance = 'default' | 'filled';
 type InputVariant = 'default' | 'address';
@@ -177,8 +177,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleBeforeInput: React.FormEventHandler<HTMLInputElement> = (e) => {
       if (!numbersOnly) return;
-      // @ts-expect-error beforeInput data exists on InputEvent
-      const data = e.nativeEvent && e.nativeEvent.data;
+      const nativeEvent = e.nativeEvent as unknown;
+      const inputEvent =
+        nativeEvent &&
+        typeof nativeEvent === 'object' &&
+        'data' in (nativeEvent as Record<string, unknown>)
+          ? (nativeEvent as { data: unknown })
+          : null;
+      const data = inputEvent?.data;
       if (typeof data === 'string' && /\D/.test(data)) {
         e.preventDefault();
       }

@@ -1,16 +1,16 @@
 'use client';
 
-import Footer from '@/components/Footer'
-import IconButton from '@/components/ui/IconButton'
-import Input from '@/components/ui/Input'
-import { LocationSuggestion } from '@/components/ui/LocationDropdown'
-import PhoneInput from '@/components/ui/PhoneInput'
-import SelectCard from '@/components/ui/SelectCard'
-import { AgencyIcon, OwnerIcon } from '@/utils/icons'
-import { cleanupImagePreview, processImageUpload } from '@/utils/imageUtils'
-import classNames from 'classnames'
-import { useRouter } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import Footer from '@/components/Footer';
+import IconButton from '@/components/ui/IconButton';
+import Input from '@/components/ui/Input';
+import { LocationSuggestion } from '@/components/ui/LocationDropdown';
+import PhoneInput from '@/components/ui/PhoneInput';
+import SelectCard from '@/components/ui/SelectCard';
+import { AgencyIcon, OwnerIcon } from '@/utils/icons';
+import { cleanupImagePreview, processImageUpload } from '@/utils/imageUtils';
+import classNames from 'classnames';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 
 // Types for form data
 interface OwnerFormData {

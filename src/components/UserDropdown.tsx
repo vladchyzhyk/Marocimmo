@@ -150,7 +150,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
         {/* Divider */}
         <div className="h-px bg-[var(--border)]" />
 
-        <div className="flex flex-col overflow-y-auto scrollbar-none max-h-[calc(100vh-25rem)] sm:max-h-[calc(100vh-20rem)] md:max-h-none">
+        <div className="flex flex-col overflow-y-auto max-h-[calc(100vh-25rem)] sm:max-h-[calc(100vh-20rem)] md:max-h-none">
           {/* Menu Items */}
           {user.isLoggedIn && (
             <div className="px-4 py-4 space-y-2">

@@ -1,13 +1,13 @@
 'use client';
 
-import { StatusLabel } from '@/components/ListingCard'
-import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
-import Modal from '@/components/ui/Modal'
-import { AppleIcon, CheckIcon, GoogleIcon, WarningIcon } from '@/utils/icons'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { StatusLabel } from '@/components/ListingCard';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Modal from '@/components/ui/Modal';
+import { AppleIcon, CheckIcon, GoogleIcon, WarningIcon } from '@/utils/icons';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const maskEmailAddress = (address: string): string => {
   const [local, domain] = address.split('@');
@@ -83,7 +83,9 @@ const SecurityContent = () => {
 
   const handleSavePassword = () => {
     if (!isPasswordValid) return;
-    console.log({ currentPassword: draftCurrentPassword, newPassword: draftNewPassword });
+    if (process.env.NODE_ENV !== 'production') {
+      console.log({ currentPassword: draftCurrentPassword, newPassword: draftNewPassword });
+    }
     setIsEditingPassword(false);
     setDraftCurrentPassword('');
     setDraftNewPassword('');
@@ -93,7 +95,9 @@ const SecurityContent = () => {
   const handleDeleteAccount = () => {
     setIsDeleteModalOpen(false);
     setIsSuccessModalOpen(true);
-    console.log('account deleted');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('account deleted');
+    }
   };
 
   return (
