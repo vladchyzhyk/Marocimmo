@@ -120,7 +120,7 @@ const Header = ({ className = '' }: HeaderProps) => {
       >
         <div className="relative w-full max-w-[1200px] flex justify-between items-center gap-4 md:gap-3 lg:gap-3 xl:gap-2 pt-4">
           {/* Logo */}
-          <div className="w-full">
+          <div className="w-full max-w-[1/3]">
             <Link href="/" className="flex items-center gap-2 h-14 lg:h-12 xl:h-11">
               <span className="inline-flex items-center justify-center w-[34px] h-[34px] lg:w-[30px] lg:h-[30px] xl:w-[28px] xl:h-[28px] rounded-[8px] bg-[var(--primarybutton-hover)]" />
               <span className="hidden sm:block title-xl uppercase text-[var(--color-black)]">
@@ -140,7 +140,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="mg:min-w-[4rem] lg:min-w-[7rem] xl:min-w-[7.5rem] whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md"
+                    className="whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md"
                   >
                     <span>{item.label}</span>
                   </Link>
@@ -150,7 +150,7 @@ const Header = ({ className = '' }: HeaderProps) => {
           </nav>
 
           {/* Actions */}
-          <div className="w-full relative flex items-center justify-end gap-3 md:gap-2 lg:gap-2 xl:gap-2">
+          <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-2 lg:gap-2 xl:gap-2">
             {/* Add your property - primary */}
             {user && (
               <div className="">
