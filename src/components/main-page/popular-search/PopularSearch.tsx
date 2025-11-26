@@ -10,7 +10,7 @@ export default function PopularSearch() {
           Popular search
         </h3>
 
-        <div className="grid grid-cols-2 grid-rows-3 gap-4 w-full h-[500px] sm:h-[600px] md:h-[350px] lg:grid-cols-4 lg:grid-rows-2 ">
+        <div className="grid grid-cols-2 grid-rows-3 gap-4 w-full h-[500px] sm:h-[600px] md:h-[600px] lg:h-[350px] lg:grid-cols-4 lg:grid-rows-2 ">
           {POPULAR_SEARCH_CARDS.map((card, index) => {
             return (
               <RentCard
