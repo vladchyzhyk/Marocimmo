@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import HeroTabs from './HeroTabs';
 import HeroSelect from './HeroSelect';
-import Button from '../ui/Button';
+import Button from '../../ui/Button';
 import { DEAL_TYPE_OPTIONS, PROPERTY_TYPE_OPTIONS, LOCATION_OPTIONS } from '@/utils/constants';
 
 export default function Hero() {
