@@ -1,5 +1,6 @@
 import { AllPropertyTypes } from '@/components/main-page/all-property-types/AllPropertyTypes';
 import Hero from '@/components/main-page/hero/Hero';
+import { Marocimmo } from '@/components/main-page/marocimmo-section/Marocimmo';
 import { PopularCities } from '@/components/main-page/popular-cities/PopularCities';
 import PopularSearch from '@/components/main-page/popular-search/PopularSearch';
 
@@ -10,6 +11,7 @@ export default function Home() {
       <PopularSearch />
       <AllPropertyTypes />
       <PopularCities />
+      <Marocimmo />
     </main>
   );
 }

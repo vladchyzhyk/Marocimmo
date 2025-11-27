@@ -67,3 +67,6 @@ export { default as OfficeIcon2 } from '@/icons/ic_office_2.svg';
 export { default as LandIcon2 } from '@/icons/ic_land_2.svg';
 export { default as CommercialIcon2 } from '@/icons/ic_commercial_2.svg';
 export { default as Watch } from '@/icons/ic_watch.svg';
+export { default as CheckIcon2 } from '@/icons/ic_check_2.svg';
+export { default as UsersIcon2 } from '@/icons/ic_users_2.svg';
+export { default as FilterIcon2 } from '@/icons/ic_filter_2.svg';
