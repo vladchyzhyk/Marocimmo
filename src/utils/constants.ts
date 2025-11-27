@@ -141,3 +141,35 @@ export const POPULAR_CITIES = [
     image: '/images/Agadir.svg',
   },
 ];
+export const MOCK_AGENCIES = [
+  {
+    id: 1,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+  {
+    id: 2,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+  {
+    id: 3,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+  {
+    id: 4,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+  {
+    id: 5,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+  {
+    id: 6,
+    label: '157 properties',
+    image: '/images/agency_logo.svg',
+  },
+];

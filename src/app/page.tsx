@@ -1,3 +1,4 @@
+import { AgenciesSection } from '@/components/main-page/agencies/AgenciesSection';
 import { AllPropertyTypes } from '@/components/main-page/all-property-types/AllPropertyTypes';
 import Hero from '@/components/main-page/hero/Hero';
 import { Marocimmo } from '@/components/main-page/marocimmo-section/Marocimmo';
@@ -14,6 +15,7 @@ export default function Home() {
       <PopularCities />
       <Marocimmo />
       <StartListingSection />
+      <AgenciesSection />
     </main>
   );
 }
