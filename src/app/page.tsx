@@ -3,6 +3,7 @@ import Hero from '@/components/main-page/hero/Hero';
 import { Marocimmo } from '@/components/main-page/marocimmo-section/Marocimmo';
 import { PopularCities } from '@/components/main-page/popular-cities/PopularCities';
 import PopularSearch from '@/components/main-page/popular-search/PopularSearch';
+import { StartListingSection } from '@/components/main-page/start-listing/StartListingSection';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <AllPropertyTypes />
       <PopularCities />
       <Marocimmo />
+      <StartListingSection />
     </main>
   );
 }
