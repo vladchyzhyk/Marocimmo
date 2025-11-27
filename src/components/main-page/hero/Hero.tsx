@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import HeroTabs from './HeroTabs';
-import HeroSelect from './HeroSelect';
+import TypePropertySelect from '../../TypePropertySelect';
 import Button from '../../ui/Button';
 import {
   DEAL_TYPE_OPTIONS,
@@ -11,17 +11,16 @@ import {
   LOCATION_SEARCH_OPTIONS,
 } from '@/utils/constants';
 import { LocationSearch, LocationSearchOption } from '../../LocationSearch';
-import { reverseGeocode } from '@/utils/geocoding';
 
 export default function Hero() {
   const [dealType, setDealType] = useState('sale');
   const [location, setLocation] = useState('');
-  const [propertyType, setPropertyType] = useState('');
+  const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
   const [isLocationLoading, setIsLocationLoading] = useState(false);
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
   const handleSearch = () => {
-    console.log('Search:', { dealType, location, propertyType });
+    console.log('Search:', { dealType, location, propertyTypes });
   };
 
   const handleLocationChange = (value: string) => {
@@ -111,10 +110,10 @@ export default function Hero() {
                 </div>
 
                 <div className="flex-1 w-full">
-                  <HeroSelect
+                  <TypePropertySelect
                     id="hero-property-type"
-                    value={propertyType}
-                    onChange={setPropertyType}
+                    value={propertyTypes}
+                    onChange={setPropertyTypes}
                     placeholder="Type of property"
                     options={PROPERTY_TYPE_OPTIONS}
                     showDivider={true}

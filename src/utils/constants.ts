@@ -18,8 +18,18 @@ export const LOCATION_SEARCH_OPTIONS = [
   { id: '4', street: 'Rabat', city: 'Rabat-Salé-Kénitra', region: 'Rabat-Salé-Kénitra' },
   { id: '5', street: 'Marrakech-Safi', city: 'region', region: 'Marrakech-Safi' },
   { id: '6', street: 'Marrakech', city: 'Marrakech-Safi', region: 'Marrakech-Safi' },
-  { id: '7', street: 'Tanger-Tetouan-Al Hoceima', city: 'region', region: 'Tanger-Tetouan-Al Hoceima' },
-  { id: '8', street: 'Tangier', city: 'Tanger-Tetouan-Al Hoceima', region: 'Tanger-Tetouan-Al Hoceima' },
+  {
+    id: '7',
+    street: 'Tanger-Tetouan-Al Hoceima',
+    city: 'region',
+    region: 'Tanger-Tetouan-Al Hoceima',
+  },
+  {
+    id: '8',
+    street: 'Tangier',
+    city: 'Tanger-Tetouan-Al Hoceima',
+    region: 'Tanger-Tetouan-Al Hoceima',
+  },
   { id: '9', street: 'Casabarata', city: 'Tanger', region: 'Tanger-Tetouan-Al Hoceima' },
   { id: '10', street: 'Castilla', city: 'Tanger', region: 'Tanger-Tetouan-Al Hoceima' },
   { id: '11', street: 'Avenue Mohammed V', city: 'Casablanca', region: 'Casablanca-Settat' },
@@ -29,7 +39,7 @@ export const LOCATION_SEARCH_OPTIONS = [
   { id: '15', street: 'Avenue Mohammed VI', city: 'Marrakech', region: 'Marrakech-Safi' },
   { id: '16', street: 'Rue de la Koutoubia', city: 'Marrakech', region: 'Marrakech-Safi' },
   { id: '17', street: 'Boulevard Pasteur', city: 'Tangier', region: 'Tanger-Tetouan-Al Hoceima' },
-  { id: '18', street: 'Avenue d\'Espagne', city: 'Tangier', region: 'Tanger-Tetouan-Al Hoceima' },
+  { id: '18', street: "Avenue d'Espagne", city: 'Tangier', region: 'Tanger-Tetouan-Al Hoceima' },
   { id: '19', street: 'Fez-Meknes', city: 'region', region: 'Fez-Meknes' },
   { id: '20', street: 'Fez', city: 'Fez-Meknes', region: 'Fez-Meknes' },
   { id: '21', street: 'Souss-Massa', city: 'region', region: 'Souss-Massa' },
@@ -41,8 +51,8 @@ export const PROPERTY_TYPE_OPTIONS = [
   { label: 'House', value: 'house' },
   { label: 'Villa', value: 'villa' },
   { label: 'Office', value: 'office' },
-  { label: 'Land', value: 'land' },
   { label: 'Commercial', value: 'commercial' },
+  { label: 'Land', value: 'land' },
 ];
 
 export const DEAL_TYPE_OPTIONS = [

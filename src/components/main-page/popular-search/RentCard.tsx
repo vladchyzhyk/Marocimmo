@@ -32,7 +32,7 @@ export const RentCard = ({ id, label, image, className }: RentCardProps) => {
         />
       </div>
 
-      <div className="relative z-10 h-full flex items-start pt-4 pl-6">
+      <div className="relative h-full flex items-start pt-4 pl-6">
         <span className="text-[24px] sm:text-[16px] md:text-[24px] font-bold leading-[1.2] tracking-[-0.02em] text-[var(--white)]">
           {label}
         </span>
