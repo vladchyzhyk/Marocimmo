@@ -1,7 +1,13 @@
 'use client';
 import { StartListingCard } from '@/components/main-page/start-listing/StartListingCard';
+import { useRouter } from 'next/navigation';
 
 export const StartListingSection = () => {
+  const router = useRouter();
+
+  const handleRedirect = () => {
+    router.push('/add-property');
+  };
   return (
     <section className="w-full px-4 sm:px-6 md:px-8 lg:px-[80px] pt-[110px] lg:pt-[100px]">
       <div className="w-full mx-auto mb-6">
@@ -15,9 +21,7 @@ export const StartListingSection = () => {
           buttonLabel="Publish your property"
           imageUrl="/images/Owner.svg"
           imageAlt="If you are Owner"
-          onButtonClick={() => {
-            console.log('If you are Owner');
-          }}
+          onButtonClick={handleRedirect}
         />
 
         <StartListingCard
@@ -26,9 +30,7 @@ export const StartListingSection = () => {
           buttonLabel="Publish your property"
           imageUrl="/images/Agency.svg"
           imageAlt="If you are an Agency"
-          onButtonClick={() => {
-            console.log('If you are an Agency');
-          }}
+          onButtonClick={handleRedirect}
         />
       </div>
     </section>
