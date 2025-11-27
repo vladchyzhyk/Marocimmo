@@ -78,3 +78,66 @@ export const GRID_AREA_CLASSES = [
   'row-[2_/_3] col-[2_/_3] lg:row-[1_/_2] lg:col-[4_/_5]',
   'row-[3_/_4] col-[2_/_3] lg:row-[2_/_3] lg:col-[4_/_5]',
 ];
+
+export const POPULAR_CITIES = [
+  {
+    id: 'casablanca',
+    name: 'Casablanca',
+    region: 'Grand Casablanca',
+    image: '/images/Casablanca.svg',
+  },
+  {
+    id: 'marrakesh',
+    name: 'Marrakech',
+    region: 'Marrakech-Safi',
+    image: '/images/Marrakech.svg',
+  },
+  {
+    id: 'rabat',
+    name: 'Rabat',
+    region: 'Rabat-Salé-Kénitra',
+    image: '/images/Rabat.svg',
+  },
+  {
+    id: 'tangier',
+    name: 'Tangier',
+    region: 'Tanger-Tétouan-Al Hoceïma',
+    image: '/images/Tangier.svg',
+  },
+  {
+    id: 'agadir',
+    name: 'Agadir',
+    region: 'Souss-Massa',
+    image: '/images/Agadir.svg',
+  },
+  {
+    id: 'casablanca',
+    name: 'Casablanca',
+    region: 'Grand Casablanca',
+    image: '/images/Casablanca.svg',
+  },
+  {
+    id: 'marrakesh',
+    name: 'Marrakech',
+    region: 'Marrakech-Safi',
+    image: '/images/Marrakech.svg',
+  },
+  {
+    id: 'rabat',
+    name: 'Rabat',
+    region: 'Rabat-Salé-Kénitra',
+    image: '/images/Rabat.svg',
+  },
+  {
+    id: 'tangier',
+    name: 'Tangier',
+    region: 'Tanger-Tétouan-Al Hoceïma',
+    image: '/images/Tangier.svg',
+  },
+  {
+    id: 'agadir',
+    name: 'Agadir',
+    region: 'Souss-Massa',
+    image: '/images/Agadir.svg',
+  },
+];

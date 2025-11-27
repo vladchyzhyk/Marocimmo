@@ -3,39 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { ArrowNextIcon } from '@/utils/icons';
 import { CityCard } from './CityCard';
-
-const POPULAR_CITIES = [
-  {
-    id: 'casablanca',
-    name: 'Casablanca',
-    region: 'Grand Casablanca',
-    image: '/images/Casablanca.svg',
-  },
-  {
-    id: 'marrakesh',
-    name: 'Marrakech',
-    region: 'Marrakech-Safi',
-    image: '/images/Marrakech.svg',
-  },
-  {
-    id: 'rabat',
-    name: 'Rabat',
-    region: 'Rabat-Salé-Kénitra',
-    image: '/images/Rabat.svg',
-  },
-  {
-    id: 'tangier',
-    name: 'Tangier',
-    region: 'Tanger-Tétouan-Al Hoceïma',
-    image: '/images/Tangier.svg',
-  },
-  {
-    id: 'agadir',
-    name: 'Agadir',
-    region: 'Souss-Massa',
-    image: '/images/Agadir.svg',
-  },
-];
+import { POPULAR_CITIES } from '@/utils/constants';
 
 export const PopularCities = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
