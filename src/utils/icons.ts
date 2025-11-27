@@ -70,3 +70,7 @@ export { default as Watch } from '@/icons/ic_watch.svg';
 export { default as CheckIcon2 } from '@/icons/ic_check_2.svg';
 export { default as UsersIcon2 } from '@/icons/ic_users_2.svg';
 export { default as FilterIcon2 } from '@/icons/ic_filter_2.svg';
+export { default as FacebookIcon } from '@/icons/ic_facebook.svg';
+export { default as InstagramIcon } from '@/icons/ic_instagram.svg';
+export { default as XIcon } from '@/icons/ic_X.svg';
+export { default as YoutubeIcon } from '@/icons/ic_youtube.svg';
