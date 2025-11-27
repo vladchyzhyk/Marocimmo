@@ -270,9 +270,9 @@ export const LocationSearch = ({
                 </div>
               </div>
               {searchHistory.map((location, index) => (
-                <button
+                <div
                   key={index}
-                  className="w-full flex items-center justify-between gap-2 p-4 md:p-3 lg:p-3 xl:p-3 hover:bg-[var(--bg-tint)] transition-colors text-left"
+                  className="w-full flex items-center justify-between gap-2 p-4 md:p-3 lg:p-3 xl:p-3 hover:bg-[var(--bg-tint)] transition-colors text-left cursor-pointer"
                   onClick={() => handleHistoryItemClick(location)}
                   role="option"
                   aria-selected={false}
@@ -291,7 +291,7 @@ export const LocationSearch = ({
                       <Image src="/icons/ic_close.svg" alt="Delete" width={16} height={16} />
                     </button>
                   )}
-                </button>
+                </div>
               ))}
             </>
           )}
