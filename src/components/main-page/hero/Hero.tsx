@@ -5,15 +5,53 @@ import { useState } from 'react';
 import HeroTabs from './HeroTabs';
 import HeroSelect from './HeroSelect';
 import Button from '../../ui/Button';
-import { DEAL_TYPE_OPTIONS, PROPERTY_TYPE_OPTIONS, LOCATION_OPTIONS } from '@/utils/constants';
+import {
+  DEAL_TYPE_OPTIONS,
+  PROPERTY_TYPE_OPTIONS,
+  LOCATION_SEARCH_OPTIONS,
+} from '@/utils/constants';
+import { LocationSearch, LocationSearchOption } from '../../LocationSearch';
+import { reverseGeocode } from '@/utils/geocoding';
 
 export default function Hero() {
   const [dealType, setDealType] = useState('sale');
   const [location, setLocation] = useState('');
   const [propertyType, setPropertyType] = useState('');
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
+  const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
   const handleSearch = () => {
     console.log('Search:', { dealType, location, propertyType });
+  };
+
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+    if (value.trim()) {
+      setIsLocationLoading(true);
+      setTimeout(() => setIsLocationLoading(false), 500);
+    } else {
+      setIsLocationLoading(false);
+    }
+  };
+
+  const handleLocationSelect = (option: LocationSearchOption) => {
+    const locationText = option.region
+      ? `${option.street}, ${option.city}`
+      : `${option.street}, ${option.city}`;
+
+    if (!locationSearchHistory.includes(locationText)) {
+      setLocationSearchHistory((prev) => [locationText, ...prev.slice(0, 4)]);
+    }
+
+    console.log('Selected location:', option);
+  };
+
+  const handleDeleteFromHistory = (locationToDelete: string) => {
+    setLocationSearchHistory((prev) => prev.filter((item) => item !== locationToDelete));
+  };
+
+  const handleCurrentLocationClick = async () => {
+    setLocation('Current location');
   };
 
   return (
@@ -56,15 +94,18 @@ export default function Hero() {
             <div className="flex flex-col gap-4 sm:gap-5 md:gap-6 sm:bg-[var(--white)] p-0 sm:p-4 rounded-[8px] box-border sm:h-[80px]">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1 w-full">
-                  <HeroSelect
+                  <LocationSearch
                     id="hero-location"
                     value={location}
-                    onChange={setLocation}
-                    leftIcon={
-                      <Image src="/icons/ic_location.svg" alt="Location" width={16} height={16} />
-                    }
+                    onChange={handleLocationChange}
+                    onSelect={handleLocationSelect}
                     placeholder="Location"
-                    options={LOCATION_OPTIONS}
+                    options={LOCATION_SEARCH_OPTIONS}
+                    loading={isLocationLoading}
+                    searchHistory={locationSearchHistory}
+                    onDeleteFromHistory={handleDeleteFromHistory}
+                    onCurrentLocationClick={handleCurrentLocationClick}
+                    showCurrentLocation={true}
                     showDivider={true}
                   />
                 </div>

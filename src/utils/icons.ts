@@ -66,3 +66,4 @@ export { default as VillaIcon2 } from '@/icons/ic_villa_2.svg';
 export { default as OfficeIcon2 } from '@/icons/ic_office_2.svg';
 export { default as LandIcon2 } from '@/icons/ic_land_2.svg';
 export { default as CommercialIcon2 } from '@/icons/ic_commercial_2.svg';
+export { default as Watch } from '@/icons/ic_watch.svg';
