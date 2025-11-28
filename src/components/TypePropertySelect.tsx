@@ -17,6 +17,7 @@ export type TypePropertySelectProps = {
   placeholder?: string;
   options: TypePropertySelectOption[];
   showDivider?: boolean;
+  className?: string;
 };
 
 export default function TypePropertySelect({
@@ -26,6 +27,7 @@ export default function TypePropertySelect({
   placeholder = 'Type of property',
   options,
   showDivider = false,
+  className = '',
 }: TypePropertySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [tempSelection, setTempSelection] = useState<string[]>(value);
@@ -98,7 +100,7 @@ export default function TypePropertySelect({
   const hasTempSelection = tempSelection.length > 0;
 
   return (
-    <div className="relative w-full" ref={containerRef}>
+    <div className={`relative w-full ${className}`} ref={containerRef}>
       <div
         className={`rounded-[8px] sm:rounded-none relative w-full h-12 md:h-10 lg:h-10 xl:h-10 px-4 pr-10 bg-white cursor-pointer transition-colors flex items-center ${
           showDivider ? 'border-r border-[var(--border-input)]' : ''
