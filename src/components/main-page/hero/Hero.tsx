@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import HeroTabs from './HeroTabs';
 import TypePropertySelect from '../../TypePropertySelect';
 import Button from '../../ui/Button';
@@ -16,22 +16,38 @@ import { LocationSearch, LocationSearchOption } from '../../LocationSearch';
 export default function Hero() {
   const router = useRouter();
   const [dealType, setDealType] = useState('sale');
-  const [location, setLocation] = useState('');
+  const [locationId, setLocationId] = useState('');
+  const [locationText, setLocationText] = useState('');
   const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
   const [isLocationLoading, setIsLocationLoading] = useState(false);
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
+  const locationDisplayValue = useMemo(() => {
+    if (locationText) {
+      return locationText;
+    }
+    if (locationId) {
+      const locationOption = LOCATION_SEARCH_OPTIONS.find((opt) => opt.id === locationId);
+      if (locationOption) {
+        return locationOption.region
+          ? `${locationOption.street}, ${locationOption.city}`
+          : `${locationOption.street}, ${locationOption.city}`;
+      }
+    }
+    return '';
+  }, [locationText, locationId]);
+
   const handleSearch = () => {
     const params = new URLSearchParams();
-    
+
     if (dealType) {
       params.set('dealType', dealType);
     }
-    
-    if (location) {
-      params.set('location', location);
+
+    if (locationId) {
+      params.set('locationId', locationId);
     }
-    
+
     if (propertyTypes.length > 0) {
       params.set('propertyTypes', propertyTypes.join(','));
     }
@@ -41,7 +57,7 @@ export default function Hero() {
   };
 
   const handleLocationChange = (value: string) => {
-    setLocation(value);
+    setLocationText(value);
     if (value.trim()) {
       setIsLocationLoading(true);
       setTimeout(() => setIsLocationLoading(false), 500);
@@ -51,15 +67,11 @@ export default function Hero() {
   };
 
   const handleLocationSelect = (option: LocationSearchOption) => {
-    const locationText = option.region
+    const locationTextValue = option.region
       ? `${option.street}, ${option.city}`
       : `${option.street}, ${option.city}`;
-
-    if (!locationSearchHistory.includes(locationText)) {
-      setLocationSearchHistory((prev) => [locationText, ...prev.slice(0, 4)]);
-    }
-
-    console.log('Selected location:', option);
+    setLocationText(locationTextValue);
+    setLocationId(option.id);
   };
 
   const handleDeleteFromHistory = (locationToDelete: string) => {
@@ -67,7 +79,8 @@ export default function Hero() {
   };
 
   const handleCurrentLocationClick = async () => {
-    setLocation('Current location');
+    setLocationText('Current location');
+    setLocationId('current');
   };
 
   return (
@@ -112,7 +125,7 @@ export default function Hero() {
                 <div className="flex-1 w-full">
                   <LocationSearch
                     id="hero-location"
-                    value={location}
+                    value={locationDisplayValue}
                     onChange={handleLocationChange}
                     onSelect={handleLocationSelect}
                     placeholder="Location"

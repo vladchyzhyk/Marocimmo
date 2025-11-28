@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { LocationSuggestion } from '@/components/ui/LocationDropdown';
 import { Watch } from '@/utils/icons';
 
-export type LocationSearchOption = LocationSuggestion & { region?: string };
+export type LocationSearchOption = LocationSuggestion & { region?: string; id: string };
 
 export type LocationSearchProps = {
   id?: string;

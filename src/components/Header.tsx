@@ -39,7 +39,7 @@ const Header = ({ className = '' }: HeaderProps) => {
   const handleNavClick = async (dealType: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     await setSearchParams({ dealType });
-    router.push('/?dealType=' + dealType);
+    // router.push('/?dealType=' + dealType);
   };
 
   const handleUserButtonClick = () => {

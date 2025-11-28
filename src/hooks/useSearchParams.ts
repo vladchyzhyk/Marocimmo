@@ -4,7 +4,7 @@ import { useQueryStates, parseAsString, parseAsArrayOf } from 'nuqs';
 
 export interface SearchParams {
   dealType: string | null;
-  location: string | null;
+  locationId: string | null;
   propertyTypes: string[];
 }
 
@@ -18,18 +18,18 @@ export const useSearchParams = (): UseSearchParamsReturn => {
   const [searchParams, setSearchParams] = useQueryStates(
     {
       dealType: parseAsString.withDefault('sale'),
-      location: parseAsString,
+      locationId: parseAsString,
       propertyTypes: parseAsArrayOf(parseAsString).withDefault([]),
     },
     {
       history: 'push',
-    }
+    },
   );
 
   const clearSearchParams = async () => {
     return await setSearchParams({
       dealType: null,
-      location: null,
+      locationId: null,
       propertyTypes: null,
     });
   };
@@ -37,11 +37,10 @@ export const useSearchParams = (): UseSearchParamsReturn => {
   return {
     searchParams: {
       dealType: searchParams.dealType,
-      location: searchParams.location,
+      locationId: searchParams.locationId,
       propertyTypes: searchParams.propertyTypes,
     },
     setSearchParams,
     clearSearchParams,
   };
 };
-
