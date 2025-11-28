@@ -1,7 +1,7 @@
 import { useSearchParams } from '@/hooks/useSearchParams';
 import { LocationSearch, LocationSearchOption } from '../LocationSearch';
 import TypePropertySelect from '../TypePropertySelect';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { LOCATION_SEARCH_OPTIONS, PROPERTY_TYPE_OPTIONS } from '@/utils/constants';
 
 export const Filters = () => {
@@ -9,6 +9,24 @@ export const Filters = () => {
   const [locationText, setLocationText] = useState<string>('');
   const [propertyTypes, setPropertyTypes] = useState<string[]>(searchParams.propertyTypes || []);
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (searchParams.locationId && !locationText) {
+      const locationOption = LOCATION_SEARCH_OPTIONS.find(
+        (opt) => opt.id === searchParams.locationId,
+      );
+      if (locationOption) {
+        if (searchParams.locationId === 'current') {
+          setLocationText('Current location');
+        } else {
+          const locationTextValue = locationOption.region
+            ? `${locationOption.street}, ${locationOption.city}`
+            : `${locationOption.street}, ${locationOption.city}`;
+          setLocationText(locationTextValue);
+        }
+      }
+    }
+  }, [searchParams.locationId, locationText]);
 
   const locationDisplayValue = useMemo(() => {
     if (locationText) {
