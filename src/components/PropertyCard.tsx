@@ -10,20 +10,14 @@ export type PropertyCardProps = {
   id: string;
   title: string;
   price: number;
-  pricePerMonth?: boolean;
   currency?: string;
   propertyType: string;
-  bedrooms?: number;
-  bathrooms?: number;
-  area: number;
-  rooms?: number;
-  parkings?: number;
   location: string;
   images: string[];
+  pricePerPeriod: string;
   isFavorite?: boolean;
   onFavoriteClick?: () => void;
   onShareClick?: () => void;
-  onContactClick?: () => void;
   className?: string;
   propertyIcons?: ReactNode;
   phone?: string;
@@ -35,25 +29,19 @@ export const PropertyCard = ({
   id,
   title,
   price,
-  pricePerMonth = true,
   currency = 'DH',
   propertyType,
-  bedrooms,
-  bathrooms,
-  area,
-  rooms,
-  parkings,
   location,
   images,
   isFavorite = false,
   onFavoriteClick,
   onShareClick,
-  onContactClick,
   className = '',
   propertyIcons,
   phone,
   whatsapp,
   email,
+  pricePerPeriod,
 }: PropertyCardProps) => {
   const [isFav, setIsFav] = useState(isFavorite);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -73,7 +61,6 @@ export const PropertyCard = ({
   const handleContactClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowContacts(!showContacts);
-    onContactClick?.();
   };
 
   const handlePhoneClick = (e: React.MouseEvent) => {
@@ -105,10 +92,6 @@ export const PropertyCard = ({
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleIndicatorClick = (index: number) => {
-    setCurrentImageIndex(index);
   };
 
   const formattedPrice = new Intl.NumberFormat('en-US').format(price);
@@ -216,7 +199,9 @@ export const PropertyCard = ({
                 <span className="title-xl text-[var(--accent-green)] font-bold">
                   {formattedPrice} {currency}
                 </span>
-                {pricePerMonth && <span className="body-md text-[#787878]">/ per month</span>}
+                {pricePerPeriod && (
+                  <span className="body-md text-[#787878]">/ per {pricePerPeriod}</span>
+                )}
               </div>
               <div className="flex items-start gap-4">{propertyIcons}</div>
             </div>
@@ -271,8 +256,10 @@ export const PropertyCard = ({
                 <span className="title-xl text-[var(--accent-green)]">
                   {formattedPrice} {currency}
                 </span>
-                {pricePerMonth && (
-                  <span className="body-md text-[var(--text-body-tint)]">/ per month</span>
+                {pricePerPeriod && (
+                  <span className="body-md text-[var(--text-body-tint)]">
+                    / per {pricePerPeriod}
+                  </span>
                 )}
               </div>
               <h3 className="title-lg text-[var(--color-black)] line-clamp-2">{title}</h3>
