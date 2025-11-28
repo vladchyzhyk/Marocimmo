@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import HeroTabs from './HeroTabs';
 import TypePropertySelect from '../../TypePropertySelect';
@@ -13,6 +14,7 @@ import {
 import { LocationSearch, LocationSearchOption } from '../../LocationSearch';
 
 export default function Hero() {
+  const router = useRouter();
   const [dealType, setDealType] = useState('sale');
   const [location, setLocation] = useState('');
   const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
@@ -20,7 +22,22 @@ export default function Hero() {
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
   const handleSearch = () => {
-    console.log('Search:', { dealType, location, propertyTypes });
+    const params = new URLSearchParams();
+    
+    if (dealType) {
+      params.set('dealType', dealType);
+    }
+    
+    if (location) {
+      params.set('location', location);
+    }
+    
+    if (propertyTypes.length > 0) {
+      params.set('propertyTypes', propertyTypes.join(','));
+    }
+
+    const queryString = params.toString();
+    router.push(`/search${queryString ? `?${queryString}` : ''}`);
   };
 
   const handleLocationChange = (value: string) => {
