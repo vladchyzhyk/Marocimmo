@@ -20,6 +20,7 @@ export { AreaFilterMobile } from './AreaFilterMobile';
 export { FloorFilter } from './FloorFilter';
 export { FloorFilterDesktop } from './FloorFilterDesktop';
 export { FloorFilterMobile } from './FloorFilterMobile';
+export { MoreFiltersDropdown } from './MoreFiltersDropdown';
 export { SearchFilterPopup } from './SearchFilterPopup';
 export * from './filters-config';
 export * from './filter-types';

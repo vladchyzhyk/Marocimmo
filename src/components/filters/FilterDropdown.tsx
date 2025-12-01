@@ -65,31 +65,39 @@ export const FilterDropdown = ({
 
   useEffect(() => {
     if (isOpen && dropdownRef.current && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const dropdown = dropdownRef.current;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
+      const updatePosition = () => {
+        if (!dropdownRef.current || !containerRef.current) return;
 
-      const spaceRight = viewportWidth - rect.right;
-      const spaceLeft = rect.left;
-      const spaceBottom = viewportHeight - rect.bottom;
-      const spaceTop = rect.top;
+        const rect = containerRef.current.getBoundingClientRect();
+        const dropdown = dropdownRef.current;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
 
-      if (placement.includes('bottom') && spaceBottom < 300 && spaceTop > spaceBottom) {
-        dropdown.style.top = `${rect.top - dropdown.offsetHeight - 8}px`;
-        dropdown.style.bottom = 'auto';
-      } else {
-        dropdown.style.top = `${rect.bottom + 8}px`;
-        dropdown.style.bottom = 'auto';
-      }
+        const spaceRight = viewportWidth - rect.right;
+        const spaceLeft = rect.left;
+        const spaceBottom = viewportHeight - rect.bottom;
+        const spaceTop = rect.top;
 
-      if (placement.includes('end') && spaceRight < 200 && spaceLeft > spaceRight) {
-        dropdown.style.left = `${rect.right - dropdown.offsetWidth}px`;
-        dropdown.style.right = 'auto';
-      } else if (placement.includes('start')) {
-        dropdown.style.left = `${rect.left}px`;
-        dropdown.style.right = 'auto';
-      }
+        if (placement.includes('bottom') && spaceBottom < 300 && spaceTop > spaceBottom) {
+          dropdown.style.top = `${rect.top - dropdown.offsetHeight - 8}px`;
+          dropdown.style.bottom = 'auto';
+        } else {
+          dropdown.style.top = `${rect.bottom + 8}px`;
+          dropdown.style.bottom = 'auto';
+        }
+
+        if (placement.includes('end')) {
+          dropdown.style.left = `${rect.right - dropdown.offsetWidth}px`;
+          dropdown.style.right = 'auto';
+        } else if (placement.includes('start')) {
+          dropdown.style.left = `${rect.left}px`;
+          dropdown.style.right = 'auto';
+        }
+      };
+
+      requestAnimationFrame(() => {
+        updatePosition();
+      });
     }
   }, [isOpen, placement]);
 

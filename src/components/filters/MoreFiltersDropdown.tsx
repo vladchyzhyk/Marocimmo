@@ -1,19 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useFilters } from '@/hooks/useFilters';
+import { FilterDropdown } from './FilterDropdown';
 import { FilterItem } from './FilterItem';
-import { FilterIcon } from '@/utils/icons';
+import { useFilters } from '@/hooks/useFilters';
+import { ArrowDownIcon } from '@/utils/icons';
 import { isFilterActive } from '@/utils/countActiveFilters';
-import { MoreFiltersDropdown } from './MoreFiltersDropdown';
+import Image from 'next/image';
 
-interface FilterBarProps {
-  onMoreFiltersClick?: () => void;
+interface MoreFiltersDropdownProps {
   className?: string;
 }
 
-export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps) => {
-  const { mobileBarFilters, visibleFilters, filterValues } = useFilters();
+export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps) => {
+  const { popupFilters, mobileBarFilters, visibleFilters, filterValues, clearAllFilters } = useFilters();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -74,29 +74,64 @@ export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps
       return isFilterActive(filter.id, value);
     }).length;
 
-  return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {mobileBarFilters.map((filter) => (
-        <div key={filter.id} className="flex-shrink-1 min-w-[150px]">
-          <FilterItem config={filter} context="bar" />
-        </div>
-      ))}
-      {isMobile && onMoreFiltersClick ? (
+  if (isMobile) {
+    return null;
+  }
+
+  const trigger = (
+    <button
+      type="button"
+      className="flex items-center gap-2 px-4 h-10 border border-[var(--border)] rounded-lg bg-white hover:bg-[var(--bg-tint)] transition-colors flex-shrink-0"
+    >
+      <span className="text-base leading-[140%] text-[var(--color-black)] whitespace-nowrap">
+        More
+      </span>
+      <Image
+        src="/icons/ic_arrow_down.svg"
+        alt="More"
+        width={20}
+        height={20}
+        className="transition-transform"
+      />
+    </button>
+  );
+
+  const content = (
+    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-auto min-w-[400px] max-w-[600px]">
+      <div className="flex items-center justify-between pr-2">
+        <h3 className="title-sm font-medium text-[var(--color-black)]">More filters</h3>
         <button
-          type="button"
-          onClick={onMoreFiltersClick}
-          className="relative flex items-center justify-center w-10 h-10 border-2 border-[var(--accent-green)] rounded-lg bg-white hover:bg-[var(--bg-tint)] transition-colors flex-shrink-0"
+          className="title-sm text-[var(--accent-green)] hover:underline"
+          onClick={clearAllFilters}
         >
-          <FilterIcon className="w-5 h-5 text-[var(--accent-green)]" />
-          {hiddenActiveFiltersCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--accent-green)] text-white rounded-full flex items-center justify-center text-xs font-medium border-2 border-white">
-              {hiddenActiveFiltersCount}
-            </span>
-          )}
+          Clear all filters
         </button>
-      ) : (
-        <MoreFiltersDropdown />
-      )}
+      </div>
+
+      <div className="flex flex-col gap-6">
+        {popupFilters.map((filter) => (
+          <FilterItem key={filter.id} config={filter} context="popup" />
+        ))}
+        {popupFilters.length === 0 && (
+          <p className="text-[var(--text-body-tint)] body-lg text-center py-8">
+            No additional filters available
+          </p>
+        )}
+      </div>
     </div>
   );
+
+  return (
+    <FilterDropdown
+      trigger={trigger}
+      content={content}
+      onApply={() => {}}
+      onClear={clearAllFilters}
+      showActions={false}
+      placement="bottom-end"
+      className={className}
+      contentClassName="max-h-[600px]"
+    />
+  );
 };
+
