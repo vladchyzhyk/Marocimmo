@@ -109,14 +109,14 @@ export const PriceRange = ({
   const selectContent = (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <h3 className="body-md font-medium text-[var(--color-black)]">Price range</h3>
+        <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
         <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
           per month
         </span>
       </div>
       <div className="flex items-end gap-2">
         <div className="flex-1">
-          <label className="body-sm text-[var(--color-black)] mb-2 block">Minimum</label>
+          <label className="body-md text-[var(--color-black)] mb-2 block">Minimum</label>
           <InputSelect
             value={getMinValue()}
             onChange={handleMinChange}
@@ -130,7 +130,7 @@ export const PriceRange = ({
         </div>
         <span className="text-[var(--text-body-tint)] body-lg mb-2">-</span>
         <div className="flex-1">
-          <label className="body-sm text-[var(--color-black)] mb-2 block">Maximum</label>
+          <label className="body-md text-[var(--color-black)] mb-2 block">Maximum</label>
           <InputSelect
             value={getMaxValue()}
             onChange={handleMaxChange}
@@ -174,7 +174,6 @@ export const PriceRange = ({
         trigger={trigger}
         content={selectContent}
         onApply={() => {}}
-        onClear={() => onChange(undefined)}
         showActions={true}
         placement="bottom-start"
         className={className}
@@ -186,14 +185,14 @@ export const PriceRange = ({
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
       <div className="flex items-center gap-2">
-        <h3 className="body-md font-medium text-[var(--color-black)]">Price range</h3>
+        <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
         <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
           per month
         </span>
       </div>
       <div className="flex items-end gap-2">
         <div className="flex-1">
-          <label className="body-sm text-[var(--color-black)] mb-2 block">Minimum</label>
+          <label className="body-md text-[var(--color-black)] mb-2 block">Minimum</label>
           <InputSelect
             value={getMinValue()}
             onChange={handleMinChange}
@@ -207,7 +206,7 @@ export const PriceRange = ({
         </div>
         <span className="text-[var(--text-body-tint)] body-lg mb-2">-</span>
         <div className="flex-1">
-          <label className="body-sm text-[var(--color-black)] mb-2 block">Maximum</label>
+          <label className="body-md text-[var(--color-black)] mb-2 block">Maximum</label>
           <InputSelect
             value={getMaxValue()}
             onChange={handleMaxChange}

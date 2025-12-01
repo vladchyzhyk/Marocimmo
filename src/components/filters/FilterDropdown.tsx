@@ -115,7 +115,7 @@ export const FilterDropdown = ({
     >
       <div className="p-4">{content}</div>
       {showActions && (onApply || onClear) && (
-        <div className="flex items-center justify-end gap-2 px-4 pb-4 pt-4 border-t border-[var(--border)] mt-4">
+        <div className="flex w-full items-center justify-end gap-2 px-4 pb-4 pt-4 ">
           {onClear && (
             <Button
               variant="outline"
@@ -128,13 +128,7 @@ export const FilterDropdown = ({
             </Button>
           )}
           {onApply && (
-            <Button
-              variant="primary"
-              size="md"
-              fullWidth={false}
-              className="!w-auto !px-4"
-              onClick={handleApply}
-            >
+            <Button variant="primary" size="lg" fullWidth={true} className="" onClick={handleApply}>
               Apply
             </Button>
           )}
