@@ -4,6 +4,18 @@ export type FilterValue =
   | boolean
   | string[]
   | { min?: number; max?: number }
+  | {
+      livingAreaMin?: number;
+      livingAreaMax?: number;
+      totalAreaMin?: number;
+      totalAreaMax?: number;
+    }
+  | {
+      floorLevelMin?: number;
+      floorLevelMax?: number;
+      totalFloorsMin?: number;
+      totalFloorsMax?: number;
+    }
   | undefined;
 
 export interface BaseFilterProps {

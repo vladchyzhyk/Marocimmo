@@ -11,7 +11,7 @@ interface FilterBarProps {
 }
 
 export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps) => {
-  const { mobileBarFilters, visibleFilters, filterValues, updateFilter } = useFilters();
+  const { mobileBarFilters, visibleFilters, filterValues } = useFilters();
 
   const getFilterValueById = (filterId: string) => {
     switch (filterId) {
@@ -20,7 +20,12 @@ export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps
       case 'propertyType':
         return filterValues.propertyTypes;
       case 'area':
-        return { min: filterValues.areaMin, max: filterValues.areaMax };
+        return {
+          livingAreaMin: filterValues.livingAreaMin,
+          livingAreaMax: filterValues.livingAreaMax,
+          totalAreaMin: filterValues.totalAreaMin,
+          totalAreaMax: filterValues.totalAreaMax,
+        };
       case 'bedsBaths':
         return {
           bedrooms: filterValues.bedrooms,
@@ -35,7 +40,12 @@ export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps
       case 'parking':
         return filterValues.parking;
       case 'floor':
-        return filterValues.floor;
+        return {
+          floorLevelMin: filterValues.floorLevelMin,
+          floorLevelMax: filterValues.floorLevelMax,
+          totalFloorsMin: filterValues.totalFloorsMin,
+          totalFloorsMax: filterValues.totalFloorsMax,
+        };
       case 'furnished':
         return filterValues.furnished;
       case 'zoningCategory':
@@ -57,7 +67,7 @@ export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps
   return (
     <div className={`flex items-center gap-2 overflow-x-auto ${className}`}>
       {mobileBarFilters.map((filter) => (
-        <div key={filter.id} className="flex-shrink-0 min-w-[200px]">
+        <div key={filter.id} className="flex-shrink-1 min-w-[150px]">
           <FilterItem config={filter} context="bar" />
         </div>
       ))}

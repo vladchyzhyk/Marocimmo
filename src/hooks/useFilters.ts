@@ -10,6 +10,7 @@ import {
   DealType,
 } from '@/components/filters/filters-config';
 import { FilterValues, resetDependentFilters } from '@/utils/filterUtils';
+import { SearchParams } from 'nuqs';
 
 export const useFilters = () => {
   const { searchParams, setSearchParams } = useSearchParams();
@@ -32,11 +33,18 @@ export const useFilters = () => {
       priceMax: searchParams.priceMax,
       areaMin: searchParams.areaMin,
       areaMax: searchParams.areaMax,
+      livingAreaMin: searchParams.livingAreaMin,
+      livingAreaMax: searchParams.livingAreaMax,
+      totalAreaMin: searchParams.totalAreaMin,
+      totalAreaMax: searchParams.totalAreaMax,
       bedrooms: searchParams.bedrooms,
       bathrooms: searchParams.bathrooms,
       rooms: searchParams.rooms,
       parking: searchParams.parking,
-      floor: searchParams.floor,
+      floorLevelMin: searchParams.floorLevelMin,
+      floorLevelMax: searchParams.floorLevelMax,
+      totalFloorsMin: searchParams.totalFloorsMin,
+      totalFloorsMax: searchParams.totalFloorsMax,
       furnished: searchParams.furnished,
       zoningCategory: searchParams.zoningCategory,
       amenities: searchParams.amenities,
@@ -81,9 +89,18 @@ export const useFilters = () => {
         updates.locationId = value as string | undefined;
         break;
       case 'area': {
-        const rangeValue = value as { min?: number; max?: number } | undefined;
-        updates.areaMin = rangeValue?.min;
-        updates.areaMax = rangeValue?.max;
+        const areaValue = value as
+          | {
+              livingAreaMin?: number;
+              livingAreaMax?: number;
+              totalAreaMin?: number;
+              totalAreaMax?: number;
+            }
+          | undefined;
+        updates.livingAreaMin = areaValue?.livingAreaMin;
+        updates.livingAreaMax = areaValue?.livingAreaMax;
+        updates.totalAreaMin = areaValue?.totalAreaMin;
+        updates.totalAreaMax = areaValue?.totalAreaMax;
         break;
       }
       case 'bedrooms':
@@ -98,9 +115,21 @@ export const useFilters = () => {
       case 'parking':
         updates.parking = value as number | undefined;
         break;
-      case 'floor':
-        updates.floor = value as number | undefined;
+      case 'floor': {
+        const floorValue = value as
+          | {
+              floorLevelMin?: number;
+              floorLevelMax?: number;
+              totalFloorsMin?: number;
+              totalFloorsMax?: number;
+            }
+          | undefined;
+        updates.floorLevelMin = floorValue?.floorLevelMin;
+        updates.floorLevelMax = floorValue?.floorLevelMax;
+        updates.totalFloorsMin = floorValue?.totalFloorsMin;
+        updates.totalFloorsMax = floorValue?.totalFloorsMax;
         break;
+      }
       case 'furnished':
         updates.furnished = value as boolean | undefined;
         break;
@@ -117,7 +146,7 @@ export const useFilters = () => {
 
   const resetFilters = () => {
     const resetValues = resetDependentFilters(propertyTypes, dealType, filterValues);
-    setSearchParams(resetValues);
+    setSearchParams(resetValues as Partial<SearchParams>);
   };
 
   const clearAllFilters = () => {
@@ -127,11 +156,18 @@ export const useFilters = () => {
       priceMax: undefined,
       areaMin: undefined,
       areaMax: undefined,
+      livingAreaMin: undefined,
+      livingAreaMax: undefined,
+      totalAreaMin: undefined,
+      totalAreaMax: undefined,
       bedrooms: undefined,
       bathrooms: undefined,
       rooms: undefined,
       parking: undefined,
-      floor: undefined,
+      floorLevelMin: undefined,
+      floorLevelMax: undefined,
+      totalFloorsMin: undefined,
+      totalFloorsMax: undefined,
       furnished: undefined,
       zoningCategory: undefined,
       amenities: undefined,

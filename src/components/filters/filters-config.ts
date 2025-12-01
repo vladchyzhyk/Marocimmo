@@ -5,6 +5,10 @@ import { BedsBathsFilterDesktop } from './BedsBathsFilterDesktop';
 import { BedsBathsFilterMobile } from './BedsBathsFilterMobile';
 import { PropertyTypeFilterDesktop } from './PropertyTypeFilterDesktop';
 import { PropertyTypeFilterMobile } from './PropertyTypeFilterMobile';
+import { AreaFilterDesktop } from './AreaFilterDesktop';
+import { AreaFilterMobile } from './AreaFilterMobile';
+import { FloorFilterDesktop } from './FloorFilterDesktop';
+import { FloorFilterMobile } from './FloorFilterMobile';
 import { createDefaultComponents } from './createDefaultComponents';
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'office' | 'commercial' | 'land';
@@ -41,9 +45,10 @@ const areaConfig: Omit<FilterConfig, 'components'> = {
     dealTypes: ['sale', 'long-term', 'short-term'],
   },
   mobile: {
-    showInBar: false,
-    priority: 2,
+    showInBar: true,
+    priority: 5,
   },
+
   min: 0,
   max: 10000,
   step: 1,
@@ -104,7 +109,7 @@ const parkingConfig: Omit<FilterConfig, 'components'> = {
   type: 'number',
   visibleFor: {
     propertyTypes: ['office', 'commercial'],
-    dealTypes: ['sale', 'long-term'],
+    dealTypes: ['sale', 'long-term', 'short-term'],
   },
   mobile: {
     showInBar: false,
@@ -117,7 +122,7 @@ const parkingConfig: Omit<FilterConfig, 'components'> = {
 const floorConfig: Omit<FilterConfig, 'components'> = {
   id: 'floor',
   label: 'Floor',
-  type: 'number',
+  type: 'range',
   visibleFor: {
     propertyTypes: ['apartment', 'office'],
     dealTypes: ['sale', 'long-term', 'short-term'],
@@ -224,7 +229,10 @@ export const FILTERS_CONFIG: FilterConfig[] = [
   },
   {
     ...areaConfig,
-    components: createDefaultComponents(areaConfig as FilterConfig),
+    components: {
+      Desktop: AreaFilterDesktop,
+      Mobile: AreaFilterMobile,
+    },
   },
   {
     ...roomsConfig,
@@ -236,7 +244,10 @@ export const FILTERS_CONFIG: FilterConfig[] = [
   },
   {
     ...floorConfig,
-    components: createDefaultComponents(floorConfig as FilterConfig),
+    components: {
+      Desktop: FloorFilterDesktop,
+      Mobile: FloorFilterMobile,
+    },
   },
   {
     ...furnishedConfig,
@@ -272,7 +283,10 @@ export function getFiltersForMobileBar(
   const visible = getVisibleFilters(propertyTypes, dealType);
   return visible
     .filter((f) => {
-      if (isMobile && (f.id === 'price' || f.id === 'bedsBaths' || f.id === 'propertyType')) {
+      if (
+        isMobile &&
+        (f.id === 'price' || f.id === 'bedsBaths' || f.id === 'propertyType' || f.id === 'area')
+      ) {
         return false;
       }
       return f.mobile.showInBar;

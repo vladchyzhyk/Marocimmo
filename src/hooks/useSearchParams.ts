@@ -17,11 +17,19 @@ export interface SearchParams {
   priceMax?: number;
   areaMin?: number;
   areaMax?: number;
+  livingAreaMin?: number;
+  livingAreaMax?: number;
+  totalAreaMin?: number;
+  totalAreaMax?: number;
   bedrooms?: number;
   bathrooms?: number;
   rooms?: number;
   parking?: number;
   floor?: number;
+  floorLevelMin?: number;
+  floorLevelMax?: number;
+  totalFloorsMin?: number;
+  totalFloorsMax?: number;
   furnished?: boolean;
   zoningCategory?: string;
   amenities?: string[];
@@ -44,11 +52,19 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       priceMax: parseAsInteger,
       areaMin: parseAsInteger,
       areaMax: parseAsInteger,
+      livingAreaMin: parseAsInteger,
+      livingAreaMax: parseAsInteger,
+      totalAreaMin: parseAsInteger,
+      totalAreaMax: parseAsInteger,
       bedrooms: parseAsInteger,
       bathrooms: parseAsInteger,
       rooms: parseAsInteger,
       parking: parseAsInteger,
       floor: parseAsInteger,
+      floorLevelMin: parseAsInteger,
+      floorLevelMax: parseAsInteger,
+      totalFloorsMin: parseAsInteger,
+      totalFloorsMax: parseAsInteger,
       furnished: parseAsBoolean,
       zoningCategory: parseAsString,
       amenities: parseAsArrayOf(parseAsString),
@@ -68,11 +84,19 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       priceMax: null,
       areaMin: null,
       areaMax: null,
+      livingAreaMin: null,
+      livingAreaMax: null,
+      totalAreaMin: null,
+      totalAreaMax: null,
       bedrooms: null,
       bathrooms: null,
       rooms: null,
       parking: null,
       floor: null,
+      floorLevelMin: null,
+      floorLevelMax: null,
+      totalFloorsMin: null,
+      totalFloorsMax: null,
       furnished: null,
       zoningCategory: null,
       amenities: null,
@@ -89,11 +113,19 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       priceMax: searchParams.priceMax ?? undefined,
       areaMin: searchParams.areaMin ?? undefined,
       areaMax: searchParams.areaMax ?? undefined,
+      livingAreaMin: searchParams.livingAreaMin ?? undefined,
+      livingAreaMax: searchParams.livingAreaMax ?? undefined,
+      totalAreaMin: searchParams.totalAreaMin ?? undefined,
+      totalAreaMax: searchParams.totalAreaMax ?? undefined,
       bedrooms: searchParams.bedrooms ?? undefined,
       bathrooms: searchParams.bathrooms ?? undefined,
       rooms: searchParams.rooms ?? undefined,
       parking: searchParams.parking ?? undefined,
       floor: searchParams.floor ?? undefined,
+      floorLevelMin: searchParams.floorLevelMin ?? undefined,
+      floorLevelMax: searchParams.floorLevelMax ?? undefined,
+      totalFloorsMin: searchParams.totalFloorsMin ?? undefined,
+      totalFloorsMax: searchParams.totalFloorsMax ?? undefined,
       furnished: searchParams.furnished ?? undefined,
       zoningCategory: searchParams.zoningCategory ?? undefined,
       amenities: searchParams.amenities ?? undefined,

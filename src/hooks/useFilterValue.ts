@@ -16,8 +16,10 @@ export const useFilterValue = (filterId: string) => {
         };
       case 'area':
         return {
-          min: searchParams.areaMin,
-          max: searchParams.areaMax,
+          livingAreaMin: searchParams.livingAreaMin,
+          livingAreaMax: searchParams.livingAreaMax,
+          totalAreaMin: searchParams.totalAreaMin,
+          totalAreaMax: searchParams.totalAreaMax,
         };
       case 'bedrooms':
         return searchParams.bedrooms;
@@ -28,7 +30,12 @@ export const useFilterValue = (filterId: string) => {
       case 'parking':
         return searchParams.parking;
       case 'floor':
-        return searchParams.floor;
+        return {
+          floorLevelMin: searchParams.floorLevelMin,
+          floorLevelMax: searchParams.floorLevelMax,
+          totalFloorsMin: searchParams.totalFloorsMin,
+          totalFloorsMax: searchParams.totalFloorsMax,
+        };
       case 'furnished':
         return searchParams.furnished;
       case 'zoningCategory':
@@ -49,10 +56,19 @@ export const useFilterValue = (filterId: string) => {
           updates.priceMin = (value as { min?: number; max?: number })?.min;
           updates.priceMax = (value as { min?: number; max?: number })?.max;
           break;
-        case 'area':
-          updates.areaMin = (value as { min?: number; max?: number })?.min;
-          updates.areaMax = (value as { min?: number; max?: number })?.max;
+        case 'area': {
+          const areaValue = value as {
+            livingAreaMin?: number;
+            livingAreaMax?: number;
+            totalAreaMin?: number;
+            totalAreaMax?: number;
+          };
+          updates.livingAreaMin = areaValue?.livingAreaMin;
+          updates.livingAreaMax = areaValue?.livingAreaMax;
+          updates.totalAreaMin = areaValue?.totalAreaMin;
+          updates.totalAreaMax = areaValue?.totalAreaMax;
           break;
+        }
         case 'bedrooms':
           updates.bedrooms = value as number | undefined;
           break;
@@ -65,9 +81,19 @@ export const useFilterValue = (filterId: string) => {
         case 'parking':
           updates.parking = value as number | undefined;
           break;
-        case 'floor':
-          updates.floor = value as number | undefined;
+        case 'floor': {
+          const floorValue = value as {
+            floorLevelMin?: number;
+            floorLevelMax?: number;
+            totalFloorsMin?: number;
+            totalFloorsMax?: number;
+          };
+          updates.floorLevelMin = floorValue?.floorLevelMin;
+          updates.floorLevelMax = floorValue?.floorLevelMax;
+          updates.totalFloorsMin = floorValue?.totalFloorsMin;
+          updates.totalFloorsMax = floorValue?.totalFloorsMax;
           break;
+        }
         case 'furnished':
           updates.furnished = value as boolean | undefined;
           break;

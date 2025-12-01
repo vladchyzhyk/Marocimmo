@@ -7,11 +7,18 @@ export interface FilterValues {
   priceMax?: number;
   areaMin?: number;
   areaMax?: number;
+  livingAreaMin?: number;
+  livingAreaMax?: number;
+  totalAreaMin?: number;
+  totalAreaMax?: number;
   bedrooms?: number;
   bathrooms?: number;
   rooms?: number;
   parking?: number;
-  floor?: number;
+  floorLevelMin?: number;
+  floorLevelMax?: number;
+  totalFloorsMin?: number;
+  totalFloorsMax?: number;
   furnished?: boolean;
   zoningCategory?: string;
   amenities?: string[];
@@ -45,7 +52,10 @@ export function resetDependentFilters(
   }
 
   if (!propertyTypes.includes('apartment') && !propertyTypes.includes('office')) {
-    resetFilters.floor = undefined;
+    resetFilters.floorLevelMin = undefined;
+    resetFilters.floorLevelMax = undefined;
+    resetFilters.totalFloorsMin = undefined;
+    resetFilters.totalFloorsMax = undefined;
   }
 
   if (!propertyTypes.includes('land')) {
