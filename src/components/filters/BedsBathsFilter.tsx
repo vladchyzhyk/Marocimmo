@@ -5,7 +5,7 @@ import { BaseFilterProps } from './filter-types';
 import { FilterDropdown } from './FilterDropdown';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import Image from 'next/image';
-import Toggle from '@/components/Toggle';
+import { CheckBox } from '../ui/CheckBox';
 
 interface BedsBathsFilterProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
@@ -67,11 +67,11 @@ export const BedsBathsFilter = ({
     const parts: string[] = [];
     if (tempBedrooms !== undefined && tempBedrooms > 0) {
       const suffix = tempExactMatch ? '' : '+';
-      parts.push(`${tempBedrooms}${suffix} beds`);
+      parts.push(`${tempBedrooms}${suffix} ro`);
     }
     if (tempBathrooms !== undefined && tempBathrooms > 0) {
       const suffix = tempExactMatch ? '' : '+';
-      parts.push(`${tempBathrooms}${suffix} baths`);
+      parts.push(`${tempBathrooms}${suffix}`);
     }
     return parts.length > 0 ? parts.join(', ') : '';
   };
@@ -154,12 +154,17 @@ export const BedsBathsFilter = ({
 
   const selectContent = (
     <div className="flex flex-col gap-4 min-w-[400px]">
-      <h3 className="title-sm font-bold text-[var(--color-black)]">Rooms</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="title-sm font-bold text-[var(--color-black)]">Rooms</h3>
+        <button className="title-sm text-[var(--accent-green)]" onClick={handleClear}>
+          Clear
+        </button>
+      </div>
 
       {renderNumberSelector('Number of Rooms', tempBedrooms, handleBedroomsChange)}
 
       <div className="flex items-center gap-2">
-        <Toggle checked={tempExactMatch} onChange={handleExactMatchChange} />
+        <CheckBox checked={tempExactMatch} onChange={handleExactMatchChange} />
         <label className="body-md text-[var(--accent-green)]">Use exact match</label>
       </div>
 
@@ -197,7 +202,6 @@ export const BedsBathsFilter = ({
         trigger={trigger}
         content={selectContent}
         onApply={handleApply}
-        onClear={handleClear}
         showActions={true}
         placement="bottom-start"
         className={className}
@@ -213,7 +217,7 @@ export const BedsBathsFilter = ({
       {renderNumberSelector('Number of Rooms', tempBedrooms, handleBedroomsChange)}
 
       <div className="flex items-center gap-2">
-        <Toggle checked={tempExactMatch} onChange={handleExactMatchChange} />
+        <CheckBox checked={tempExactMatch} onChange={handleExactMatchChange} />
         <label className="body-md text-[var(--accent-green)]">Use exact match</label>
       </div>
 
