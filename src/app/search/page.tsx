@@ -1,14 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import PropertyCard from '@/components/PropertyCard';
-import { Filters } from '@/components/search-results/Filters';
+import { LocationFilter } from '@/components/search-results/Filters';
+import { FilterBar } from '@/components/filters/FilterBar';
+import { SearchFilterPopup } from '@/components/filters/SearchFilterPopup';
+import SegmentControl from '@/components/SegmentControl';
 import {
   HousePropertyIcons,
   OfficePropertyIcons,
   LandPropertyIcons,
 } from '@/components/property-icons';
-import { NotificationIcon, ArrowNextIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
+import { NotificationIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
+import { DEAL_TYPE_OPTIONS } from '@/utils/constants';
+import { PropertyType } from '@/components/filters/filters-config';
 
 const mockProperties = [
   {
@@ -243,7 +249,8 @@ const mockProperties = [
 ];
 
 export default function SearchPage() {
-  const { searchParams } = useSearchParams();
+  const { searchParams, setSearchParams } = useSearchParams();
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
 
   const filteredProperties = mockProperties.filter((property) => {
     if (searchParams.dealType && searchParams.dealType !== 'sale') {
@@ -252,12 +259,48 @@ export default function SearchPage() {
     if (searchParams.locationId && property.locationId !== searchParams.locationId) {
       return false;
     }
-    if (
-      searchParams.propertyTypes.length > 0 &&
-      !searchParams.propertyTypes.includes(property.propertyType.toLowerCase())
-    ) {
+    if (searchParams.propertyTypes.length > 0) {
+      const propertyTypeLower = property.propertyType.toLowerCase() as PropertyType;
+      if (!searchParams.propertyTypes.includes(propertyTypeLower)) {
+        return false;
+      }
+    }
+
+    if (searchParams.priceMin !== undefined && property.price < searchParams.priceMin) {
       return false;
     }
+    if (searchParams.priceMax !== undefined && property.price > searchParams.priceMax) {
+      return false;
+    }
+    if (searchParams.areaMin !== undefined && property.area < searchParams.areaMin) {
+      return false;
+    }
+    if (searchParams.areaMax !== undefined && property.area > searchParams.areaMax) {
+      return false;
+    }
+    if (searchParams.bedrooms !== undefined && property.bedrooms !== undefined) {
+      if (searchParams.exactMatch) {
+        if (property.bedrooms !== searchParams.bedrooms) {
+          return false;
+        }
+      } else {
+        if (property.bedrooms < searchParams.bedrooms) {
+          return false;
+        }
+      }
+    }
+    if (searchParams.bathrooms !== undefined && property.bathrooms !== undefined) {
+      if (searchParams.exactMatch) {
+        if (property.bathrooms !== searchParams.bathrooms) {
+          return false;
+        }
+      } else {
+        if (property.bathrooms < searchParams.bathrooms) {
+          return false;
+        }
+      }
+    }
+
     return true;
   });
 
@@ -288,13 +331,20 @@ export default function SearchPage() {
     );
   };
 
+  const handleDealTypeChange = (value: string) => {
+    setSearchParams({ dealType: value as 'sale' | 'long-term' | 'short-term' });
+  };
+
   return (
     <main className="w-full min-h-screen">
       <div className="w-full max-w-[1240px] mx-auto px-4 mt-[69px]">
-        <div className="w-full lg:w-3/4">
-          <div className="flex py-4 border-b-[var(--border)]">
-            <Filters />
+        <div className="flex flex-col gap-4 py-4 border-b-[var(--border)]">
+          <div className="flex gap-2">
+            <LocationFilter />
+            <FilterBar onMoreFiltersClick={() => setIsFilterPopupOpen(true)} />
           </div>
+        </div>
+        <div className="w-full lg:w-3/4">
           <div className="flex items-center gap-2 p-0 ">
             <span className="text-base leading-[140%] text-[#222222] flex items-center flex-grow">
               {filteredProperties.length} properties found
@@ -343,6 +393,11 @@ export default function SearchPage() {
           </div>
         </div>
       </div>
+      <SearchFilterPopup
+        isOpen={isFilterPopupOpen}
+        onClose={() => setIsFilterPopupOpen(false)}
+        resultCount={filteredProperties.length}
+      />
     </main>
   );
 }

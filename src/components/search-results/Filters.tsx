@@ -4,10 +4,9 @@ import TypePropertySelect from '../TypePropertySelect';
 import { useState, useMemo, useEffect } from 'react';
 import { LOCATION_SEARCH_OPTIONS, PROPERTY_TYPE_OPTIONS } from '@/utils/constants';
 
-export const Filters = () => {
+export const LocationFilter = () => {
   const { searchParams, setSearchParams } = useSearchParams();
   const [locationText, setLocationText] = useState<string>('');
-  const [propertyTypes, setPropertyTypes] = useState<string[]>(searchParams.propertyTypes || []);
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
   useEffect(() => {
@@ -74,13 +73,8 @@ export const Filters = () => {
     setSearchParams({ locationId: currentLocationId });
   };
 
-  const handlePropertyTypesChange = (value: string[]) => {
-    setPropertyTypes(value);
-    setSearchParams({ propertyTypes: value });
-  };
-
   return (
-    <div className="flex gap-2">
+    <div className="w-[268px]">
       <LocationSearch
         onDeleteFromHistory={handleDeleteFromHistory}
         onCurrentLocationClick={handleCurrentLocationClick}
@@ -91,12 +85,6 @@ export const Filters = () => {
         onChange={handleLocationChange}
         options={LOCATION_SEARCH_OPTIONS}
         className="flex-1 border rounded-[8px] border-[var(--border)]"
-      />
-      <TypePropertySelect
-        className="flex-1 border rounded-[8px] border-[var(--border)]"
-        options={PROPERTY_TYPE_OPTIONS}
-        value={propertyTypes}
-        onChange={handlePropertyTypesChange}
       />
     </div>
   );

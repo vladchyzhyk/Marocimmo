@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Button from './ui/Button';
 import { CheckIcon } from '@/utils/icons';
 
@@ -32,6 +33,7 @@ export default function TypePropertySelect({
   const [isOpen, setIsOpen] = useState(false);
   const [tempSelection, setTempSelection] = useState<string[]>(value);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setTempSelection(value);
@@ -39,17 +41,69 @@ export default function TypePropertySelect({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
         setTempSelection(value);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+        setTempSelection(value);
+      }
     };
-  }, [value]);
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('keydown', handleEscape);
+      };
+    }
+  }, [value, isOpen]);
+
+  useEffect(() => {
+    if (isOpen && dropdownRef.current && containerRef.current) {
+      const triggerRect = containerRef.current.getBoundingClientRect();
+      const dropdown = dropdownRef.current;
+
+      dropdown.style.position = 'fixed';
+      dropdown.style.zIndex = '1000';
+      dropdown.style.left = 'auto';
+      dropdown.style.right = 'auto';
+      dropdown.style.top = 'auto';
+      dropdown.style.bottom = 'auto';
+      dropdown.style.margin = '0';
+
+      let top = triggerRect.bottom + 8;
+      let left = triggerRect.left;
+
+      if (left + dropdown.offsetWidth > window.innerWidth) {
+        left = window.innerWidth - dropdown.offsetWidth - 16;
+      }
+      if (left < 0) {
+        left = 16;
+      }
+
+      if (
+        top + dropdown.offsetHeight > window.innerHeight &&
+        triggerRect.top > window.innerHeight - triggerRect.bottom
+      ) {
+        top = triggerRect.top - dropdown.offsetHeight - 8;
+      }
+
+      dropdown.style.top = `${top}px`;
+      dropdown.style.left = `${left}px`;
+      dropdown.style.width = `${Math.min(triggerRect.width, 400)}px`;
+    }
+  }, [isOpen]);
 
   const handleToggle = () => {
     if (isOpen) {
@@ -130,72 +184,78 @@ export default function TypePropertySelect({
         </div>
       </div>
 
-      {isOpen && (
-        <div
-          id={id ? `${id}-listbox` : undefined}
-          className="absolute top-full left-0 right-0 mt-1 bg-white border border-[var(--border-input)] rounded-[8px] shadow-lg z-[9999]"
-          role="listbox"
-        >
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
-            <span className="title-md text-[var(--color-black)]">{placeholder}</span>
-            {hasTempSelection && (
-              <button
-                type="button"
-                onClick={handleClear}
-                className="body-md text-[var(--accent-green)] hover:underline"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-
-          <div>
-            {options.map((option) => {
-              const isChecked = tempSelection.includes(option.value);
-
-              return (
-                <label
-                  key={option.value}
-                  className="group flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-[var(--bg-tint)] transition-colors"
-                  role="option"
-                  aria-selected={isChecked}
+      {isOpen &&
+        typeof window !== 'undefined' &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            id={id ? `${id}-listbox` : undefined}
+            className="fixed bg-white border border-[var(--border-input)] rounded-[8px] shadow-lg min-h-[200px] flex flex-col"
+            role="listbox"
+            style={{ zIndex: 1000 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] flex-shrink-0">
+              <span className="title-md text-[var(--color-black)]">{placeholder}</span>
+              {hasTempSelection && (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="body-md text-[var(--accent-green)] hover:underline"
                 >
-                  <div className="relative flex-shrink-0 w-5 h-5">
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={() => handleCheckboxChange(option.value)}
-                      className="sr-only"
-                    />
-                    <div
-                      className={`w-5 h-5 border-2 rounded-[4px] flex items-center justify-center transition-colors ${
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div className="flex-1 min-h-0">
+              {options.map((option) => {
+                const isChecked = tempSelection.includes(option.value);
+
+                return (
+                  <label
+                    key={option.value}
+                    className="group flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-[var(--bg-tint)] transition-colors"
+                    role="option"
+                    aria-selected={isChecked}
+                  >
+                    <div className="relative flex-shrink-0 w-5 h-5">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => handleCheckboxChange(option.value)}
+                        className="sr-only"
+                      />
+                      <div
+                        className={`w-5 h-5 border-2 rounded-[4px] flex items-center justify-center transition-colors ${
+                          isChecked
+                            ? 'border-[var(--accent-green)] bg-[var(--accent-green)]'
+                            : 'border-[var(--border)] bg-white'
+                        }`}
+                      >
+                        {isChecked && <CheckIcon className="w-3 h-3 text-white" />}
+                      </div>
+                    </div>
+                    <span
+                      className={`body-lg flex-1 text-left transition-colors ${
                         isChecked
-                          ? 'border-[var(--accent-green)] bg-[var(--accent-green)]'
-                          : 'border-[var(--border)] bg-white'
+                          ? 'text-[var(--color-black)]'
+                          : 'text-[var(--color-black)] group-hover:text-[var(--accent-green)]'
                       }`}
                     >
-                      {isChecked && <CheckIcon className="w-3 h-3 text-white" />}
-                    </div>
-                  </div>
-                  <span
-                    className={`body-lg flex-1 text-left transition-colors ${
-                      isChecked
-                        ? 'text-[var(--color-black)]'
-                        : 'text-[var(--color-black)] group-hover:text-[var(--accent-green)]'
-                    }`}
-                  >
-                    {option.label}
-                  </span>
-                </label>
-              );
-            })}
-          </div>
+                      {option.label}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
 
-          <div className="px-4 py-3 border-t border-[var(--border)]">
-            <Button label="Apply" onClick={handleApply} variant="primary" size="md" fullWidth />
-          </div>
-        </div>
-      )}
+            <div className="px-4 py-3 border-t border-[var(--border)] flex-shrink-0">
+              <Button label="Apply" onClick={handleApply} variant="primary" size="md" fullWidth />
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

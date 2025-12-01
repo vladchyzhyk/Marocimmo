@@ -43,6 +43,7 @@ export const LocationSearch = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const filteredLocations = useMemo(() => {
+    console.log('options', value);
     if (!value.trim()) {
       return [];
     }
