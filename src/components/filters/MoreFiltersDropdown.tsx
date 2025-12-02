@@ -107,7 +107,7 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
       type="button"
       className="flex items-center gap-2 px-4 h-10 border border-[var(--border)] rounded-lg bg-white hover:bg-[var(--bg-tint)] transition-colors flex-shrink-0"
     >
-      <span className="text-base leading-[140%] text-[var(--color-black)] whitespace-nowrap">
+      <span className="text-base leading-[140%]whitespace-nowrap">
         More
       </span>
       <Image
@@ -117,6 +117,11 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
         height={20}
         className="transition-transform"
       />
+      {hiddenActiveFiltersCount > 0 && (
+        <span className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--accent-green)] text-white rounded-full flex items-center justify-center text-xs font-medium border-2 border-white">
+          {hiddenActiveFiltersCount}
+        </span>
+      )}
     </button>
   );
 

@@ -77,9 +77,19 @@ export const BuildingFilter = ({
     setTempCondition(buildingValue?.condition || 'any');
     setTempRenovation(buildingValue?.renovation || 'any');
     setTempPropertyClass(buildingValue?.propertyClass || 'any');
-  }, [buildingValue?.year, buildingValue?.condition, buildingValue?.renovation, buildingValue?.propertyClass]);
+  }, [
+    buildingValue?.year,
+    buildingValue?.condition,
+    buildingValue?.renovation,
+    buildingValue?.propertyClass,
+  ]);
 
-  const applyFilter = (year: string, condition: string, renovation: string, propertyClass: string) => {
+  const applyFilter = (
+    year: string,
+    condition: string,
+    renovation: string,
+    propertyClass: string,
+  ) => {
     const result: {
       year?: string;
       condition?: string;
@@ -150,7 +160,7 @@ export const BuildingFilter = ({
         )}
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <div className="flex flex-col gap-2">
           <label className="body-md text-[var(--color-black)]">Year</label>
           <InputSelect
@@ -246,4 +256,3 @@ export const BuildingFilter = ({
 
   return <div className={className}>{content}</div>;
 };
-

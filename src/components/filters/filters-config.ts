@@ -229,14 +229,6 @@ export const FILTERS_CONFIG: FilterConfig[] = [
     },
   },
   {
-    ...roomsConfig,
-    components: createDefaultComponents(roomsConfig as FilterConfig),
-  },
-  {
-    ...parkingConfig,
-    components: createDefaultComponents(parkingConfig as FilterConfig),
-  },
-  {
     ...floorConfig,
     components: {
       Desktop: FloorFilterDesktop,
