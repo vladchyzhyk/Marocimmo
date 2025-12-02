@@ -241,7 +241,9 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       amenities: searchParams.amenities ?? undefined,
       exactMatch: searchParams.exactMatch ?? undefined,
       guests:
-        searchParams.maxGuests || searchParams.guestsDisabledAccess || searchParams.guestsPetsAllowed
+        searchParams.maxGuests ||
+        searchParams.guestsDisabledAccess ||
+        searchParams.guestsPetsAllowed
           ? {
               maxGuests: searchParams.maxGuests ?? undefined,
               disabledAccess: searchParams.guestsDisabledAccess ?? undefined,
@@ -249,15 +251,28 @@ export const useSearchParams = (): UseSearchParamsReturn => {
             }
           : undefined,
       building:
-        searchParams.buildingYear ||
-        searchParams.buildingCondition ||
-        searchParams.buildingRenovation ||
-        searchParams.buildingPropertyClass
+        (searchParams.buildingYear && searchParams.buildingYear !== 'undefined') ||
+        (searchParams.buildingCondition && searchParams.buildingCondition !== 'undefined') ||
+        (searchParams.buildingRenovation && searchParams.buildingRenovation !== 'undefined') ||
+        (searchParams.buildingPropertyClass && searchParams.buildingPropertyClass !== 'undefined')
           ? {
-              year: searchParams.buildingYear ?? undefined,
-              condition: searchParams.buildingCondition ?? undefined,
-              renovation: searchParams.buildingRenovation ?? undefined,
-              propertyClass: searchParams.buildingPropertyClass ?? undefined,
+              year:
+                searchParams.buildingYear && searchParams.buildingYear !== 'undefined'
+                  ? searchParams.buildingYear
+                  : undefined,
+              condition:
+                searchParams.buildingCondition && searchParams.buildingCondition !== 'undefined'
+                  ? searchParams.buildingCondition
+                  : undefined,
+              renovation:
+                searchParams.buildingRenovation && searchParams.buildingRenovation !== 'undefined'
+                  ? searchParams.buildingRenovation
+                  : undefined,
+              propertyClass:
+                searchParams.buildingPropertyClass &&
+                searchParams.buildingPropertyClass !== 'undefined'
+                  ? searchParams.buildingPropertyClass
+                  : undefined,
             }
           : undefined,
       view: searchParams.view ?? undefined,

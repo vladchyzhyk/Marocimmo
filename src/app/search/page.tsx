@@ -16,6 +16,8 @@ import { NotificationIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
 import { DEAL_TYPE_OPTIONS } from '@/utils/constants';
 import { PropertyType } from '@/components/filters/filters-config';
 import { useCollectFilters } from '@/hooks/useCollectFilters';
+import { FilterTip } from '@/components/filters/FilterTip';
+import { ActiveFilters } from '@/components/filters/ActiveFilters';
 
 const mockProperties = [
   {
@@ -347,6 +349,9 @@ export default function SearchPage() {
             <LocationFilter />
             <FilterBar onMoreFiltersClick={() => setIsFilterPopupOpen(true)} />
           </div>
+        </div>
+        <div>
+          <ActiveFilters />
         </div>
         <div className="w-full lg:w-3/4">
           <div className="flex items-center gap-2 p-0 ">
