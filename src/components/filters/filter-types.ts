@@ -3,7 +3,7 @@ export type FilterValue =
   | string
   | boolean
   | string[]
-  | { min?: number; max?: number }
+  | { min?: number; max?: number; period?: 'per-day' | 'per-month' }
   | {
       livingAreaMin?: number;
       livingAreaMax?: number;
@@ -15,6 +15,35 @@ export type FilterValue =
       floorLevelMax?: number;
       totalFloorsMin?: number;
       totalFloorsMax?: number;
+    }
+  | {
+      bedrooms?: number;
+      bathrooms?: number;
+      exactMatch?: boolean;
+    }
+  | {
+      maxGuests?: number;
+      disabledAccess?: boolean;
+      petsAllowed?: boolean;
+    }
+  | {
+      year?: string;
+      condition?: string;
+      renovation?: string;
+      propertyClass?: string;
+    }
+  | {
+      moveInDate?: string;
+      showWithoutDate?: boolean;
+    }
+  | {
+      disabledAccess?: boolean;
+      petsAllowed?: boolean;
+      smokingAllowed?: boolean;
+      negotiablePrice?: boolean;
+      touristLicense?: boolean;
+      loti?: boolean;
+      titledLand?: boolean;
     }
   | undefined;
 
