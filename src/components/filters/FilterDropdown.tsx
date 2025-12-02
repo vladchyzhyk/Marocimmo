@@ -72,32 +72,78 @@ export const FilterDropdown = ({
         const dropdown = dropdownRef.current;
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
+        const padding = 16;
 
         const spaceRight = viewportWidth - rect.right;
         const spaceLeft = rect.left;
         const spaceBottom = viewportHeight - rect.bottom;
         const spaceTop = rect.top;
 
-        if (placement.includes('bottom') && spaceBottom < 300 && spaceTop > spaceBottom) {
-          dropdown.style.top = `${rect.top - dropdown.offsetHeight - 8}px`;
-          dropdown.style.bottom = 'auto';
-        } else {
-          dropdown.style.top = `${rect.bottom + 8}px`;
-          dropdown.style.bottom = 'auto';
+        const maxDropdownWidth = viewportWidth - padding * 2;
+        const currentWidth = dropdown.offsetWidth;
+        if (currentWidth > maxDropdownWidth) {
+          dropdown.style.maxWidth = `${maxDropdownWidth}px`;
+          dropdown.style.width = 'auto';
         }
 
-        if (placement.includes('end')) {
-          dropdown.style.left = `${rect.right - dropdown.offsetWidth}px`;
-          dropdown.style.right = 'auto';
-        } else if (placement.includes('start')) {
-          dropdown.style.left = `${rect.left}px`;
-          dropdown.style.right = 'auto';
+        let top = 0;
+        let left = 0;
+
+        if (placement.includes('bottom')) {
+          if (spaceBottom < dropdown.offsetHeight + padding && spaceTop > spaceBottom) {
+            top = rect.top - dropdown.offsetHeight - 8;
+          } else {
+            top = rect.bottom + 8;
+          }
+        } else {
+          if (spaceTop < dropdown.offsetHeight + padding && spaceBottom > spaceTop) {
+            top = rect.bottom + 8;
+          } else {
+            top = rect.top - dropdown.offsetHeight - 8;
+          }
         }
+
+        const dropdownWidth = dropdown.offsetWidth;
+
+        if (placement.includes('end')) {
+          left = rect.right - dropdownWidth;
+          if (left < padding) {
+            left = padding;
+          }
+          if (left + dropdownWidth > viewportWidth - padding) {
+            left = viewportWidth - dropdownWidth - padding;
+          }
+        } else if (placement.includes('start')) {
+          left = rect.left;
+          if (left < padding) {
+            left = padding;
+          }
+          if (left + dropdownWidth > viewportWidth - padding) {
+            left = viewportWidth - dropdownWidth - padding;
+          }
+        }
+
+        dropdown.style.top = `${Math.max(padding, Math.min(top, viewportHeight - dropdown.offsetHeight - padding))}px`;
+        dropdown.style.left = `${left}px`;
+        dropdown.style.right = 'auto';
+        dropdown.style.bottom = 'auto';
+      };
+
+      const handleResize = () => {
+        updatePosition();
       };
 
       requestAnimationFrame(() => {
         updatePosition();
       });
+
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('scroll', handleResize, true);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('scroll', handleResize, true);
+      };
     }
   }, [isOpen, placement]);
 
@@ -115,7 +161,7 @@ export const FilterDropdown = ({
     <div
       ref={dropdownRef}
       className={classNames(
-        'fixed bg-white border border-[var(--border-input)] rounded-[8px] shadow-lg',
+        'fixed bg-white border border-[var(--border-input)] rounded-[8px] shadow-lg overflow-hidden',
         contentClassName,
       )}
       style={{ zIndex: 1000 }}

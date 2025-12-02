@@ -62,6 +62,30 @@ export const FilterBar = ({ onMoreFiltersClick, className = '' }: FilterBarProps
         return filterValues.zoningCategory;
       case 'location':
         return filterValues.location;
+      case 'guests':
+        return filterValues.guests;
+      case 'building':
+        return filterValues.building;
+      case 'view':
+        return filterValues.view;
+      case 'ceiling':
+        return { min: filterValues.ceilingMin, max: filterValues.ceilingMax };
+      case 'availability':
+        return filterValues.availability;
+      case 'specialCondition':
+        return filterValues.specialCondition;
+      case 'furnishing':
+        return filterValues.furnishing;
+      case 'layout':
+        return filterValues.layout;
+      case 'buildingAmenities':
+        return filterValues.buildingAmenities;
+      case 'safety':
+        return filterValues.safety;
+      case 'utilities':
+        return filterValues.utilities;
+      case 'basicSupplies':
+        return filterValues.basicSupplies;
       default:
         return undefined;
     }

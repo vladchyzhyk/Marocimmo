@@ -62,6 +62,30 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
         return filterValues.zoningCategory;
       case 'location':
         return filterValues.location;
+      case 'guests':
+        return filterValues.guests;
+      case 'building':
+        return filterValues.building;
+      case 'view':
+        return filterValues.view;
+      case 'ceiling':
+        return { min: filterValues.ceilingMin, max: filterValues.ceilingMax };
+      case 'availability':
+        return filterValues.availability;
+      case 'specialCondition':
+        return filterValues.specialCondition;
+      case 'furnishing':
+        return filterValues.furnishing;
+      case 'layout':
+        return filterValues.layout;
+      case 'buildingAmenities':
+        return filterValues.buildingAmenities;
+      case 'safety':
+        return filterValues.safety;
+      case 'utilities':
+        return filterValues.utilities;
+      case 'basicSupplies':
+        return filterValues.basicSupplies;
       default:
         return undefined;
     }
@@ -97,8 +121,8 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
   );
 
   const content = (
-    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-auto min-w-[400px] max-w-[600px]">
-      <div className="flex items-center justify-between pr-2">
+    <div className="flex flex-col gap-6 min-w-[350px] max-w-[600px]">
+      <div className="flex items-center justify-between pr-2 flex-shrink-0">
         <h3 className="title-sm font-medium text-[var(--color-black)]">More filters</h3>
         <button
           className="title-sm text-[var(--accent-green)] hover:underline"
@@ -108,7 +132,7 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
         </button>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 max-h-[500px] overflow-y-auto overflow-x-hidden scrollbar-none">
         {popupFilters.map((filter) => (
           <FilterItem key={filter.id} config={filter} context="popup" />
         ))}
@@ -130,7 +154,6 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
       showActions={false}
       placement="bottom-end"
       className={className}
-      contentClassName="max-h-[600px]"
     />
   );
 };
