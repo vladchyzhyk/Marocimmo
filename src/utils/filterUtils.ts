@@ -22,6 +22,41 @@ export interface FilterValues {
   furnished?: boolean;
   zoningCategory?: string;
   amenities?: string[];
+  exactMatch?: boolean;
+  guests?: {
+    maxGuests?: number;
+    disabledAccess?: boolean;
+    petsAllowed?: boolean;
+  };
+  building?: {
+    year?: string;
+    condition?: string;
+    renovation?: string;
+    propertyClass?: string;
+  };
+  view?: string;
+  ceilingMin?: number;
+  ceilingMax?: number;
+  availability?: {
+    moveInDate?: string;
+    showWithoutDate?: boolean;
+  };
+  specialCondition?: {
+    disabledAccess?: boolean;
+    petsAllowed?: boolean;
+    smokingAllowed?: boolean;
+    negotiablePrice?: boolean;
+    touristLicense?: boolean;
+    loti?: boolean;
+    titledLand?: boolean;
+  };
+  furnishing?: string[];
+  layout?: string[];
+  buildingAmenities?: string[];
+  safety?: string[];
+  utilities?: string[];
+  basicSupplies?: string[];
+  pricePeriod?: 'per-day' | 'per-month';
 }
 
 export function resetDependentFilters(
