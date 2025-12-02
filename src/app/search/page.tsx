@@ -15,6 +15,7 @@ import {
 import { NotificationIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
 import { DEAL_TYPE_OPTIONS } from '@/utils/constants';
 import { PropertyType } from '@/components/filters/filters-config';
+import { useCollectFilters } from '@/hooks/useCollectFilters';
 
 const mockProperties = [
   {
@@ -251,6 +252,9 @@ const mockProperties = [
 export default function SearchPage() {
   const { searchParams, setSearchParams } = useSearchParams();
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
+  const { activeFilters } = useCollectFilters({ onlyActive: true });
+
+  console.log('Active Filters:', activeFilters);
 
   const filteredProperties = mockProperties.filter((property) => {
     if (searchParams.dealType && searchParams.dealType !== 'sale') {
