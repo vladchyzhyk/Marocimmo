@@ -2,8 +2,12 @@
 
 import { BaseFilterProps } from './filter-types';
 import { PriceRange } from './PriceRange';
+import { useFilters } from '@/hooks/useFilters';
 
 export const PriceRangeMobile = ({ filterId, value, onChange, className }: BaseFilterProps) => {
+  const { dealType } = useFilters();
+  const showPeriodToggle = dealType === 'short-term';
+
   return (
     <PriceRange
       filterId={filterId}
@@ -11,6 +15,7 @@ export const PriceRangeMobile = ({ filterId, value, onChange, className }: BaseF
       onChange={onChange}
       className={className}
       variant="select"
+      showPeriodToggle={showPeriodToggle}
     />
   );
 };

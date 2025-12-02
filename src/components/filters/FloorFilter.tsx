@@ -124,24 +124,69 @@ export const FloorFilter = ({
     floorValue?.totalFloorsMax,
   ]);
 
+  const applyFloorValue = (
+    floorLevelMin?: number,
+    floorLevelMax?: number,
+    totalFloorsMin?: number,
+    totalFloorsMax?: number,
+  ) => {
+    const hasValue =
+      floorLevelMin !== undefined ||
+      floorLevelMax !== undefined ||
+      totalFloorsMin !== undefined ||
+      totalFloorsMax !== undefined;
+
+    if (hasValue) {
+      const result: {
+        floorLevelMin?: number;
+        floorLevelMax?: number;
+        totalFloorsMin?: number;
+        totalFloorsMax?: number;
+      } = {};
+      if (floorLevelMin !== undefined) result.floorLevelMin = floorLevelMin;
+      if (floorLevelMax !== undefined) result.floorLevelMax = floorLevelMax;
+      if (totalFloorsMin !== undefined) result.totalFloorsMin = totalFloorsMin;
+      if (totalFloorsMax !== undefined) result.totalFloorsMax = totalFloorsMax;
+      onChange(result);
+    } else {
+      onChange(undefined);
+    }
+  };
+
   const handleFloorLevelMinChange = (val: string) => {
     const numValue = val === 'no-min' ? undefined : parseInt(val, 10);
     setTempFloorLevelMin(numValue);
+    // В variant="select" применяем изменения сразу
+    if (variant === 'select') {
+      applyFloorValue(numValue, tempFloorLevelMax, tempTotalFloorsMin, tempTotalFloorsMax);
+    }
   };
 
   const handleFloorLevelMaxChange = (val: string) => {
     const numValue = val === 'no-max' ? undefined : parseInt(val, 10);
     setTempFloorLevelMax(numValue);
+    // В variant="select" применяем изменения сразу
+    if (variant === 'select') {
+      applyFloorValue(tempFloorLevelMin, numValue, tempTotalFloorsMin, tempTotalFloorsMax);
+    }
   };
 
   const handleTotalFloorsMinChange = (val: string) => {
     const numValue = val === 'no-min' ? undefined : parseInt(val, 10);
     setTempTotalFloorsMin(numValue);
+    // В variant="select" применяем изменения сразу
+    if (variant === 'select') {
+      applyFloorValue(tempFloorLevelMin, tempFloorLevelMax, numValue, tempTotalFloorsMax);
+    }
   };
 
   const handleTotalFloorsMaxChange = (val: string) => {
     const numValue = val === 'no-max' ? undefined : parseInt(val, 10);
     setTempTotalFloorsMax(numValue);
+    // В variant="select" применяем изменения сразу
+    if (variant === 'select') {
+      applyFloorValue(tempFloorLevelMin, tempFloorLevelMax, tempTotalFloorsMin, numValue);
+    }
   };
 
   const getFloorLevelMinValue = () =>
@@ -154,12 +199,8 @@ export const FloorFilter = ({
     tempTotalFloorsMax !== undefined ? tempTotalFloorsMax.toString() : 'no-max';
 
   const handleApply = () => {
-    onChange({
-      floorLevelMin: tempFloorLevelMin,
-      floorLevelMax: tempFloorLevelMax,
-      totalFloorsMin: tempTotalFloorsMin,
-      totalFloorsMax: tempTotalFloorsMax,
-    });
+    // В variant="compact" применяем изменения через кнопку Apply
+    applyFloorValue(tempFloorLevelMin, tempFloorLevelMax, tempTotalFloorsMin, tempTotalFloorsMax);
   };
 
   const handleClear = () => {
@@ -275,8 +316,7 @@ export const FloorFilter = ({
               onChange={handleTotalFloorsMaxChange}
               options={TOTAL_FLOORS_MAX_OPTIONS.filter(
                 (opt) =>
-                  opt.value === 'no-max' ||
-                  parseInt(opt.value, 10) >= (tempTotalFloorsMin || 0),
+                  opt.value === 'no-max' || parseInt(opt.value, 10) >= (tempTotalFloorsMin || 0),
               )}
               placeholder="No max"
               size="md"
@@ -328,4 +368,3 @@ export const FloorFilter = ({
 
   return <div className={className}>{content}</div>;
 };
-

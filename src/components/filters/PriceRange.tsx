@@ -1,14 +1,17 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { BaseFilterProps } from './filter-types';
 import { FilterDropdown } from './FilterDropdown';
 import { formatFilterValue } from '@/utils/filterUtils';
 import InputSelect from '@/components/ui/InputSelect';
+import SegmentControl from '@/components/SegmentControl';
 import Image from 'next/image';
 
 interface PriceRangeProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
   unit?: string;
+  showPeriodToggle?: boolean;
 }
 
 const PRICE_MIN_OPTIONS = [
@@ -54,24 +57,35 @@ export const PriceRange = ({
   className = '',
   variant = 'select',
   unit = 'DH',
+  showPeriodToggle = false,
 }: PriceRangeProps) => {
-  const rangeValue = value as { min?: number; max?: number } | undefined;
+  const rangeValue = value as
+    | { min?: number; max?: number; period?: 'per-day' | 'per-month' }
+    | undefined;
+
+  const [tempPeriod, setTempPeriod] = useState<'per-day' | 'per-month'>(
+    rangeValue?.period || 'per-month',
+  );
+
+  useEffect(() => {
+    setTempPeriod(rangeValue?.period || 'per-month');
+  }, [rangeValue?.period]);
 
   const handleMinChange = (value: string) => {
     if (value === 'no-min') {
-      onChange({ min: undefined, max: rangeValue?.max });
+      onChange({ min: undefined, max: rangeValue?.max, period: rangeValue?.period });
     } else {
       const numValue = parseInt(value, 10);
-      onChange({ min: numValue, max: rangeValue?.max });
+      onChange({ min: numValue, max: rangeValue?.max, period: rangeValue?.period });
     }
   };
 
   const handleMaxChange = (value: string) => {
     if (value === 'no-max') {
-      onChange({ min: rangeValue?.min, max: undefined });
+      onChange({ min: rangeValue?.min, max: undefined, period: rangeValue?.period });
     } else {
       const numValue = parseInt(value, 10);
-      onChange({ min: rangeValue?.min, max: numValue });
+      onChange({ min: rangeValue?.min, max: numValue, period: rangeValue?.period });
     }
   };
 
@@ -106,13 +120,31 @@ export const PriceRange = ({
     return '';
   };
 
+  const handlePeriodChange = (val: string) => {
+    setTempPeriod(val as 'per-day' | 'per-month');
+    onChange({ ...rangeValue, period: val as 'per-day' | 'per-month' });
+  };
+
   const selectContent = (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between">
         <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
-        <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
-          per month
-        </span>
+        {showPeriodToggle && (
+          <SegmentControl
+            type="switch"
+            options={[
+              { label: 'Price range', value: 'per-month' },
+              { label: 'per day', value: 'per-day' },
+            ]}
+            value={tempPeriod}
+            onChange={handlePeriodChange}
+          />
+        )}
+        {!showPeriodToggle && (
+          <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
+            per month
+          </span>
+        )}
       </div>
       <div className="flex items-end gap-2">
         <div className="flex-1">
@@ -184,11 +216,24 @@ export const PriceRange = ({
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between">
         <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
-        <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
-          per month
-        </span>
+        {showPeriodToggle && (
+          <SegmentControl
+            type="switch"
+            options={[
+              { label: 'Price range', value: 'per-month' },
+              { label: 'per day', value: 'per-day' },
+            ]}
+            value={tempPeriod}
+            onChange={handlePeriodChange}
+          />
+        )}
+        {!showPeriodToggle && (
+          <span className="px-2 py-1 bg-[var(--color-black)] text-white rounded-full text-xs">
+            per month
+          </span>
+        )}
       </div>
       <div className="flex items-end gap-2">
         <div className="flex-1">
