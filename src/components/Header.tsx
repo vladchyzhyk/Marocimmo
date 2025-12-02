@@ -10,6 +10,7 @@ import NotificationsDropdown from './NotificationDropdown';
 import Button, { ButtonVariant } from './ui/Button';
 import Modal from './ui/Modal';
 import UserDropdown from './UserDropdown';
+import { DealType } from './filters';
 
 export const user = {
   // name: 'John Doe',
@@ -36,7 +37,7 @@ const Header = ({ className = '' }: HeaderProps) => {
 
   const currentDealType = searchParams.dealType || 'sale';
 
-  const handleNavClick = async (dealType: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleNavClick = async (dealType: DealType, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     await setSearchParams({ dealType });
     // router.push('/?dealType=' + dealType);
@@ -152,7 +153,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      onClick={(e) => handleNavClick(item.dealType, e)}
+                      onClick={(e) => handleNavClick(item.dealType as DealType, e)}
                       className={classNames(
                         'whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md',
                         {
