@@ -52,8 +52,7 @@ const getInputStyles = (variant: 'default' | 'outline', size: 'sm' | 'md' | 'lg'
 
   const variantStyles = {
     default: 'border-[var(--border-input)]',
-    outline:
-      'border border-[var(--border)] hover:border-[var(--accent-green)] focus:border-[var(--accent-green)]',
+    outline: 'border border-[var(--border)]',
   };
 
   return `${base} ${sizeStyles[size]} ${paddingStyles[size]} ${variantStyles[variant]}`;
@@ -125,7 +124,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
     const computedInputClasses = [
       getInputStyles(variant, size),
       fullWidth ? 'w-full' : '',
-      hasError ? 'border-[var(--error)]' : '',
+      hasError ? 'border-[var(--error)]' : selectedOption ? 'border-[var(--accent-green)]' : '',
       disabled ? 'opacity-40 cursor-not-allowed' : '',
       inputClassName,
     ]
@@ -243,11 +242,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               aria-describedby={helperText ? `${id}-help` : undefined}
               aria-invalid={hasError || undefined}
             >
-              <span
-                className={
-                  selectedOption ? 'text-[var(--color-black)]' : 'text-[var(--text-body-tint)]'
-                }
-              >
+              <span className="text-[var(--color-black)]">
                 {selectedOption ? selectedOption.label : placeholder}
               </span>
             </div>

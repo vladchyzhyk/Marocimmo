@@ -4,8 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { BaseFilterProps } from './filter-types';
 import { FilterDropdown } from './FilterDropdown';
 import { useSearchParams } from '@/hooks/useSearchParams';
-import Image from 'next/image';
 import { CheckBox } from '../ui/CheckBox';
+import { FilterTriggerButton } from './FilterTriggerButton';
 
 interface BedsBathsFilterProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
@@ -173,29 +173,9 @@ export const BedsBathsFilter = ({
   );
 
   if (variant === 'compact') {
-    const displayValue = getDisplayValue() || 'Beds & Baths';
+    const displayValue = getDisplayValue();
 
-    const trigger = (
-      <button
-        type="button"
-        className="w-full h-10 rounded-[8px] px-4 border border-[var(--border)] bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer flex items-center justify-between hover:bg-[var(--bg-tint)] focus:border-[var(--accent-green)]"
-      >
-        <span
-          className={
-            getDisplayValue() ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
-          }
-        >
-          {displayValue}
-        </span>
-        <Image
-          src="/icons/ic_arrow_down.svg"
-          alt="Select"
-          width={20}
-          height={20}
-          className="transition-transform"
-        />
-      </button>
-    );
+    const trigger = <FilterTriggerButton displayValue={displayValue} placeholder="Beds & Baths" />;
 
     return (
       <FilterDropdown

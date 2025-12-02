@@ -6,7 +6,7 @@ import { FilterDropdown } from './FilterDropdown';
 import { formatFilterValue } from '@/utils/filterUtils';
 import InputSelect from '@/components/ui/InputSelect';
 import SegmentControl from '@/components/SegmentControl';
-import Image from 'next/image';
+import { FilterTriggerButton } from './FilterTriggerButton';
 
 interface PriceRangeProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
@@ -181,25 +181,7 @@ export const PriceRange = ({
   if (variant === 'compact') {
     const displayValue = getDisplayValue();
 
-    const trigger = (
-      <button
-        type="button"
-        className="w-full h-10 rounded-[8px] px-4 border border-[var(--border)] bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer flex items-center justify-between hover:bg-[var(--bg-tint)] focus:border-[var(--accent-green)]"
-      >
-        <span
-          className={displayValue ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'}
-        >
-          {displayValue || 'Price range'}
-        </span>
-        <Image
-          src="/icons/ic_arrow_down.svg"
-          alt="Select"
-          width={20}
-          height={20}
-          className="transition-transform"
-        />
-      </button>
-    );
+    const trigger = <FilterTriggerButton displayValue={displayValue} placeholder="Price range" />;
 
     return (
       <FilterDropdown

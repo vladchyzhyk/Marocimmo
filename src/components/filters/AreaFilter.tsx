@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { BaseFilterProps } from './filter-types';
 import { FilterDropdown } from './FilterDropdown';
 import InputSelect from '@/components/ui/InputSelect';
-import Image from 'next/image';
+import { FilterTriggerButton } from './FilterTriggerButton';
 
 interface AreaFilterProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
@@ -260,25 +260,7 @@ export const AreaFilter = ({
 
   if (variant === 'compact') {
     const trigger = (
-      <button
-        type="button"
-        className="w-full h-10 rounded-[8px] px-4 border border-[var(--border)] bg-white text-[var(--color-black)] body-lg outline-none transition-colors cursor-pointer flex items-center justify-between hover:bg-[var(--bg-tint)] focus:border-[var(--accent-green)]"
-      >
-        <span
-          className={
-            getDisplayValue() ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
-          }
-        >
-          {getDisplayValue() || 'Area'}
-        </span>
-        <Image
-          src="/icons/ic_arrow_down.svg"
-          alt="Select"
-          width={20}
-          height={20}
-          className="transition-transform"
-        />
-      </button>
+      <FilterTriggerButton displayValue={getDisplayValue()} placeholder="Area" />
     );
 
     return (
