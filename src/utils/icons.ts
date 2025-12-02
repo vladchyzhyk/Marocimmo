@@ -38,6 +38,7 @@ export { default as ListIcon } from '@/icons/ic_list.svg';
 export { default as MenuIcon } from '@/icons/ic_menu.svg';
 export { default as MicrowaveIcon } from '@/icons/ic_microwave.svg';
 export { default as MinusIcon } from '@/icons/ic_minus.svg';
+export { default as NoPropertiesIcon } from '@/icons/ic_no_properties.svg';
 export { default as MoroccanLoungeIcon } from '@/icons/ic_moroccan_lounge.svg';
 export { default as NotificationIcon } from '@/icons/ic_notification.svg';
 export { default as OfficeIcon } from '@/icons/ic_office.svg';

@@ -18,6 +18,7 @@ import { PropertyType } from '@/components/filters/filters-config';
 import { useCollectFilters } from '@/hooks/useCollectFilters';
 import { FilterTip } from '@/components/filters/FilterTip';
 import { ActiveFilters } from '@/components/filters/ActiveFilters';
+import { NoResults } from '@/components/search-results/NoResults';
 
 const mockProperties = [
   {
@@ -380,26 +381,30 @@ export default function SearchPage() {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 py-4">
-            {filteredProperties.map((property) => (
-              <PropertyCard
-                key={property.id}
-                id={property.id}
-                title={property.title}
-                price={property.price}
-                pricePerPeriod={property.pricePerPeriod}
-                currency={property.currency}
-                propertyType={property.propertyType}
-                location={property.location}
-                images={property.images}
-                isFavorite={property.isFavorite}
-                propertyIcons={getPropertyIcons(property)}
-                phone={property.phone}
-                whatsapp={property.whatsapp}
-                email={property.email}
-              />
-            ))}
-          </div>
+          {filteredProperties.length === 0 ? (
+            <NoResults />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 py-4">
+              {filteredProperties.map((property) => (
+                <PropertyCard
+                  key={property.id}
+                  id={property.id}
+                  title={property.title}
+                  price={property.price}
+                  pricePerPeriod={property.pricePerPeriod}
+                  currency={property.currency}
+                  propertyType={property.propertyType}
+                  location={property.location}
+                  images={property.images}
+                  isFavorite={property.isFavorite}
+                  propertyIcons={getPropertyIcons(property)}
+                  phone={property.phone}
+                  whatsapp={property.whatsapp}
+                  email={property.email}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <SearchFilterPopup
