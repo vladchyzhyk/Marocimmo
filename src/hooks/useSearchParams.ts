@@ -34,6 +34,64 @@ export interface SearchParams {
   zoningCategory?: string;
   amenities?: string[];
   exactMatch?: boolean;
+  guests?: {
+    maxGuests?: number;
+    disabledAccess?: boolean;
+    petsAllowed?: boolean;
+  };
+  building?: {
+    year?: string;
+    condition?: string;
+    renovation?: string;
+    propertyClass?: string;
+  };
+  view?: string;
+  ceilingMin?: number;
+  ceilingMax?: number;
+  availability?: {
+    moveInDate?: string;
+    showWithoutDate?: boolean;
+  };
+  specialCondition?: {
+    disabledAccess?: boolean;
+    petsAllowed?: boolean;
+    smokingAllowed?: boolean;
+    negotiablePrice?: boolean;
+    touristLicense?: boolean;
+    loti?: boolean;
+    titledLand?: boolean;
+  };
+  furnishing?: string[];
+  layout?: string[];
+  buildingAmenities?: string[];
+  safety?: string[];
+  utilities?: string[];
+  basicSupplies?: string[];
+  pricePeriod?: 'per-day' | 'per-month';
+  maxGuests?: number;
+  guestsDisabledAccess?: boolean;
+  guestsPetsAllowed?: boolean;
+  buildingYear?: string;
+  buildingCondition?: string;
+  buildingRenovation?: string;
+  buildingPropertyClass?: string;
+  ceilingMin?: number;
+  ceilingMax?: number;
+  moveInDate?: string;
+  showWithoutDate?: boolean;
+  specialDisabledAccess?: boolean;
+  specialPetsAllowed?: boolean;
+  specialSmokingAllowed?: boolean;
+  specialNegotiablePrice?: boolean;
+  specialTouristLicense?: boolean;
+  specialLoti?: boolean;
+  specialTitledLand?: boolean;
+  furnishing?: string[];
+  layout?: string[];
+  buildingAmenities?: string[];
+  safety?: string[];
+  utilities?: string[];
+  basicSupplies?: string[];
 }
 
 export interface UseSearchParamsReturn {
@@ -69,6 +127,32 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       zoningCategory: parseAsString,
       amenities: parseAsArrayOf(parseAsString),
       exactMatch: parseAsBoolean,
+      maxGuests: parseAsInteger,
+      guestsDisabledAccess: parseAsBoolean,
+      guestsPetsAllowed: parseAsBoolean,
+      buildingYear: parseAsString,
+      buildingCondition: parseAsString,
+      buildingRenovation: parseAsString,
+      buildingPropertyClass: parseAsString,
+      view: parseAsString,
+      ceilingMin: parseAsInteger,
+      ceilingMax: parseAsInteger,
+      moveInDate: parseAsString,
+      showWithoutDate: parseAsBoolean,
+      specialDisabledAccess: parseAsBoolean,
+      specialPetsAllowed: parseAsBoolean,
+      specialSmokingAllowed: parseAsBoolean,
+      specialNegotiablePrice: parseAsBoolean,
+      specialTouristLicense: parseAsBoolean,
+      specialLoti: parseAsBoolean,
+      specialTitledLand: parseAsBoolean,
+      furnishing: parseAsArrayOf(parseAsString),
+      layout: parseAsArrayOf(parseAsString),
+      buildingAmenities: parseAsArrayOf(parseAsString),
+      safety: parseAsArrayOf(parseAsString),
+      utilities: parseAsArrayOf(parseAsString),
+      basicSupplies: parseAsArrayOf(parseAsString),
+      pricePeriod: parseAsString,
     },
     {
       history: 'push',
@@ -101,6 +185,32 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       zoningCategory: null,
       amenities: null,
       exactMatch: null,
+      maxGuests: null,
+      guestsDisabledAccess: null,
+      guestsPetsAllowed: null,
+      buildingYear: null,
+      buildingCondition: null,
+      buildingRenovation: null,
+      buildingPropertyClass: null,
+      view: null,
+      ceilingMin: null,
+      ceilingMax: null,
+      moveInDate: null,
+      showWithoutDate: null,
+      specialDisabledAccess: null,
+      specialPetsAllowed: null,
+      specialSmokingAllowed: null,
+      specialNegotiablePrice: null,
+      specialTouristLicense: null,
+      specialLoti: null,
+      specialTitledLand: null,
+      furnishing: null,
+      layout: null,
+      buildingAmenities: null,
+      safety: null,
+      utilities: null,
+      basicSupplies: null,
+      pricePeriod: null,
     });
   };
 
@@ -130,6 +240,61 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       zoningCategory: searchParams.zoningCategory ?? undefined,
       amenities: searchParams.amenities ?? undefined,
       exactMatch: searchParams.exactMatch ?? undefined,
+      guests:
+        searchParams.maxGuests || searchParams.guestsDisabledAccess || searchParams.guestsPetsAllowed
+          ? {
+              maxGuests: searchParams.maxGuests ?? undefined,
+              disabledAccess: searchParams.guestsDisabledAccess ?? undefined,
+              petsAllowed: searchParams.guestsPetsAllowed ?? undefined,
+            }
+          : undefined,
+      building:
+        searchParams.buildingYear ||
+        searchParams.buildingCondition ||
+        searchParams.buildingRenovation ||
+        searchParams.buildingPropertyClass
+          ? {
+              year: searchParams.buildingYear ?? undefined,
+              condition: searchParams.buildingCondition ?? undefined,
+              renovation: searchParams.buildingRenovation ?? undefined,
+              propertyClass: searchParams.buildingPropertyClass ?? undefined,
+            }
+          : undefined,
+      view: searchParams.view ?? undefined,
+      ceilingMin: searchParams.ceilingMin ?? undefined,
+      ceilingMax: searchParams.ceilingMax ?? undefined,
+      availability:
+        searchParams.moveInDate || searchParams.showWithoutDate
+          ? {
+              moveInDate: searchParams.moveInDate ?? undefined,
+              showWithoutDate: searchParams.showWithoutDate ?? undefined,
+            }
+          : undefined,
+      specialCondition:
+        searchParams.specialDisabledAccess ||
+        searchParams.specialPetsAllowed ||
+        searchParams.specialSmokingAllowed ||
+        searchParams.specialNegotiablePrice ||
+        searchParams.specialTouristLicense ||
+        searchParams.specialLoti ||
+        searchParams.specialTitledLand
+          ? {
+              disabledAccess: searchParams.specialDisabledAccess ?? undefined,
+              petsAllowed: searchParams.specialPetsAllowed ?? undefined,
+              smokingAllowed: searchParams.specialSmokingAllowed ?? undefined,
+              negotiablePrice: searchParams.specialNegotiablePrice ?? undefined,
+              touristLicense: searchParams.specialTouristLicense ?? undefined,
+              loti: searchParams.specialLoti ?? undefined,
+              titledLand: searchParams.specialTitledLand ?? undefined,
+            }
+          : undefined,
+      furnishing: searchParams.furnishing ?? undefined,
+      layout: searchParams.layout ?? undefined,
+      buildingAmenities: searchParams.buildingAmenities ?? undefined,
+      safety: searchParams.safety ?? undefined,
+      utilities: searchParams.utilities ?? undefined,
+      basicSupplies: searchParams.basicSupplies ?? undefined,
+      pricePeriod: (searchParams.pricePeriod as 'per-day' | 'per-month') ?? undefined,
     },
     setSearchParams,
     clearSearchParams,
