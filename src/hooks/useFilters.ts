@@ -13,7 +13,7 @@ import { FilterValues, resetDependentFilters } from '@/utils/filterUtils';
 import { SearchParams } from 'nuqs';
 
 export const useFilters = () => {
-  const { searchParams, setSearchParams } = useSearchParams();
+  const { searchParams, setSearchParams, clearSearchParams } = useSearchParams();
 
   const propertyTypes = useMemo(
     () => (searchParams.propertyTypes || []) as PropertyType[],
@@ -48,6 +48,21 @@ export const useFilters = () => {
       furnished: searchParams.furnished,
       zoningCategory: searchParams.zoningCategory,
       amenities: searchParams.amenities,
+      exactMatch: searchParams.exactMatch,
+      guests: searchParams.guests,
+      building: searchParams.building,
+      view: searchParams.view,
+      ceilingMin: searchParams.ceilingMin,
+      ceilingMax: searchParams.ceilingMax,
+      availability: searchParams.availability,
+      specialCondition: searchParams.specialCondition,
+      furnishing: searchParams.furnishing,
+      layout: searchParams.layout,
+      buildingAmenities: searchParams.buildingAmenities,
+      safety: searchParams.safety,
+      utilities: searchParams.utilities,
+      basicSupplies: searchParams.basicSupplies,
+      pricePeriod: searchParams.pricePeriod,
     };
   }, [searchParams]);
 
@@ -80,9 +95,12 @@ export const useFilters = () => {
 
     switch (filterId) {
       case 'price': {
-        const rangeValue = value as { min?: number; max?: number } | undefined;
+        const rangeValue = value as
+          | { min?: number; max?: number; period?: 'per-day' | 'per-month' }
+          | undefined;
         updates.priceMin = rangeValue?.min;
         updates.priceMax = rangeValue?.max;
+        updates.pricePeriod = rangeValue?.period;
         break;
       }
       case 'location':
@@ -139,6 +157,93 @@ export const useFilters = () => {
       case 'amenities':
         updates.amenities = value as string[] | undefined;
         break;
+      case 'guests': {
+        const guestsValue = value as
+          | {
+              maxGuests?: number;
+              disabledAccess?: boolean;
+              petsAllowed?: boolean;
+            }
+          | undefined;
+        updates.maxGuests = guestsValue?.maxGuests;
+        updates.guestsDisabledAccess = guestsValue?.disabledAccess;
+        updates.guestsPetsAllowed = guestsValue?.petsAllowed;
+        break;
+      }
+      case 'building': {
+        const buildingValue = value as
+          | {
+              year?: string;
+              condition?: string;
+              renovation?: string;
+              propertyClass?: string;
+            }
+          | undefined;
+        updates.buildingYear = buildingValue?.year;
+        updates.buildingCondition = buildingValue?.condition;
+        updates.buildingRenovation = buildingValue?.renovation;
+        updates.buildingPropertyClass = buildingValue?.propertyClass;
+        break;
+      }
+      case 'view':
+        updates.view = value as string | undefined;
+        break;
+      case 'ceiling': {
+        const ceilingValue = value as { min?: number; max?: number } | undefined;
+        updates.ceilingMin = ceilingValue?.min;
+        updates.ceilingMax = ceilingValue?.max;
+        break;
+      }
+      case 'availability': {
+        const availabilityValue = value as
+          | {
+              moveInDate?: string;
+              showWithoutDate?: boolean;
+            }
+          | undefined;
+        updates.moveInDate = availabilityValue?.moveInDate;
+        updates.showWithoutDate = availabilityValue?.showWithoutDate;
+        break;
+      }
+      case 'specialCondition': {
+        const conditionValue = value as
+          | {
+              disabledAccess?: boolean;
+              petsAllowed?: boolean;
+              smokingAllowed?: boolean;
+              negotiablePrice?: boolean;
+              touristLicense?: boolean;
+              loti?: boolean;
+              titledLand?: boolean;
+            }
+          | undefined;
+        updates.specialDisabledAccess = conditionValue?.disabledAccess;
+        updates.specialPetsAllowed = conditionValue?.petsAllowed;
+        updates.specialSmokingAllowed = conditionValue?.smokingAllowed;
+        updates.specialNegotiablePrice = conditionValue?.negotiablePrice;
+        updates.specialTouristLicense = conditionValue?.touristLicense;
+        updates.specialLoti = conditionValue?.loti;
+        updates.specialTitledLand = conditionValue?.titledLand;
+        break;
+      }
+      case 'furnishing':
+        updates.furnishing = value as string[] | undefined;
+        break;
+      case 'layout':
+        updates.layout = value as string[] | undefined;
+        break;
+      case 'buildingAmenities':
+        updates.buildingAmenities = value as string[] | undefined;
+        break;
+      case 'safety':
+        updates.safety = value as string[] | undefined;
+        break;
+      case 'utilities':
+        updates.utilities = value as string[] | undefined;
+        break;
+      case 'basicSupplies':
+        updates.basicSupplies = value as string[] | undefined;
+        break;
     }
 
     setSearchParams(updates);
@@ -149,29 +254,9 @@ export const useFilters = () => {
     setSearchParams(resetValues as Partial<SearchParams>);
   };
 
-  const clearAllFilters = () => {
-    setSearchParams({
-      locationId: undefined,
-      priceMin: undefined,
-      priceMax: undefined,
-      areaMin: undefined,
-      areaMax: undefined,
-      livingAreaMin: undefined,
-      livingAreaMax: undefined,
-      totalAreaMin: undefined,
-      totalAreaMax: undefined,
-      bedrooms: undefined,
-      bathrooms: undefined,
-      rooms: undefined,
-      parking: undefined,
-      floorLevelMin: undefined,
-      floorLevelMax: undefined,
-      totalFloorsMin: undefined,
-      totalFloorsMax: undefined,
-      furnished: undefined,
-      zoningCategory: undefined,
-      amenities: undefined,
-    });
+  const clearAllFilters = async () => {
+    await clearSearchParams();
+    setSearchParams({ dealType: 'sale' });
   };
 
   return {
