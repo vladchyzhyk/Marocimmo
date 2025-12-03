@@ -11,12 +11,13 @@ import {
   OfficePropertyIcons,
   LandPropertyIcons,
 } from '@/components/property-icons';
-import { NotificationIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
+import { NotificationIcon } from '@/utils/icons';
 import { PropertyType } from '@/components/filters/filters-config';
 import { useCollectFilters } from '@/hooks/useCollectFilters';
 import { ActiveFilters } from '@/components/filters/ActiveFilters';
 import { NoResults } from '@/components/search-results/NoResults';
 import Pagination from '@/components/search-results/Pagination';
+import { SortDropdown } from '@/components/search-results/SortDropdown';
 
 const mockProperties = [
   {
@@ -424,16 +425,7 @@ export default function SearchPage() {
                   Save filter
                 </span>
               </button>
-              <button
-                type="button"
-                className="flex flex-row items-center pl-2 pr-0 gap-2 w-40 h-8 bg-white border border-[#E5E5E5] rounded-lg box-border flex-none hover:opacity-80 transition-opacity"
-              >
-                <SortIcon className="w-4 h-4 text-[#222222] flex-none" />
-                <span className="text-base leading-[140%] text-[#222222] flex-grow">
-                  Newest first
-                </span>
-                <ArrowDownIcon className="w-6 h-6 text-[#222222] flex-none" />
-              </button>
+              <SortDropdown />
             </div>
           </div>
           {filteredProperties.length === 0 ? (
