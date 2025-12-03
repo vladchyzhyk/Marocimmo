@@ -4,6 +4,7 @@ import Button from '@/components/ui/Button';
 import { ArrowNextIcon } from '@/utils/icons';
 import { useFilters } from '@/hooks/useFilters';
 import { FilterItem } from './FilterItem';
+import { ActiveFilters } from './ActiveFilters';
 import classNames from 'classnames';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
@@ -55,6 +56,10 @@ export const SearchFilterPopup = ({ isOpen, onClose, resultCount = 0 }: SearchFi
             Clean
           </Button>
         </div>
+      </div>
+
+      <div className="px-4 pt-4 pb-2 border-b border-[var(--border)]">
+        <ActiveFilters />
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-6">

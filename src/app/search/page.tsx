@@ -197,7 +197,7 @@ function SearchPageContent() {
             <FilterBar onMoreFiltersClick={() => setIsFilterPopupOpen(true)} />
           </div>
         </div>
-        <div className="mb-2">
+        <div className="mb-2 hidden md:block">
           <ActiveFilters />
         </div>
         <div className="divider w-screen h-[1px] relative left-[calc(-50vw+50%)] bg-[var(--border)]"></div>
