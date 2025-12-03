@@ -105,7 +105,7 @@ export const useFilters = () => {
           break;
         }
         case 'location':
-          updates.locationId = value as string | undefined;
+          updates.locationId = value === undefined ? null : (value as string);
           break;
         case 'area': {
           const areaValue = value as

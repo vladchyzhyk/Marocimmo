@@ -32,6 +32,7 @@ export const PropertyTypeFilter = ({
         onChange={handleChange}
         placeholder="Type of property"
         className="w-full min-w-[200px] border rounded-[8px] border-[var(--border)]"
+        labelClassName="text-[var(--color-black)]"
       />
     </div>
   );
