@@ -126,7 +126,7 @@ export const PriceRange = ({
 
   const selectContent = (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2 ">
         <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
         {showPeriodToggle && (
           <SegmentControl
@@ -197,7 +197,7 @@ export const PriceRange = ({
 
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2 ">
         <h3 className="title-sm font-medium text-[var(--color-black)]">Price range</h3>
         {showPeriodToggle && (
           <SegmentControl
