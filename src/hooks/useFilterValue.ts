@@ -75,6 +75,7 @@ export const useFilterValue = (filterId: string) => {
         return {
           bedrooms: searchParams.bedrooms,
           bathrooms: searchParams.bathrooms,
+          exactMatch: searchParams.exactMatch,
         };
       case 'propertyType':
         return searchParams.propertyTypes;
@@ -226,9 +227,10 @@ export const useFilterValue = (filterId: string) => {
           updates.basicSupplies = value as string[] | undefined;
           break;
         case 'bedsBaths': {
-          const bedsBathsValue = value as { bedrooms?: number; bathrooms?: number };
+          const bedsBathsValue = value as { bedrooms?: number; bathrooms?: number; exactMatch?: boolean };
           updates.bedrooms = bedsBathsValue?.bedrooms;
           updates.bathrooms = bedsBathsValue?.bathrooms;
+          updates.exactMatch = bedsBathsValue?.exactMatch;
           break;
         }
         case 'propertyType':

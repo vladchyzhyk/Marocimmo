@@ -97,21 +97,53 @@ export const AreaFilter = ({
   const handleLivingAreaMinChange = (val: string) => {
     const numValue = val === 'no-min' ? undefined : parseInt(val, 10);
     setTempLivingAreaMin(numValue);
+    if (variant === 'select') {
+      onChange({
+        livingAreaMin: numValue,
+        livingAreaMax: tempLivingAreaMax,
+        totalAreaMin: tempTotalAreaMin,
+        totalAreaMax: tempTotalAreaMax,
+      });
+    }
   };
 
   const handleLivingAreaMaxChange = (val: string) => {
     const numValue = val === 'no-max' ? undefined : parseInt(val, 10);
     setTempLivingAreaMax(numValue);
+    if (variant === 'select') {
+      onChange({
+        livingAreaMin: tempLivingAreaMin,
+        livingAreaMax: numValue,
+        totalAreaMin: tempTotalAreaMin,
+        totalAreaMax: tempTotalAreaMax,
+      });
+    }
   };
 
   const handleTotalAreaMinChange = (val: string) => {
     const numValue = val === 'no-min' ? undefined : parseInt(val, 10);
     setTempTotalAreaMin(numValue);
+    if (variant === 'select') {
+      onChange({
+        livingAreaMin: tempLivingAreaMin,
+        livingAreaMax: tempLivingAreaMax,
+        totalAreaMin: numValue,
+        totalAreaMax: tempTotalAreaMax,
+      });
+    }
   };
 
   const handleTotalAreaMaxChange = (val: string) => {
     const numValue = val === 'no-max' ? undefined : parseInt(val, 10);
     setTempTotalAreaMax(numValue);
+    if (variant === 'select') {
+      onChange({
+        livingAreaMin: tempLivingAreaMin,
+        livingAreaMax: tempLivingAreaMax,
+        totalAreaMin: tempTotalAreaMin,
+        totalAreaMax: numValue,
+      });
+    }
   };
 
   const getLivingAreaMinValue = () =>

@@ -9,6 +9,8 @@ import { FilterTriggerButton } from './FilterTriggerButton';
 interface BedsBathsFilterProps {
   className?: string;
   variant?: 'compact' | 'select';
+  value?: { bedrooms?: number; bathrooms?: number; exactMatch?: boolean };
+  onChange?: (value: { bedrooms?: number; bathrooms?: number; exactMatch?: boolean }) => void;
 }
 
 const NUMBER_OPTIONS = [
@@ -31,11 +33,18 @@ const EXACT_MATCH_NUMBER_OPTIONS = [
 export const BedsBathsFilter = ({
   className = '',
   variant = 'select',
+  value,
+  onChange,
 }: BedsBathsFilterProps) => {
   const { searchParams, setSearchParams } = useSearchParams();
-  const [tempBedrooms, setTempBedrooms] = useState<number | undefined>(searchParams.bedrooms);
-  const [tempBathrooms, setTempBathrooms] = useState<number | undefined>(searchParams.bathrooms);
-  const [tempExactMatch, setTempExactMatch] = useState<boolean>(searchParams.exactMatch || false);
+  
+  const currentBedrooms = value?.bedrooms ?? searchParams.bedrooms;
+  const currentBathrooms = value?.bathrooms ?? searchParams.bathrooms;
+  const currentExactMatch = value?.exactMatch ?? searchParams.exactMatch ?? false;
+  
+  const [tempBedrooms, setTempBedrooms] = useState<number | undefined>(currentBedrooms);
+  const [tempBathrooms, setTempBathrooms] = useState<number | undefined>(currentBathrooms);
+  const [tempExactMatch, setTempExactMatch] = useState<boolean>(currentExactMatch);
 
   const numberOptions = useMemo(
     () => (tempExactMatch ? EXACT_MATCH_NUMBER_OPTIONS : NUMBER_OPTIONS),
@@ -43,10 +52,10 @@ export const BedsBathsFilter = ({
   );
 
   useEffect(() => {
-    setTempBedrooms(searchParams.bedrooms);
-    setTempBathrooms(searchParams.bathrooms);
-    setTempExactMatch(searchParams.exactMatch || false);
-  }, [searchParams.bedrooms, searchParams.bathrooms, searchParams.exactMatch]);
+    setTempBedrooms(currentBedrooms);
+    setTempBathrooms(currentBathrooms);
+    setTempExactMatch(currentExactMatch);
+  }, [currentBedrooms, currentBathrooms, currentExactMatch]);
 
   const handleExactMatchChange = (checked: boolean) => {
     setTempExactMatch(checked);
@@ -56,6 +65,28 @@ export const BedsBathsFilter = ({
       }
       if (tempBathrooms === 0 || tempBathrooms === undefined) {
         setTempBathrooms(undefined);
+      }
+    }
+    if (variant === 'select') {
+      const newBedrooms = checked && (tempBedrooms === 0 || tempBedrooms === undefined) 
+        ? undefined 
+        : tempBedrooms;
+      const newBathrooms = checked && (tempBathrooms === 0 || tempBathrooms === undefined) 
+        ? undefined 
+        : tempBathrooms;
+      const newValueObj = {
+        bedrooms: newBedrooms,
+        bathrooms: newBathrooms,
+        exactMatch: checked,
+      };
+      if (onChange) {
+        onChange(newValueObj);
+      } else {
+        setSearchParams({
+          bedrooms: newBedrooms,
+          bathrooms: newBathrooms,
+          exactMatch: checked,
+        });
       }
     }
   };
@@ -74,30 +105,77 @@ export const BedsBathsFilter = ({
   };
 
   const handleBedroomsChange = (val: number) => {
-    setTempBedrooms(val === 0 ? undefined : val);
+    const newValue = val === 0 ? undefined : val;
+    setTempBedrooms(newValue);
+    if (variant === 'select') {
+      const newValueObj = {
+        bedrooms: newValue,
+        bathrooms: tempBathrooms,
+        exactMatch: tempExactMatch,
+      };
+      if (onChange) {
+        onChange(newValueObj);
+      } else {
+        setSearchParams({
+          bedrooms: newValue,
+          bathrooms: tempBathrooms,
+          exactMatch: tempExactMatch,
+        });
+      }
+    }
   };
 
   const handleBathroomsChange = (val: number) => {
-    setTempBathrooms(val === 0 ? undefined : val);
+    const newValue = val === 0 ? undefined : val;
+    setTempBathrooms(newValue);
+    if (variant === 'select') {
+      const newValueObj = {
+        bedrooms: tempBedrooms,
+        bathrooms: newValue,
+        exactMatch: tempExactMatch,
+      };
+      if (onChange) {
+        onChange(newValueObj);
+      } else {
+        setSearchParams({
+          bedrooms: tempBedrooms,
+          bathrooms: newValue,
+          exactMatch: tempExactMatch,
+        });
+      }
+    }
   };
 
   const handleApply = () => {
-    setSearchParams({
+    const newValueObj = {
       bedrooms: tempBedrooms,
       bathrooms: tempBathrooms,
       exactMatch: tempExactMatch,
-    });
+    };
+    if (onChange) {
+      onChange(newValueObj);
+    } else {
+      setSearchParams({
+        bedrooms: tempBedrooms,
+        bathrooms: tempBathrooms,
+        exactMatch: tempExactMatch,
+      });
+    }
   };
 
   const handleClear = () => {
     setTempBedrooms(undefined);
     setTempBathrooms(undefined);
     setTempExactMatch(false);
-    setSearchParams({
-      bedrooms: undefined,
-      bathrooms: undefined,
-      exactMatch: undefined,
-    });
+    if (onChange) {
+      onChange(undefined);
+    } else {
+      setSearchParams({
+        bedrooms: undefined,
+        bathrooms: undefined,
+        exactMatch: undefined,
+      });
+    }
   };
 
   const renderNumberSelector = (
