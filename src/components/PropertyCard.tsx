@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { ArrowRightIcon, Favorite, Share, PhoneIcon, WhatsAppIcon, EmailIcon } from '@/utils/icons';
 import Button from './ui/Button';
 import { SharePropertyDialog } from './SharePropertyDialog';
+import { AuthModal } from './AuthModal';
+import { user } from './Header';
 import type { ReactNode } from 'react';
 
 export type PropertyCardProps = {
@@ -50,11 +52,17 @@ export const PropertyCard = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showContacts, setShowContacts] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsFav(!isFav);
-    onFavoriteClick?.();
+    if (user.isLoggedIn) {
+      setIsFav(!isFav);
+      console.log('Favorite toggled:', !isFav);
+      onFavoriteClick?.();
+    } else {
+      setIsAuthModalOpen(true);
+    }
   };
 
   const handleShareClick = (e: React.MouseEvent) => {
@@ -346,6 +354,11 @@ export const PropertyCard = ({
           image: currentImage,
           url: shareUrl,
         }}
+      />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialMode="signin"
       />
     </div>
   );

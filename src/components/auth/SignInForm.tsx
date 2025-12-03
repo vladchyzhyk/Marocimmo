@@ -8,9 +8,10 @@ import React, { useState } from 'react';
 type Props = {
   onSubmit?: (data: { email: string; password: string }) => void;
   className?: string;
+  hideSwitchButton?: boolean;
 };
 
-const SignInForm = ({ onSubmit, className = '' }: Props) => {
+const SignInForm = ({ onSubmit, className = '', hideSwitchButton = false }: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +51,7 @@ const SignInForm = ({ onSubmit, className = '' }: Props) => {
       className={className}
       submitDisabled={!email.trim() || !isEmailValid || !password.trim() || password.length < 8}
       onSubmitGuard={guardSubmit}
+      hideSwitchButton={hideSwitchButton}
     >
       <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3">
         <div>

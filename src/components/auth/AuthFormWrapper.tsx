@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '@/components/ui/Button'
-import { AppleIcon, GoogleIcon } from '@/utils/icons'
-import { usePathname, useRouter } from 'next/navigation'
-import React from 'react'
+import Button from '@/components/ui/Button';
+import { AppleIcon, GoogleIcon } from '@/utils/icons';
+import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
 
 type Props = {
   title: string;
@@ -14,6 +14,7 @@ type Props = {
   showSocial?: boolean;
   submitDisabled?: boolean;
   onSubmitGuard?: () => void;
+  hideSwitchButton?: boolean;
 };
 
 const AuthFormWrapper = ({
@@ -25,9 +26,19 @@ const AuthFormWrapper = ({
   showSocial = true,
   submitDisabled = false,
   onSubmitGuard,
+  hideSwitchButton = false,
 }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const handleSwitchMode = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push(pathname === '/sign-in' ? '/sign-up' : '/sign-in');
+  };
+
+  const getSwitchLabel = () => {
+    return pathname === '/sign-up' ? 'Log in' : 'Create account';
+  };
   return (
     <form
       onSubmit={onSubmit}
@@ -45,12 +56,10 @@ const AuthFormWrapper = ({
       {showSocial ? (
         <div className="flex flex-col gap-2 md:gap-1 lg:gap-2 xl:gap-2">
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <GoogleIcon className="w-4 h-4"/> Continue with
-            Google
+            <GoogleIcon className="w-4 h-4" /> Continue with Google
           </Button>
           <Button className="bg-[var(--color-black)]" variant="primary" size="lg" fullWidth>
-            <AppleIcon className="w-4 h-4"/> Continue with
-            Apple
+            <AppleIcon className="w-4 h-4" /> Continue with Apple
           </Button>
         </div>
       ) : null}
@@ -78,15 +87,15 @@ const AuthFormWrapper = ({
           {submitLabel}
         </Button>
       )}
-      <button
-        className="text-center title-md text-[var(--accent-green)] cursor-pointer underline"
-        onClick={(e) => {
-          e.preventDefault();
-          router.push(pathname === '/sign-in' ? '/sign-up' : '/sign-in');
-        }}
-      >
-        {pathname === '/sign-up' ? 'Log in' : 'Create account'}
-      </button>
+      {!hideSwitchButton && (
+        <button
+          type="button"
+          className="text-center title-md text-[var(--accent-green)] cursor-pointer underline"
+          onClick={handleSwitchMode}
+        >
+          {getSwitchLabel()}
+        </button>
+      )}
     </form>
   );
 };
