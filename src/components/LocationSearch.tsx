@@ -140,8 +140,8 @@ export const LocationSearch = ({
   return (
     <div className={`relative w-full ${className}`} ref={containerRef}>
       <div
-        className={`rounded-[8px] sm:rounded-none relative w-full h-12 md:h-10 lg:h-10 xl:h-10 px-4 pr-10 bg-white transition-colors flex items-center 
-         ${showDivider ? 'border-r border-[var(--border-input)]' : ''}`}
+        className={`${isSelected ? 'rounded-[8px]' : 'rounded-[8px] sm:rounded-none'} relative w-full h-12 md:h-10 lg:h-10 xl:h-10 px-4 pr-10 bg-white transition-colors flex items-center 
+         ${showDivider ? 'border-r border-[var(--border-input)]' : ''} ${isSelected ? 'border border-[var(--accent-green)]' : ''}`}
       >
         <div className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-[20px] h-[20px]  text-[var(--text-body-tint)] z-10">
           <Image src="/icons/ic_location.svg" alt="Location" width={16} height={16} />
