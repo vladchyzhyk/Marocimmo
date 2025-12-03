@@ -207,16 +207,16 @@ function SearchPageContent() {
               {filteredProperties.length}{' '}
               {filteredProperties.length === 1 ? 'property' : 'properties'} found
             </span>
-            <div className="flex justify-end items-center gap-2 w-[295px] h-8 flex-none">
+            <div className="flex justify-end items-center gap-2 h-8 flex-none">
               <button
                 type="button"
                 onClick={() => setIsSaveFilterModalOpen(true)}
-                className="flex flex-row justify-center items-center px-4 gap-2 w-[127px] h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg box-border flex-none hover:opacity-80 transition-opacity"
+                className="hidden md:flex flex-row justify-center items-center px-4 gap-2 h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg box-border flex-none hover:opacity-80 transition-opacity"
                 tabIndex={0}
                 aria-label="Save filter"
               >
                 <NotificationIcon className="w-4 h-4 text-[#222222] flex-none" />
-                <span className="text-base leading-[140%] text-[#222222] flex-none">
+                <span className="block text-base leading-[140%] text-[#222222] flex-none">
                   Save filter
                 </span>
               </button>
