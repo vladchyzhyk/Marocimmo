@@ -123,21 +123,21 @@ export const PropertyCard = ({
   return (
     <div>
       <div
-        className={`w-full border border-[var(--border)] rounded-lg overflow-hidden bg-[var(--white)] hover:shadow-lg transition-shadow ${className}`}
+        className={`w-full border border-[var(--border)] rounded-[8px] overflow-hidden bg-[var(--white)] hover:shadow-lg transition-shadow ${className}`}
       >
-        <div className="flex flex-col lg:flex-row h-full">
-          <div className="relative w-full lg:w-1/2 h-[200px] lg:h-auto bg-[var(--bg-tint)] overflow-hidden group">
+        <div className="flex flex-col lg:flex-row h-full gap-6">
+          <div className="relative w-full lg:w-[370px] h-[200px] lg:h-[208px] bg-[var(--bg-tint)] overflow-hidden group">
             <Image
               key={currentImageIndex}
               src={currentImage}
               alt={`${title} - Image ${currentImageIndex + 1}`}
               fill
               className="object-cover transition-opacity duration-300"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, 370px"
             />
 
-            <div className="absolute top-2 left-2 z-10">
-              <span className="px-2 py-1 label-sm-medium bg-[var(--pill-pending-bg)] text-[var(--color-black)] rounded">
+            <div className="absolute top-2 left-2 z-[1]">
+              <span className="px-2 py-1 label-sm-medium bg-[var(--pill-pending-bg)] text-[var(--color-black)] rounded-[8px] shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)]">
                 {propertyType}
               </span>
             </div>
@@ -147,18 +147,18 @@ export const PropertyCard = ({
                 <button
                   type="button"
                   onClick={handlePreviousImage}
-                  className="absolute top-1/2 left-3 -translate-y-1/2 w-8 h-8 rounded-[24px] bg-[rgba(34,34,34,0.4)] flex items-center justify-center hover:bg-[rgba(34,34,34,0.5)] transition-colors z-10"
+                  className="absolute top-1/2 left-2 -translate-y-1/2 w-8 h-8 rounded-[24px] bg-[rgba(34,34,34,0.4)] flex items-center justify-center hover:bg-[rgba(34,34,34,0.5)] transition-colors z-0"
                   aria-label="Previous image"
                 >
-                  <ArrowRightIcon className="w-6 h-6 text-white scale-x-[-1]" />
+                  <ArrowRightIcon className="w-5 h-5 text-white scale-x-[-1]" />
                 </button>
                 <button
                   type="button"
                   onClick={handleNextImage}
-                  className="absolute top-1/2 right-3 -translate-y-1/2 w-8 h-8 rounded-[24px] bg-[rgba(34,34,34,0.4)] flex items-center justify-center hover:bg-[rgba(34,34,34,0.5)] transition-colors z-10"
+                  className="absolute top-1/2 right-2 -translate-y-1/2 w-8 h-8 rounded-[24px] bg-[rgba(34,34,34,0.4)] flex items-center justify-center hover:bg-[rgba(34,34,34,0.5)] transition-colors z-0"
                   aria-label="Next image"
                 >
-                  <ArrowRightIcon className="w-6 h-6 text-white" />
+                  <ArrowRightIcon className="w-5 h-5 text-white" />
                 </button>
               </>
             )}
@@ -167,7 +167,7 @@ export const PropertyCard = ({
               <button
                 type="button"
                 onClick={handleFavoriteClick}
-                className={`w-9 h-9 flex items-center justify-center bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity ${
+                className={`w-9 h-9 flex items-center justify-center bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity ${
                   isFav ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
                 }`}
                 aria-label="Add to favorites"
@@ -179,7 +179,7 @@ export const PropertyCard = ({
               <button
                 type="button"
                 onClick={handleShareClick}
-                className="w-9 h-9 flex items-center justify-center bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity text-[var(--text-body-tint)]"
+                className="w-9 h-9 flex items-center justify-center bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity text-[var(--text-body-tint)]"
                 aria-label="Share"
               >
                 <Share className="w-5 h-5" />
@@ -192,7 +192,7 @@ export const PropertyCard = ({
             </div>
           </div>
 
-          <div className="flex-1 p-2 lg:p-4 md:p-6 flex flex-col justify-between relative">
+          <div className="flex-1 p-2 lg:py-2 lg:pr-4 lg:pl-0 flex flex-col justify-between relative">
             <div className="absolute top-4 right-4 flex items-center gap-2 z-10 hidden lg:flex">
               <button
                 type="button"
@@ -216,14 +216,14 @@ export const PropertyCard = ({
               </button>
             </div>
 
-            <div className="lg:hidden flex flex-col items-start gap-2 px-2 relative">
+            <div className="flex flex-col items-start gap-2 px-2 relative lg:hidden">
               <div className="flex flex-col items-start gap-2 w-full">
                 <div className="flex items-end justify-start gap-1 w-full">
                   <span className="title-xl text-[var(--accent-green)] font-bold">
                     {formattedPrice} {currency}
                   </span>
                   {pricePerPeriod && (
-                    <span className="body-md text-[#787878]">/ per {pricePerPeriod}</span>
+                    <span className="body-md text-[var(--text-pill)]">/ per {pricePerPeriod}</span>
                   )}
                 </div>
                 <div className="flex items-start gap-4">{propertyIcons}</div>
@@ -234,17 +234,19 @@ export const PropertyCard = ({
                     <button
                       type="button"
                       onClick={handlePhoneClick}
-                      className="flex items-center justify-center gap-2 pl-2 pr-4 h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg hover:opacity-80 transition-opacity"
+                      className="flex items-center justify-center gap-2 pl-2 pr-4 h-8 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:opacity-80 transition-opacity"
                     >
-                      <PhoneIcon className="w-4 h-4 text-[#519C2C]" />
-                      <span className="text-base leading-[140%] text-[#222222]">{phone}</span>
+                      <PhoneIcon className="w-4 h-4 text-[var(--accent-green)]" />
+                      <span className="text-base leading-[140%] text-[var(--color-black)]">
+                        {phone}
+                      </span>
                     </button>
                   )}
                   {whatsapp && (
                     <button
                       type="button"
                       onClick={handleWhatsAppClick}
-                      className="flex items-center justify-center w-8 h-8 p-2 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg hover:opacity-80 transition-opacity"
+                      className="flex items-center justify-center w-8 h-8 p-2 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:opacity-80 transition-opacity"
                     >
                       <WhatsAppIcon className="w-5 h-5" />
                     </button>
@@ -253,7 +255,7 @@ export const PropertyCard = ({
                     <button
                       type="button"
                       onClick={handleEmailClick}
-                      className="flex items-center justify-center w-8 h-8 p-2 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg hover:opacity-80 transition-opacity"
+                      className="flex items-center justify-center w-8 h-8 p-2 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:opacity-80 transition-opacity"
                     >
                       <EmailIcon className="w-5 h-5 text-[var(--text-body-tint)]" />
                     </button>
@@ -273,30 +275,32 @@ export const PropertyCard = ({
               )}
             </div>
 
-            <div className="hidden lg:flex flex-col gap-4">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-1">
-                  <span className="title-xl text-[var(--accent-green)]">
-                    {formattedPrice} {currency}
-                  </span>
-                  {pricePerPeriod && (
-                    <span className="body-md text-[var(--text-body-tint)]">
-                      / per {pricePerPeriod}
+            <div className="hidden lg:flex flex-col gap-4 py-2">
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 flex-1">
+                    <span className="title-xl text-[var(--accent-green)]">
+                      {formattedPrice} {currency}
                     </span>
-                  )}
+                    {pricePerPeriod && (
+                      <span className="body-md text-[var(--text-pill)]">
+                        / per {pricePerPeriod}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <h3 className="title-lg text-[var(--color-black)] line-clamp-2">{title}</h3>
               </div>
 
-              {propertyIcons}
+              <div className="flex items-start gap-4">{propertyIcons}</div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 mt-4">
-              <div className="hidden lg:flex items-center gap-1 text-[var(--text-body-tint)]">
+            <div className="hidden lg:flex items-center justify-between gap-2 pb-2">
+              <div className="flex items-center gap-2 flex-1">
                 <Image src="/icons/ic_location.svg" alt="Location" width={16} height={16} />
                 <span className="body-lg text-[var(--color-black)]">{location}</span>
               </div>
-              <div className="hidden lg:block">
+              <div>
                 {showContacts ? (
                   <div className="flex items-center gap-2">
                     {phone && (
@@ -313,7 +317,7 @@ export const PropertyCard = ({
                       <button
                         type="button"
                         onClick={handleWhatsAppClick}
-                        className="flex items-center justify-center w-8 h-8 p-2 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg hover:opacity-80 transition-opacity"
+                        className="flex items-center justify-center w-8 h-8 p-2 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:opacity-80 transition-opacity"
                       >
                         <WhatsAppIcon className="w-5 h-5" />
                       </button>
@@ -322,7 +326,7 @@ export const PropertyCard = ({
                       <button
                         type="button"
                         onClick={handleEmailClick}
-                        className="flex items-center justify-center w-8 h-8 p-2 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg hover:opacity-80 transition-opacity"
+                        className="flex items-center justify-center w-8 h-8 p-2 bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg hover:opacity-80 transition-opacity"
                       >
                         <EmailIcon className="w-5 h-5 text-[var(--text-body-tint)]" />
                       </button>
@@ -335,7 +339,7 @@ export const PropertyCard = ({
                     variant="primary"
                     size="md"
                     fullWidth={false}
-                    className="whitespace-nowrap"
+                    className="whitespace-nowrap bg-[var(--primarybutton-hover)] text-white body-md px-4 h-8 rounded-[8px]"
                   />
                 )}
               </div>
