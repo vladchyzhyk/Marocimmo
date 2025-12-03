@@ -1,24 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import PropertyCard from '@/components/PropertyCard';
 import { LocationFilter } from '@/components/search-results/Filters';
 import { FilterBar } from '@/components/filters/FilterBar';
 import { SearchFilterPopup } from '@/components/filters/SearchFilterPopup';
-import SegmentControl from '@/components/SegmentControl';
 import {
   HousePropertyIcons,
   OfficePropertyIcons,
   LandPropertyIcons,
 } from '@/components/property-icons';
 import { NotificationIcon, ArrowDownIcon, SortIcon } from '@/utils/icons';
-import { DEAL_TYPE_OPTIONS } from '@/utils/constants';
 import { PropertyType } from '@/components/filters/filters-config';
 import { useCollectFilters } from '@/hooks/useCollectFilters';
-import { FilterTip } from '@/components/filters/FilterTip';
 import { ActiveFilters } from '@/components/filters/ActiveFilters';
 import { NoResults } from '@/components/search-results/NoResults';
+import Pagination from '@/components/search-results/Pagination';
 
 const mockProperties = [
   {
@@ -252,64 +250,124 @@ const mockProperties = [
   },
 ];
 
+const ITEMS_PER_PAGE = 10;
+
 export default function SearchPage() {
   const { searchParams, setSearchParams } = useSearchParams();
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
-  const { activeFilters } = useCollectFilters({ onlyActive: true });
+  useCollectFilters({ onlyActive: true });
 
-  console.log('Active Filters:', activeFilters);
+  const currentPage = searchParams.page ?? 1;
+  const prevFiltersRef = useRef<string>('');
 
-  const filteredProperties = mockProperties.filter((property) => {
-    if (searchParams.dealType && searchParams.dealType !== 'sale') {
-      return true;
-    }
-    if (searchParams.locationId && property.locationId !== searchParams.locationId) {
-      return false;
-    }
-    if (searchParams.propertyTypes.length > 0) {
-      const propertyTypeLower = property.propertyType.toLowerCase() as PropertyType;
-      if (!searchParams.propertyTypes.includes(propertyTypeLower)) {
+  const filteredProperties = useMemo(() => {
+    return mockProperties.filter((property) => {
+      if (searchParams.dealType && searchParams.dealType !== 'sale') {
+        return true;
+      }
+      if (searchParams.locationId && property.locationId !== searchParams.locationId) {
         return false;
       }
-    }
-
-    if (searchParams.priceMin !== undefined && property.price < searchParams.priceMin) {
-      return false;
-    }
-    if (searchParams.priceMax !== undefined && property.price > searchParams.priceMax) {
-      return false;
-    }
-    if (searchParams.areaMin !== undefined && property.area < searchParams.areaMin) {
-      return false;
-    }
-    if (searchParams.areaMax !== undefined && property.area > searchParams.areaMax) {
-      return false;
-    }
-    if (searchParams.bedrooms !== undefined && property.bedrooms !== undefined) {
-      if (searchParams.exactMatch) {
-        if (property.bedrooms !== searchParams.bedrooms) {
-          return false;
-        }
-      } else {
-        if (property.bedrooms < searchParams.bedrooms) {
+      if (searchParams.propertyTypes.length > 0) {
+        const propertyTypeLower = property.propertyType.toLowerCase() as PropertyType;
+        if (!searchParams.propertyTypes.includes(propertyTypeLower)) {
           return false;
         }
       }
-    }
-    if (searchParams.bathrooms !== undefined && property.bathrooms !== undefined) {
-      if (searchParams.exactMatch) {
-        if (property.bathrooms !== searchParams.bathrooms) {
-          return false;
-        }
-      } else {
-        if (property.bathrooms < searchParams.bathrooms) {
-          return false;
+
+      if (searchParams.priceMin !== undefined && property.price < searchParams.priceMin) {
+        return false;
+      }
+      if (searchParams.priceMax !== undefined && property.price > searchParams.priceMax) {
+        return false;
+      }
+      if (searchParams.areaMin !== undefined && property.area < searchParams.areaMin) {
+        return false;
+      }
+      if (searchParams.areaMax !== undefined && property.area > searchParams.areaMax) {
+        return false;
+      }
+      if (searchParams.bedrooms !== undefined && property.bedrooms !== undefined) {
+        if (searchParams.exactMatch) {
+          if (property.bedrooms !== searchParams.bedrooms) {
+            return false;
+          }
+        } else {
+          if (property.bedrooms < searchParams.bedrooms) {
+            return false;
+          }
         }
       }
+      if (searchParams.bathrooms !== undefined && property.bathrooms !== undefined) {
+        if (searchParams.exactMatch) {
+          if (property.bathrooms !== searchParams.bathrooms) {
+            return false;
+          }
+        } else {
+          if (property.bathrooms < searchParams.bathrooms) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    });
+  }, [
+    searchParams.dealType,
+    searchParams.locationId,
+    searchParams.propertyTypes,
+    searchParams.priceMin,
+    searchParams.priceMax,
+    searchParams.areaMin,
+    searchParams.areaMax,
+    searchParams.bedrooms,
+    searchParams.bathrooms,
+    searchParams.exactMatch,
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredProperties.length / ITEMS_PER_PAGE));
+  const paginatedProperties = filteredProperties.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  useEffect(() => {
+    const currentFilters = JSON.stringify({
+      dealType: searchParams.dealType,
+      locationId: searchParams.locationId,
+      propertyTypes: searchParams.propertyTypes,
+      priceMin: searchParams.priceMin,
+      priceMax: searchParams.priceMax,
+      areaMin: searchParams.areaMin,
+      areaMax: searchParams.areaMax,
+      bedrooms: searchParams.bedrooms,
+      bathrooms: searchParams.bathrooms,
+      exactMatch: searchParams.exactMatch,
+    });
+
+    if (prevFiltersRef.current && prevFiltersRef.current !== currentFilters && currentPage !== 1) {
+      setSearchParams({ page: 1 });
     }
 
-    return true;
-  });
+    prevFiltersRef.current = currentFilters;
+  }, [
+    searchParams.dealType,
+    searchParams.locationId,
+    searchParams.propertyTypes,
+    searchParams.priceMin,
+    searchParams.priceMax,
+    searchParams.areaMin,
+    searchParams.areaMax,
+    searchParams.bedrooms,
+    searchParams.bathrooms,
+    searchParams.exactMatch,
+    currentPage,
+    setSearchParams,
+  ]);
+
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page });
+  };
 
   const getPropertyIcons = (property: (typeof mockProperties)[0]) => {
     const propertyType = property.propertyType.toLowerCase();
@@ -338,10 +396,6 @@ export default function SearchPage() {
     );
   };
 
-  const handleDealTypeChange = (value: string) => {
-    setSearchParams({ dealType: value as 'sale' | 'long-term' | 'short-term' });
-  };
-
   return (
     <main className="w-full min-h-screen">
       <div className="w-full max-w-[1240px] mx-auto px-4 mt-[69px]">
@@ -357,7 +411,8 @@ export default function SearchPage() {
         <div className="w-full lg:w-3/4">
           <div className="flex items-center gap-2 p-0 ">
             <span className="text-base leading-[140%] text-[#222222] flex items-center flex-grow">
-              {filteredProperties.length} properties found
+              {filteredProperties.length}{' '}
+              {filteredProperties.length === 1 ? 'property' : 'properties'} found
             </span>
             <div className="flex justify-end items-center gap-2 w-[295px] h-8 flex-none">
               <button
@@ -384,26 +439,37 @@ export default function SearchPage() {
           {filteredProperties.length === 0 ? (
             <NoResults />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 py-4">
-              {filteredProperties.map((property) => (
-                <PropertyCard
-                  key={property.id}
-                  id={property.id}
-                  title={property.title}
-                  price={property.price}
-                  pricePerPeriod={property.pricePerPeriod}
-                  currency={property.currency}
-                  propertyType={property.propertyType}
-                  location={property.location}
-                  images={property.images}
-                  isFavorite={property.isFavorite}
-                  propertyIcons={getPropertyIcons(property)}
-                  phone={property.phone}
-                  whatsapp={property.whatsapp}
-                  email={property.email}
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 py-4">
+                {paginatedProperties.map((property) => (
+                  <PropertyCard
+                    key={property.id}
+                    id={property.id}
+                    title={property.title}
+                    price={property.price}
+                    pricePerPeriod={property.pricePerPeriod}
+                    currency={property.currency}
+                    propertyType={property.propertyType}
+                    location={property.location}
+                    images={property.images}
+                    isFavorite={property.isFavorite}
+                    propertyIcons={getPropertyIcons(property)}
+                    phone={property.phone}
+                    whatsapp={property.whatsapp}
+                    email={property.email}
+                  />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="flex justify-center py-6">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

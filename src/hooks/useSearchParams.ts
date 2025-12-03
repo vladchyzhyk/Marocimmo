@@ -13,6 +13,7 @@ export interface SearchParams {
   dealType: DealType | null;
   locationId: string | null;
   propertyTypes: PropertyType[];
+  page?: number;
   priceMin?: number;
   priceMax?: number;
   areaMin?: number;
@@ -106,6 +107,7 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       dealType: parseAsString.withDefault('sale'),
       locationId: parseAsString,
       propertyTypes: parseAsArrayOf(parseAsString).withDefault([]),
+      page: parseAsInteger.withDefault(1),
       priceMin: parseAsInteger,
       priceMax: parseAsInteger,
       areaMin: parseAsInteger,
@@ -164,6 +166,7 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       dealType: null,
       locationId: null,
       propertyTypes: null,
+      page: null,
       priceMin: null,
       priceMax: null,
       areaMin: null,
@@ -219,6 +222,7 @@ export const useSearchParams = (): UseSearchParamsReturn => {
       dealType: searchParams.dealType as DealType | null,
       locationId: searchParams.locationId,
       propertyTypes: (searchParams.propertyTypes || []) as PropertyType[],
+      page: searchParams.page ?? 1,
       priceMin: searchParams.priceMin ?? undefined,
       priceMax: searchParams.priceMax ?? undefined,
       areaMin: searchParams.areaMin ?? undefined,
