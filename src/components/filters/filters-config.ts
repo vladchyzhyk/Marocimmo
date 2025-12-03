@@ -556,7 +556,11 @@ export function getFiltersForMobileBar(
     .filter((f) => {
       if (
         isMobile &&
-        (f.id === 'price' || f.id === 'bedsBaths' || f.id === 'propertyType' || f.id === 'area')
+        (f.id === 'price' ||
+          f.id === 'bedsBaths' ||
+          f.id === 'propertyType' ||
+          f.id === 'area' ||
+          f.id === 'guests')
       ) {
         return false;
       }
