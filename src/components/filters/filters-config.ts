@@ -81,38 +81,6 @@ const areaConfig: Omit<FilterConfig, 'components'> = {
   unit: 'm²',
 };
 
-const roomsConfig: Omit<FilterConfig, 'components'> = {
-  id: 'rooms',
-  label: 'Rooms',
-  type: 'number',
-  visibleFor: {
-    propertyTypes: ['office'],
-    dealTypes: ['sale', 'long-term'],
-  },
-  mobile: {
-    showInBar: false,
-    priority: 5,
-  },
-  min: 0,
-  max: 50,
-};
-
-const parkingConfig: Omit<FilterConfig, 'components'> = {
-  id: 'parking',
-  label: 'Parking',
-  type: 'number',
-  visibleFor: {
-    propertyTypes: ['office', 'commercial'],
-    dealTypes: ['sale', 'long-term', 'short-term'],
-  },
-  mobile: {
-    showInBar: false,
-    priority: 6,
-  },
-  min: 0,
-  max: 20,
-};
-
 const floorConfig: Omit<FilterConfig, 'components'> = {
   id: 'floor',
   label: 'Floor',

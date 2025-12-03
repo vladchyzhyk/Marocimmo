@@ -1,8 +1,7 @@
 import { useSearchParams } from '@/hooks/useSearchParams';
 import { LocationSearch, LocationSearchOption } from '../LocationSearch';
-import TypePropertySelect from '../TypePropertySelect';
 import { useState, useMemo, useEffect } from 'react';
-import { LOCATION_SEARCH_OPTIONS, PROPERTY_TYPE_OPTIONS } from '@/utils/constants';
+import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
 
 export const LocationFilter = () => {
   const { searchParams, setSearchParams } = useSearchParams();

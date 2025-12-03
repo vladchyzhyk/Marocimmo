@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import LanguageDropdown from './LanguageDropdown';
 import NotificationsDropdown from './NotificationDropdown';
@@ -25,23 +25,64 @@ type HeaderProps = {
   className?: string;
 };
 
-const Header = ({ className = '' }: HeaderProps) => {
-  const pathname = usePathname();
-  const router = useRouter();
+const HeaderNav = () => {
   const { searchParams, setSearchParams } = useSearchParams();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ar'>('en');
-  const [isSaveExitOpen, setIsSaveExitOpen] = useState(false);
-
   const currentDealType = searchParams.dealType || 'sale';
 
   const handleNavClick = async (dealType: DealType, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     await setSearchParams({ dealType });
-    // router.push('/?dealType=' + dealType);
   };
+
+  return (
+    <nav className="w-full hidden lg:block">
+      <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-4 lg:gap-6 xl:gap-8 py-1">
+        {[
+          { href: '/', label: 'Short-time Rent', dealType: 'short-term' },
+          { href: '/', label: 'Long-time Rent', dealType: 'long-term' },
+          { href: '/', label: 'Buy', dealType: 'sale' },
+        ].map((item) => {
+          const isActive = currentDealType === item.dealType;
+          return (
+            <li key={item.label}>
+              <Link
+                href={item.href}
+                onClick={(e) => handleNavClick(item.dealType as DealType, e)}
+                className={classNames(
+                  'whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md',
+                  {
+                    'font-medium underline decoration-solid decoration-[var(--color-black)] text-base leading-[100%]':
+                      isActive,
+                  },
+                )}
+                style={
+                  isActive
+                    ? {
+                        fontFamily: 'Helvetica Neue, sans-serif',
+                        textDecorationThickness: '9%',
+                        textUnderlineOffset: '50%',
+                      }
+                    : undefined
+                }
+              >
+                <span>{item.label}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+};
+
+const Header = ({ className = '' }: HeaderProps) => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'ar'>('en');
+  const [isSaveExitOpen, setIsSaveExitOpen] = useState(false);
 
   const handleUserButtonClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -141,43 +182,9 @@ const Header = ({ className = '' }: HeaderProps) => {
           </div>
 
           {/* Nav - grows and centers on larger screens */}
-          <nav className="w-full hidden lg:block">
-            <ul className="w-full flex justify-center md:justify-center items-center gap-3 md:gap-4 lg:gap-6 xl:gap-8 py-1">
-              {[
-                { href: '/', label: 'Short-time Rent', dealType: 'short-term' },
-                { href: '/', label: 'Long-time Rent', dealType: 'long-term' },
-                { href: '/', label: 'Buy', dealType: 'sale' },
-              ].map((item) => {
-                const isActive = currentDealType === item.dealType;
-                return (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      onClick={(e) => handleNavClick(item.dealType as DealType, e)}
-                      className={classNames(
-                        'whitespace-nowrap inline-flex items-center gap-2 px-2 py-2 lg:px-1.5 lg:py-1.5 xl:px-1 xl:py-1 rounded-[8px] text-[var(--color-black)] hover:bg-[var(--bg-tint)] body-lg md:body-md',
-                        {
-                          'font-medium underline decoration-solid decoration-[var(--color-black)] text-base leading-[100%]':
-                            isActive,
-                        },
-                      )}
-                      style={
-                        isActive
-                          ? {
-                              fontFamily: 'Helvetica Neue, sans-serif',
-                              textDecorationThickness: '9%',
-                              textUnderlineOffset: '50%',
-                            }
-                          : undefined
-                      }
-                    >
-                      <span>{item.label}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+          <Suspense fallback={<nav className="w-full hidden lg:block" />}>
+            <HeaderNav />
+          </Suspense>
 
           {/* Actions */}
           <div className="w-full max-w-[1/3] relative flex items-center justify-end gap-3 md:gap-2 lg:gap-2 xl:gap-2">

@@ -76,8 +76,6 @@ export interface SearchParams {
   buildingCondition?: string;
   buildingRenovation?: string;
   buildingPropertyClass?: string;
-  ceilingMin?: number;
-  ceilingMax?: number;
   moveInDate?: string;
   showWithoutDate?: boolean;
   specialDisabledAccess?: boolean;
@@ -87,12 +85,6 @@ export interface SearchParams {
   specialTouristLicense?: boolean;
   specialLoti?: boolean;
   specialTitledLand?: boolean;
-  furnishing?: string[];
-  layout?: string[];
-  buildingAmenities?: string[];
-  safety?: string[];
-  utilities?: string[];
-  basicSupplies?: string[];
 }
 
 export interface UseSearchParamsReturn {

@@ -2,7 +2,7 @@
 
 import { FilterConfig } from './filters-config';
 import { useFilterValue } from '@/hooks/useFilterValue';
-import { useState, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 type FilterContext = 'bar' | 'popup';
 
@@ -14,14 +14,7 @@ interface FilterItemProps {
 
 export const FilterItem = ({ config, context = 'popup', className = '' }: FilterItemProps) => {
   const { value, setValue } = useFilterValue(config.id);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile(768);
 
   const Component =
     context === 'bar' && !isMobile ? config.components.Desktop : config.components.Mobile;

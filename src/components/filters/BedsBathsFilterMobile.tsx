@@ -3,6 +3,6 @@
 import { BaseFilterProps } from './filter-types';
 import { BedsBathsFilter } from './BedsBathsFilter';
 
-export const BedsBathsFilterMobile = (props: BaseFilterProps) => {
-  return <BedsBathsFilter {...props} variant="select" />;
+export const BedsBathsFilterMobile = ({ className }: BaseFilterProps) => {
+  return <BedsBathsFilter className={className} variant="select" />;
 };

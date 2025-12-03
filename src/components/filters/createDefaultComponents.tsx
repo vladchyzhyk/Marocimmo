@@ -9,7 +9,7 @@ import { FilterToggle } from './FilterToggle';
 import { BaseFilterProps } from './filter-types';
 
 const createDefaultDesktop = (config: FilterConfig) => {
-  return ({ filterId, value, onChange, className }: BaseFilterProps) => {
+  const DefaultDesktopFilter = ({ value, onChange, className }: BaseFilterProps) => {
     switch (config.type) {
       case 'range':
         const rangeValue = value as { min?: number; max?: number } | undefined;
@@ -63,10 +63,12 @@ const createDefaultDesktop = (config: FilterConfig) => {
         return null;
     }
   };
+  DefaultDesktopFilter.displayName = `DefaultDesktopFilter(${config.id})`;
+  return DefaultDesktopFilter;
 };
 
 const createDefaultMobile = (config: FilterConfig) => {
-  return ({ filterId, value, onChange, className }: BaseFilterProps) => {
+  const DefaultMobileFilter = ({ value, onChange, className }: BaseFilterProps) => {
     switch (config.type) {
       case 'range':
         const rangeValue = value as { min?: number; max?: number } | undefined;
@@ -120,6 +122,8 @@ const createDefaultMobile = (config: FilterConfig) => {
         return null;
     }
   };
+  DefaultMobileFilter.displayName = `DefaultMobileFilter(${config.id})`;
+  return DefaultMobileFilter;
 };
 
 export const createDefaultComponents = (config: FilterConfig): FilterComponent => ({

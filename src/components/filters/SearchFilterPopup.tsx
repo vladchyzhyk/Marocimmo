@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Button from '@/components/ui/Button';
 import { ArrowNextIcon } from '@/utils/icons';
 import { useFilters } from '@/hooks/useFilters';
 import { FilterItem } from './FilterItem';
 import classNames from 'classnames';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface SearchFilterPopupProps {
   isOpen: boolean;
@@ -15,14 +15,7 @@ interface SearchFilterPopupProps {
 
 export const SearchFilterPopup = ({ isOpen, onClose, resultCount = 0 }: SearchFilterPopupProps) => {
   const { popupFilters, clearAllFilters } = useFilters();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile(768);
 
   if (!isMobile) {
     return null;

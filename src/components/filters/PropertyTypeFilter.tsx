@@ -1,21 +1,16 @@
 'use client';
 
-import { BaseFilterProps } from './filter-types';
 import TypePropertySelect from '../TypePropertySelect';
 import { PROPERTY_TYPE_OPTIONS } from '@/utils/constants';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import { PropertyType } from './filters-config';
 
-interface PropertyTypeFilterProps extends BaseFilterProps {
-  variant?: 'compact' | 'select';
+interface PropertyTypeFilterProps {
+  className?: string;
 }
 
 export const PropertyTypeFilter = ({
-  filterId,
-  value,
-  onChange,
   className = '',
-  variant = 'select',
 }: PropertyTypeFilterProps) => {
   const { searchParams, setSearchParams } = useSearchParams();
   const propertyTypes = (searchParams.propertyTypes || []) as string[];

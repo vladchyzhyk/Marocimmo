@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { FilterDropdown } from './FilterDropdown';
 import { FilterItem } from './FilterItem';
 import { useFilters } from '@/hooks/useFilters';
-import { ArrowDownIcon } from '@/utils/icons';
 import { isFilterActive } from '@/utils/countActiveFilters';
 import Image from 'next/image';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { getFilterValueById } from '@/utils/getFilterValueById';
 
 interface MoreFiltersDropdownProps {
   className?: string;
@@ -14,87 +14,12 @@ interface MoreFiltersDropdownProps {
 
 export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps) => {
   const { popupFilters, mobileBarFilters, visibleFilters, filterValues, clearAllFilters } = useFilters();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const getFilterValueById = (filterId: string) => {
-    switch (filterId) {
-      case 'price':
-        return { min: filterValues.priceMin, max: filterValues.priceMax };
-      case 'propertyType':
-        return filterValues.propertyTypes;
-      case 'area':
-        return {
-          livingAreaMin: filterValues.livingAreaMin,
-          livingAreaMax: filterValues.livingAreaMax,
-          totalAreaMin: filterValues.totalAreaMin,
-          totalAreaMax: filterValues.totalAreaMax,
-        };
-      case 'bedsBaths':
-        return {
-          bedrooms: filterValues.bedrooms,
-          bathrooms: filterValues.bathrooms,
-        };
-      case 'bedrooms':
-        return filterValues.bedrooms;
-      case 'bathrooms':
-        return filterValues.bathrooms;
-      case 'rooms':
-        return filterValues.rooms;
-      case 'parking':
-        return filterValues.parking;
-      case 'floor':
-        return {
-          floorLevelMin: filterValues.floorLevelMin,
-          floorLevelMax: filterValues.floorLevelMax,
-          totalFloorsMin: filterValues.totalFloorsMin,
-          totalFloorsMax: filterValues.totalFloorsMax,
-        };
-      case 'furnished':
-        return filterValues.furnished;
-      case 'zoningCategory':
-        return filterValues.zoningCategory;
-      case 'location':
-        return filterValues.location;
-      case 'guests':
-        return filterValues.guests;
-      case 'building':
-        return filterValues.building;
-      case 'view':
-        return filterValues.view;
-      case 'ceiling':
-        return { min: filterValues.ceilingMin, max: filterValues.ceilingMax };
-      case 'availability':
-        return filterValues.availability;
-      case 'specialCondition':
-        return filterValues.specialCondition;
-      case 'furnishing':
-        return filterValues.furnishing;
-      case 'layout':
-        return filterValues.layout;
-      case 'buildingAmenities':
-        return filterValues.buildingAmenities;
-      case 'safety':
-        return filterValues.safety;
-      case 'utilities':
-        return filterValues.utilities;
-      case 'basicSupplies':
-        return filterValues.basicSupplies;
-      default:
-        return undefined;
-    }
-  };
+  const isMobile = useIsMobile(768);
 
   const hiddenActiveFiltersCount = visibleFilters
     .filter((filter) => !mobileBarFilters.some((f) => f.id === filter.id))
     .filter((filter) => {
-      const value = getFilterValueById(filter.id);
+      const value = getFilterValueById(filter.id, filterValues);
       return isFilterActive(filter.id, value);
     }).length;
 

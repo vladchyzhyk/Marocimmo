@@ -9,6 +9,7 @@ interface AmenitiesFilterProps extends BaseFilterProps {
 }
 
 export const AmenitiesFilter = ({
+  filterId,
   options,
   value,
   onChange,
@@ -17,6 +18,7 @@ export const AmenitiesFilter = ({
 }: AmenitiesFilterProps) => {
   return (
     <CheckboxGroupFilter
+      filterId={filterId}
       title="Amenities"
       options={options}
       value={value}

@@ -7,7 +7,6 @@ import Button from './ui/Button';
 import type { ReactNode } from 'react';
 
 export type PropertyCardProps = {
-  id: string;
   title: string;
   price: number;
   currency?: string;
@@ -26,7 +25,6 @@ export type PropertyCardProps = {
 };
 
 export const PropertyCard = ({
-  id,
   title,
   price,
   currency = 'DH',

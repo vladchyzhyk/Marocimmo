@@ -70,10 +70,6 @@ export function buildSearchQuery(
     query.parking = filters.parking;
   }
 
-  if (filters.floor !== undefined) {
-    query.floor = filters.floor;
-  }
-
   if (filters.furnished !== undefined && (dealType === 'long-term' || dealType === 'short-term')) {
     query.furnished = filters.furnished;
   }

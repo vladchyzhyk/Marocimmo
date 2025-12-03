@@ -9,6 +9,7 @@ interface FurnishingFilterProps extends BaseFilterProps {
 }
 
 export const FurnishingFilter = ({
+  filterId,
   options,
   value,
   onChange,
@@ -17,6 +18,7 @@ export const FurnishingFilter = ({
 }: FurnishingFilterProps) => {
   return (
     <CheckboxGroupFilter
+      filterId={filterId}
       title="Furnishing & Essentials"
       options={options}
       value={value}

@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { useSearchParams } from './useSearchParams';
 import { FilterValue } from '@/components/filters/filter-types';
+import { PropertyType } from '@/components/filters/filters-config';
 
 export const useFilterValue = (filterId: string) => {
   const { searchParams, setSearchParams } = useSearchParams();
@@ -231,7 +232,7 @@ export const useFilterValue = (filterId: string) => {
           break;
         }
         case 'propertyType':
-          updates.propertyTypes = value as string[] | undefined;
+          updates.propertyTypes = value as PropertyType[] | undefined;
           break;
       }
 

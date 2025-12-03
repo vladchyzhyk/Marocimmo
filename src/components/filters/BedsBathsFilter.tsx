@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { BaseFilterProps } from './filter-types';
 import { FilterDropdown } from './FilterDropdown';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import { CheckBox } from '../ui/CheckBox';
 import { FilterTriggerButton } from './FilterTriggerButton';
 
-interface BedsBathsFilterProps extends BaseFilterProps {
+interface BedsBathsFilterProps {
+  className?: string;
   variant?: 'compact' | 'select';
 }
 
@@ -29,9 +29,6 @@ const EXACT_MATCH_NUMBER_OPTIONS = [
 ];
 
 export const BedsBathsFilter = ({
-  filterId,
-  value,
-  onChange,
   className = '',
   variant = 'select',
 }: BedsBathsFilterProps) => {

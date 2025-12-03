@@ -9,6 +9,7 @@ interface LayoutFilterProps extends BaseFilterProps {
 }
 
 export const LayoutFilter = ({
+  filterId,
   options,
   value,
   onChange,
@@ -17,6 +18,7 @@ export const LayoutFilter = ({
 }: LayoutFilterProps) => {
   return (
     <CheckboxGroupFilter
+      filterId={filterId}
       title="Layout & Style"
       options={options}
       value={value}

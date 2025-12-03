@@ -9,6 +9,7 @@ interface SafetyFilterProps extends BaseFilterProps {
 }
 
 export const SafetyFilter = ({
+  filterId,
   options,
   value,
   onChange,
@@ -17,6 +18,7 @@ export const SafetyFilter = ({
 }: SafetyFilterProps) => {
   return (
     <CheckboxGroupFilter
+      filterId={filterId}
       title="Safety & Security"
       options={options}
       value={value}

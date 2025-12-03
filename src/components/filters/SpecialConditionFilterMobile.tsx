@@ -10,7 +10,6 @@ export const SpecialConditionFilterMobile = (props: BaseFilterProps) => {
   const isApartment = propertyTypes.includes('apartment');
   const isLand = propertyTypes.includes('land');
   const isSale = dealType === 'sale';
-  const isShortTerm = dealType === 'short-term';
 
   return (
     <SpecialConditionFilter

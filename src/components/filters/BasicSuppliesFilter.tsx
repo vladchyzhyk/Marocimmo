@@ -9,6 +9,7 @@ interface BasicSuppliesFilterProps extends BaseFilterProps {
 }
 
 export const BasicSuppliesFilter = ({
+  filterId,
   options,
   value,
   onChange,
@@ -17,6 +18,7 @@ export const BasicSuppliesFilter = ({
 }: BasicSuppliesFilterProps) => {
   return (
     <CheckboxGroupFilter
+      filterId={filterId}
       title="Basic Supplies & Extras"
       options={options}
       value={value}

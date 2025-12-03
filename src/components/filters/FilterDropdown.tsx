@@ -74,8 +74,6 @@ export const FilterDropdown = ({
         const viewportHeight = window.innerHeight;
         const padding = 16;
 
-        const spaceRight = viewportWidth - rect.right;
-        const spaceLeft = rect.left;
         const spaceBottom = viewportHeight - rect.bottom;
         const spaceTop = rect.top;
 

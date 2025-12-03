@@ -51,7 +51,6 @@ const PRICE_MAX_OPTIONS = [
 ];
 
 export const PriceRange = ({
-  filterId,
   value,
   onChange,
   className = '',
