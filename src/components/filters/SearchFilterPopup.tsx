@@ -44,17 +44,14 @@ export const SearchFilterPopup = ({ isOpen, onClose, resultCount = 0 }: SearchFi
             >
               <ArrowNextIcon className="w-5 h-5 text-[var(--color-black)] rotate-180" />
             </button>
-            <p className="body-lg text-[var(--color-black)]">Filter</p>
+            <p className="title-lg text-[var(--color-black)]">Filter</p>
           </div>
-          <Button
-            variant="outline"
-            size="md"
-            fullWidth={false}
-            className="!w-auto !bg-[var(--bg-tint)] hover:!bg-white !px-4"
+          <button
+            className="title-sm text-[var(--accent-green)] transition-colors whitespace-nowrap"
             onClick={clearAllFilters}
           >
-            Clean
-          </Button>
+            Clear all filters
+          </button>
         </div>
       </div>
 
