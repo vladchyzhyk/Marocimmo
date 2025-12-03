@@ -189,7 +189,7 @@ function SearchPageContent() {
   };
 
   return (
-    <main className="w-full min-h-screen">
+    <main className="w-full min-h-screen overflow-x-hidden">
       <div className="w-full max-w-[1240px] mx-auto px-4 mt-[69px]">
         <div className="flex flex-col gap-4 py-4 border-b-[var(--border)]">
           <div className="flex gap-2">
@@ -197,10 +197,11 @@ function SearchPageContent() {
             <FilterBar onMoreFiltersClick={() => setIsFilterPopupOpen(true)} />
           </div>
         </div>
-        <div>
+        <div className="mb-2">
           <ActiveFilters />
         </div>
-        <div className="w-full lg:w-3/4">
+        <div className="divider w-screen h-[1px] relative left-[calc(-50vw+50%)] bg-[var(--border)]"></div>
+        <div className="w-full lg:w-3/4 mt-4">
           <div className="flex items-center gap-2 p-0 ">
             <span className="text-base leading-[140%] text-[#222222] flex items-center flex-grow">
               {filteredProperties.length}{' '}
