@@ -58,12 +58,15 @@ export default function Hero() {
 
   const handleLocationChange = (value: string) => {
     setLocationText(value);
-    if (value.trim()) {
-      setIsLocationLoading(true);
-      setTimeout(() => setIsLocationLoading(false), 500);
-    } else {
+
+    if (!value.trim()) {
+      setLocationId('');
       setIsLocationLoading(false);
+      return;
     }
+
+    setIsLocationLoading(true);
+    setTimeout(() => setIsLocationLoading(false), 500);
   };
 
   const handleLocationSelect = (option: LocationSearchOption) => {
@@ -136,6 +139,7 @@ export default function Hero() {
                     onCurrentLocationClick={handleCurrentLocationClick}
                     showCurrentLocation={true}
                     showDivider={true}
+                    textClassName="text-[var(--text-body-tint)]"
                   />
                 </div>
 
@@ -147,6 +151,7 @@ export default function Hero() {
                     placeholder="Type of property"
                     options={PROPERTY_TYPE_OPTIONS}
                     showDivider={true}
+                    labelClassName="text-[var(--text-body-tint)]"
                   />
                 </div>
 

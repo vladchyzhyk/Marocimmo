@@ -21,6 +21,7 @@ export type LocationSearchProps = {
   showCurrentLocation?: boolean;
   className?: string;
   showDivider?: boolean;
+  textClassName?: string;
 };
 
 export const LocationSearch = ({
@@ -37,6 +38,7 @@ export const LocationSearch = ({
   showCurrentLocation = true,
   className = '',
   showDivider = false,
+  textClassName = 'placeholder:text-[var(--text-body-tint)]',
 }: LocationSearchProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,7 +133,7 @@ export const LocationSearch = ({
     };
   }, []);
 
-  const isSelected = value && !value.trim().startsWith('Current location');
+  const isSelected = !!value.trim();
   const showDropdown =
     isOpen && (filteredLocations.length > 0 || !value.trim() || searchHistory.length > 0);
 
@@ -154,12 +156,8 @@ export const LocationSearch = ({
           onBlur={handleInputBlur}
           placeholder={isSelected ? '' : placeholder}
           className={`flex-1 body-lg text-left bg-transparent border-none outline-none pl-5 ${
-            isSelected
-              ? 'text-[var(--accent-green)]'
-              : value
-                ? 'text-[var(--color-black)]'
-                : 'text-[var(--text-body-tint)]'
-          }`}
+            !isSelected ? textClassName : ''
+          } ${isSelected ? 'text-[var(--accent-green)]' : ''}`}
         />
 
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">

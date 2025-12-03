@@ -10,6 +10,19 @@ export const LocationFilter = () => {
   const [locationSearchHistory, setLocationSearchHistory] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!searchParams.locationId) {
+      const isLocationTextFromOption = LOCATION_SEARCH_OPTIONS.some((opt) => {
+        const optionText = opt.region
+          ? `${opt.street}, ${opt.city}`
+          : `${opt.street}, ${opt.city}`;
+        return locationText === optionText || locationText === 'Current location';
+      });
+      if (isLocationTextFromOption) {
+        setLocationText('');
+      }
+      return;
+    }
+
     if (searchParams.locationId && !locationText) {
       const locationOption = LOCATION_SEARCH_OPTIONS.find(
         (opt) => opt.id === searchParams.locationId,
@@ -85,6 +98,7 @@ export const LocationFilter = () => {
         onChange={handleLocationChange}
         options={LOCATION_SEARCH_OPTIONS}
         className="flex-1 border rounded-[8px] border-[var(--border)]"
+        textClassName="text-[var(--color-black)] placeholder:text-[var(--color-black)]"
       />
     </div>
   );

@@ -19,6 +19,7 @@ export type TypePropertySelectProps = {
   options: TypePropertySelectOption[];
   showDivider?: boolean;
   className?: string;
+  labelClassName?: string;
 };
 
 export default function TypePropertySelect({
@@ -29,6 +30,7 @@ export default function TypePropertySelect({
   options,
   showDivider = false,
   className = '',
+  labelClassName = '',
 }: TypePropertySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [tempSelection, setTempSelection] = useState<string[]>(value);
@@ -168,8 +170,8 @@ export default function TypePropertySelect({
       >
         <span
           className={`flex-1 body-lg text-left ${
-            hasSelection ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
-          }`}
+            !hasSelection ? labelClassName : ''
+          } ${hasSelection ? 'text-[var(--accent-green)]' : ''}`}
         >
           {getDisplayText()}
         </span>
