@@ -2,24 +2,30 @@
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useSearchParams } from '@/hooks/useSearchParams';
-import PropertyCard from '@/components/PropertyCard';
+import { PropertyCard } from '@/components/PropertyCard';
 import { LocationFilter } from '@/components/search-results/Filters';
 import { FilterBar } from '@/components/filters/FilterBar';
 import { SearchFilterPopup } from '@/components/filters/SearchFilterPopup';
+import { SaveFilterModal } from '@/components/filters/SaveFilterModal';
+import { SaveFilterSuccessModal } from '@/components/filters/SaveFilterSuccessModal';
 import { NotificationIcon } from '@/utils/icons';
-import { PropertyType } from '@/components/filters/filters-config';
+import { PropertyType, DealType } from '@/components/filters/filters-config';
 import { ActiveFilters } from '@/components/filters/ActiveFilters';
 import { NoResults } from '@/components/search-results/NoResults';
 import Pagination from '@/components/search-results/Pagination';
 import { SortDropdown } from '@/components/search-results/SortDropdown';
 import { mockProperties } from '@/utils/mockProperties';
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
+import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
 
 const ITEMS_PER_PAGE = 10;
 
 function SearchPageContent() {
   const { searchParams, setSearchParams } = useSearchParams();
   const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
+  const [isSaveFilterModalOpen, setIsSaveFilterModalOpen] = useState(false);
+  const [isSaveFilterSuccessModalOpen, setIsSaveFilterSuccessModalOpen] = useState(false);
+  const [savedFilterName, setSavedFilterName] = useState('');
 
   const currentPage = searchParams.page ?? 1;
   const prevFiltersRef = useRef<string>('');
@@ -133,6 +139,55 @@ function SearchPageContent() {
     setSearchParams({ page });
   };
 
+  const generateFilterName = (): string => {
+    const parts: string[] = [];
+
+    if (searchParams.dealType) {
+      const dealTypeLabels: Record<DealType, string> = {
+        sale: 'Buy',
+        'long-term': 'Long-term Rent',
+        'short-term': 'Short-term Rent',
+      };
+      parts.push(dealTypeLabels[searchParams.dealType]);
+    }
+
+    if (searchParams.propertyTypes.length > 0) {
+      const propertyTypeLabels: Record<PropertyType, string> = {
+        apartment: 'Apartment',
+        house: 'House',
+        villa: 'Villa',
+        office: 'Office',
+        commercial: 'Commercial',
+        land: 'Land',
+      };
+      const propertyTypeLabel =
+        searchParams.propertyTypes.length === 1
+          ? propertyTypeLabels[searchParams.propertyTypes[0]]
+          : `${searchParams.propertyTypes.length} Property Types`;
+      parts.push(propertyTypeLabel);
+    }
+
+    if (searchParams.locationId) {
+      const location = LOCATION_SEARCH_OPTIONS.find((opt) => opt.id === searchParams.locationId);
+      if (location) {
+        if (searchParams.locationId === 'current') {
+          parts.push('Current location');
+        } else {
+          parts.push(`in ${location.street}`);
+        }
+      }
+    }
+
+    return parts.length > 0 ? parts.join(' ') : 'Saved filter';
+  };
+
+  const handleSaveFilter = (filterName: string) => {
+    console.log('Saving filter:', filterName, searchParams);
+    setSavedFilterName(filterName);
+    setIsSaveFilterModalOpen(false);
+    setIsSaveFilterSuccessModalOpen(true);
+  };
+
   return (
     <main className="w-full min-h-screen">
       <div className="w-full max-w-[1240px] mx-auto px-4 mt-[69px]">
@@ -154,7 +209,10 @@ function SearchPageContent() {
             <div className="flex justify-end items-center gap-2 w-[295px] h-8 flex-none">
               <button
                 type="button"
+                onClick={() => setIsSaveFilterModalOpen(true)}
                 className="flex flex-row justify-center items-center px-4 gap-2 w-[127px] h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg box-border flex-none hover:opacity-80 transition-opacity"
+                tabIndex={0}
+                aria-label="Save filter"
               >
                 <NotificationIcon className="w-4 h-4 text-[#222222] flex-none" />
                 <span className="text-base leading-[140%] text-[#222222] flex-none">
@@ -172,6 +230,7 @@ function SearchPageContent() {
                 {paginatedProperties.map((property) => (
                   <PropertyCard
                     key={property.id}
+                    id={property.id}
                     title={property.title}
                     price={property.price}
                     pricePerPeriod={property.pricePerPeriod}
@@ -204,6 +263,17 @@ function SearchPageContent() {
         isOpen={isFilterPopupOpen}
         onClose={() => setIsFilterPopupOpen(false)}
         resultCount={filteredProperties.length}
+      />
+      <SaveFilterModal
+        isOpen={isSaveFilterModalOpen}
+        onClose={() => setIsSaveFilterModalOpen(false)}
+        onSave={handleSaveFilter}
+        defaultFilterName={generateFilterName()}
+      />
+      <SaveFilterSuccessModal
+        isOpen={isSaveFilterSuccessModalOpen}
+        onClose={() => setIsSaveFilterSuccessModalOpen(false)}
+        filterName={savedFilterName}
       />
     </main>
   );
