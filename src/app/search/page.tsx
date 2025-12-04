@@ -17,6 +17,7 @@ import { SortDropdown } from '@/components/search-results/SortDropdown';
 import { mockProperties } from '@/utils/mockProperties';
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
 import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
+import Button from '@/components/ui/Button';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -211,7 +212,7 @@ function SearchPageContent() {
               <button
                 type="button"
                 onClick={() => setIsSaveFilterModalOpen(true)}
-                className="hidden md:flex flex-row justify-center items-center px-4 gap-2 h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg box-border flex-none hover:opacity-80 transition-opacity"
+                className="hidden md:flex flex-row justify-center items-center px-4 gap-2 h-8 bg-[#FAFAFA] border border-[#E5E5E5] rounded-lg box-border flex-none hover:border-[var(--accent-green)] transition-opacity"
                 tabIndex={0}
                 aria-label="Save filter"
               >
@@ -220,6 +221,7 @@ function SearchPageContent() {
                   Save filter
                 </span>
               </button>
+
               <SortDropdown />
             </div>
           </div>
