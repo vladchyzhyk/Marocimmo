@@ -25,8 +25,10 @@ export default function HeroTabs({ options, value, onChange }: HeroTabsProps) {
             role="tab"
             aria-selected={isSelected}
             onClick={() => onChange(opt.value)}
-            className={`w-full sm:w-fit px-6 py-4 h-[50px] whitespace-nowrap text-center label-sm-medium  transition-colors ${
-              isSelected ? 'bg-[var(--accent-green)] text-white' : 'text-[var(--color-black)]'
+            className={`w-full sm:w-fit px-6 py-4 h-[50px] whitespace-nowrap text-center label-sm-medium  transition-colors  ${
+              isSelected
+                ? 'bg-[var(--accent-green)] text-white'
+                : 'text-[var(--color-black)] border-b border-[var(--border)] bg-[var(--pill-archived-bg)]'
             }`}
           >
             <span className="body-md lg: body-lg">{opt.label}</span>
