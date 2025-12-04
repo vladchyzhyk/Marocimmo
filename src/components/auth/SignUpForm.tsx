@@ -11,9 +11,10 @@ import React, { useState } from 'react';
 type Props = {
   onSubmit?: (data: { email: string; password: string }) => void;
   className?: string;
+  hideSwitchButton?: boolean;
 };
 
-const SignUpForm = ({ onSubmit, className = '' }: Props) => {
+const SignUpForm = ({ onSubmit, className = '', hideSwitchButton = false }: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -72,6 +73,7 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
         password !== confirmPassword
       }
       onSubmitGuard={guardSubmit}
+      hideSwitchButton={hideSwitchButton}
     >
       <div className="flex flex-col gap-4 md:gap-3 lg:gap-3 xl:gap-3">
         <div>
@@ -226,8 +228,8 @@ const SignUpForm = ({ onSubmit, className = '' }: Props) => {
       >
         <div className="flex flex-col gap-3 md:gap-2 lg:gap-3 xl:gap-3">
           <p className="body-md text-[var(--color-black)]">
-            We&apos;ve sent you an email with instructions to reset your password. Check your inbox and
-            follow the steps there
+            We&apos;ve sent you an email with instructions to reset your password. Check your inbox
+            and follow the steps there
           </p>
           <p className="body-md text-[var(--color-black)]">
             Not your request? Or want to log in to another account? Select Return to login

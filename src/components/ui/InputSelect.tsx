@@ -52,8 +52,7 @@ const getInputStyles = (variant: 'default' | 'outline', size: 'sm' | 'md' | 'lg'
 
   const variantStyles = {
     default: 'border-[var(--border-input)]',
-    outline:
-      'border border-[var(--border)] hover:border-[var(--accent-green)] focus:border-[var(--accent-green)]',
+    outline: 'border border-[var(--border)]',
   };
 
   return `${base} ${sizeStyles[size]} ${paddingStyles[size]} ${variantStyles[variant]}`;
@@ -78,7 +77,7 @@ const getRightIconContainer = (size: 'sm' | 'md' | 'lg') => {
 };
 
 const dropdownBase =
-  'absolute top-full left-0 right-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] md:mt-[-0.125rem] pt-2 md:pt-1';
+  'absolute top-full left-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] md:mt-[-0.125rem] pt-2 md:pt-1 min-w-full w-auto';
 
 const dropdownOptionBase =
   'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
@@ -125,7 +124,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
     const computedInputClasses = [
       getInputStyles(variant, size),
       fullWidth ? 'w-full' : '',
-      hasError ? 'border-[var(--error)]' : '',
+      hasError ? 'border-[var(--error)]' : selectedOption ? 'border-[var(--accent-green)]' : '',
       disabled ? 'opacity-40 cursor-not-allowed' : '',
       inputClassName,
     ]
@@ -243,11 +242,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               aria-describedby={helperText ? `${id}-help` : undefined}
               aria-invalid={hasError || undefined}
             >
-              <span
-                className={
-                  selectedOption ? 'text-[var(--color-black)]' : 'text-[var(--text-body-tint)]'
-                }
-              >
+              <span className="text-[var(--color-black)]">
                 {selectedOption ? selectedOption.label : placeholder}
               </span>
             </div>

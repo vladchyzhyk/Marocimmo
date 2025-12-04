@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useSearchParams } from '@/hooks/useSearchParams';
+import { DealType } from './filters';
 import { user } from './Header';
 import Button, { ButtonVariant } from './ui/Button';
 import Modal from './ui/Modal';
@@ -44,6 +46,8 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = React.useState(false);
   const [isSaveExitModalOpen, setIsSaveExitModalOpen] = React.useState(false);
   const router = useRouter();
+  const { searchParams, setSearchParams } = useSearchParams();
+  const currentDealType = searchParams.dealType || 'sale';
 
   const languages = [
     { code: 'en', name: 'English', nativeName: 'English' },
@@ -67,6 +71,12 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
     setIsSaveExitModalOpen(false);
     onClose?.();
     router.push('/');
+  };
+
+  const handleNavClick = async (dealType: DealType, e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    await setSearchParams({ dealType });
+    onClose?.();
   };
 
   return (
@@ -252,18 +262,39 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
 
           <div className="flex lg:hidden flex-col gap-2 p-4">
             {[
-              { href: '#short-time', label: 'Short-time Rent' },
-              { href: '#long-time', label: 'Long-time Rent' },
-              { href: '#buy', label: 'Buy' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="w-full items-center gap-2 px-2 py-3 rounded-[8px] text-[var(--color-black)] hover:text-[var(--accent-green)] hover:bg-white body-lg transition-colors duration-300 cursor-pointer"
-              >
-                <span>{item.label}</span>
-              </Link>
-            ))}
+              { href: '/', label: 'Short-time Rent', dealType: 'short-term' },
+              { href: '/', label: 'Long-time Rent', dealType: 'long-term' },
+              { href: '/', label: 'Buy', dealType: 'sale' },
+            ].map((item) => {
+              const isActive = currentDealType === item.dealType;
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(item.dealType as DealType, e)}
+                  className={classNames(
+                    'w-full items-center gap-2 px-2 py-3 rounded-[8px] body-lg transition-colors duration-300 cursor-pointer',
+                    {
+                      'font-medium underline decoration-solid decoration-[var(--color-black)] text-base leading-[100%]':
+                        isActive,
+                      'text-[var(--color-black)] hover:text-[var(--accent-green)] hover:bg-white':
+                        !isActive,
+                    },
+                  )}
+                  style={
+                    isActive
+                      ? {
+                          fontFamily: 'Helvetica Neue, sans-serif',
+                          textDecorationThickness: '9%',
+                          textUnderlineOffset: '50%',
+                        }
+                      : undefined
+                  }
+                >
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Divider */}

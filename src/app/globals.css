@@ -31,6 +31,11 @@
 
   /* Typography (from Figma) */
   /* Heading */
+  --h1-size: 48px;
+  --h1-weight: 700;
+  --h1-leading: 1.2;
+  --h1-tracking: -0.02em;
+
   --h3-size: 32px;
   --h3-weight: 700;
   --h3-leading: 1.2;
@@ -115,6 +120,13 @@ body {
 }
 
 /* Typography utility classes */
+.heading-h1 {
+  font-size: var(--h1-size);
+  line-height: var(--h1-leading);
+  font-weight: var(--h1-weight);
+  letter-spacing: var(--h1-tracking);
+}
+
 .heading-h3 {
   font-size: var(--h3-size);
   line-height: var(--h3-leading);
@@ -211,6 +223,10 @@ body {
 
 /* Below lg responsive typography (10% smaller for screens below lg) */
 @media (max-width: 1023px) {
+  .heading-h1 {
+    font-size: calc(var(--h1-size) * 0.9);
+  }
+
   .heading-h3 {
     font-size: calc(var(--h3-size) * 0.9);
   }
@@ -266,6 +282,10 @@ body {
 
 /* Mobile typography (reset to 1.0 below md to override lg rule) */
 @media (max-width: 767px) {
+  .heading-h1 {
+    font-size: var(--h1-size);
+  }
+
   .heading-h3 {
     font-size: var(--h3-size);
   }
