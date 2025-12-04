@@ -102,8 +102,8 @@ const furnishedConfig: Omit<FilterConfig, 'components'> = {
   label: 'Furnished',
   type: 'toggle',
   visibleFor: {
-    propertyTypes: ['apartment', 'house', 'villa'],
-    dealTypes: ['long-term', 'short-term'],
+    propertyTypes: ['apartment', 'house', 'villa', 'office', 'commercial'],
+    dealTypes: ['sale', 'long-term'],
   },
   mobile: {
     showInBar: false,
@@ -250,7 +250,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
     label: 'View',
     type: 'custom',
     visibleFor: {
-      propertyTypes: ['apartment'],
+      propertyTypes: ['apartment', 'house', 'villa'],
       dealTypes: ['short-term'],
     },
     mobile: {
@@ -268,7 +268,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
     type: 'range',
     visibleFor: {
       propertyTypes: ['office', 'commercial'],
-      dealTypes: ['sale', 'long-term', 'short-term'],
+      dealTypes: ['sale', 'long-term'],
     },
     mobile: {
       showInBar: false,
@@ -288,7 +288,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
     label: 'Availability',
     type: 'custom',
     visibleFor: {
-      propertyTypes: ['house', 'villa', 'office', 'commercial'],
+      propertyTypes: ['apartment', 'house', 'villa', 'office', 'commercial'],
       dealTypes: ['long-term'],
     },
     mobile: {
@@ -333,6 +333,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
       { label: 'Wi-Fi', value: 'wifi' },
       { label: 'TV', value: 'tv' },
       { label: 'Satellite TV', value: 'satellite-tv' },
+      { label: 'Satellite dish', value: 'satellite-dish' },
       { label: 'Fiber optic cable', value: 'fiber-optic' },
       { label: 'Telephone wiring', value: 'telephone' },
       { label: 'Air conditioning', value: 'air-conditioning' },
@@ -419,6 +420,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
       { label: 'Garden', value: 'garden' },
       { label: 'Fireplace', value: 'fireplace' },
       { label: 'Grill zone', value: 'grill-zone' },
+      { label: 'Accessibility for disabled', value: 'accessibility-disabled' },
     ],
     components: {
       Desktop: BuildingAmenitiesFilterDesktop,
@@ -454,7 +456,7 @@ export const FILTERS_CONFIG: FilterConfig[] = [
     label: 'Utilities available',
     type: 'custom',
     visibleFor: {
-      propertyTypes: ['commercial', 'land'],
+      propertyTypes: ['house', 'villa', 'commercial', 'land'],
       dealTypes: ['sale', 'long-term', 'short-term'],
     },
     mobile: {

@@ -11,12 +11,12 @@ interface ViewFilterProps extends BaseFilterProps {
 
 const VIEW_OPTIONS = [
   { label: 'Any', value: 'any' },
-  { label: 'Sea view', value: 'sea' },
-  { label: 'Mountain view', value: 'mountain' },
+  { label: 'Street view', value: 'street' },
+  { label: 'Garden', value: 'garden' },
+  { label: 'Sea', value: 'sea' },
+  { label: 'Mountain', value: 'mountain' },
   { label: 'City view', value: 'city' },
-  { label: 'Garden view', value: 'garden' },
-  { label: 'Pool view', value: 'pool' },
-  { label: 'No view', value: 'no-view' },
+  { label: 'Wall / Lightwell', value: 'wall-lightwell' },
 ];
 
 export const ViewFilter = ({
@@ -91,4 +91,3 @@ export const ViewFilter = ({
 
   return <div className={className}>{content}</div>;
 };
-

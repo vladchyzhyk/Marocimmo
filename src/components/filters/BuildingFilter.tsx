@@ -11,43 +11,34 @@ interface BuildingFilterProps extends BaseFilterProps {
 
 const YEAR_OPTIONS = [
   { label: 'Any', value: 'any' },
-  { label: '2024', value: '2024' },
-  { label: '2023', value: '2023' },
-  { label: '2022', value: '2022' },
-  { label: '2021', value: '2021' },
-  { label: '2020', value: '2020' },
-  { label: '2019', value: '2019' },
-  { label: '2018', value: '2018' },
-  { label: '2017', value: '2017' },
-  { label: '2016', value: '2016' },
-  { label: '2015', value: '2015' },
-  { label: '2010-2014', value: '2010-2014' },
-  { label: '2000-2009', value: '2000-2009' },
-  { label: '1990-1999', value: '1990-1999' },
-  { label: 'Before 1990', value: 'before-1990' },
+  { label: 'Less than 1 year', value: 'less-than-1-year' },
+  { label: '1–5 years', value: '1-5-years' },
+  { label: '6–10 years', value: '6-10-years' },
+  { label: '11–20 years', value: '11-20-years' },
+  { label: '21+ years', value: '21-plus-years' },
 ];
 
 const CONDITION_OPTIONS = [
   { label: 'Any', value: 'any' },
   { label: 'New', value: 'new' },
-  { label: 'Excellent', value: 'excellent' },
   { label: 'Good', value: 'good' },
+  { label: 'Renovated', value: 'renovated' },
   { label: 'Needs renovation', value: 'needs-renovation' },
 ];
 
 const RENOVATION_OPTIONS = [
   { label: 'Any', value: 'any' },
-  { label: 'Recently renovated', value: 'recently' },
-  { label: 'Partially renovated', value: 'partial' },
-  { label: 'Not renovated', value: 'not' },
+  { label: 'No renovation', value: 'no-renovation' },
+  { label: 'Cosmetic renovation', value: 'cosmetic-renovation' },
+  { label: 'Mid-level renovation', value: 'mid-level-renovation' },
+  { label: 'Premium renovation', value: 'premium-renovation' },
 ];
 
 const PROPERTY_CLASS_OPTIONS = [
   { label: 'Any', value: 'any' },
-  { label: 'Luxury', value: 'luxury' },
-  { label: 'Premium', value: 'premium' },
-  { label: 'Standard', value: 'standard' },
-  { label: 'Economy', value: 'economy' },
+  { label: 'Economic', value: 'economic' },
+  { label: 'Mid-range', value: 'mid-range' },
+  { label: 'High-end', value: 'high-end' },
 ];
 
 export const BuildingFilter = ({
