@@ -37,11 +37,11 @@ export const BedsBathsFilter = ({
   onChange,
 }: BedsBathsFilterProps) => {
   const { searchParams, setSearchParams } = useSearchParams();
-  
+
   const currentBedrooms = value?.bedrooms ?? searchParams.bedrooms;
   const currentBathrooms = value?.bathrooms ?? searchParams.bathrooms;
   const currentExactMatch = value?.exactMatch ?? searchParams.exactMatch ?? false;
-  
+
   const [tempBedrooms, setTempBedrooms] = useState<number | undefined>(currentBedrooms);
   const [tempBathrooms, setTempBathrooms] = useState<number | undefined>(currentBathrooms);
   const [tempExactMatch, setTempExactMatch] = useState<boolean>(currentExactMatch);
@@ -68,12 +68,10 @@ export const BedsBathsFilter = ({
       }
     }
     if (variant === 'select') {
-      const newBedrooms = checked && (tempBedrooms === 0 || tempBedrooms === undefined) 
-        ? undefined 
-        : tempBedrooms;
-      const newBathrooms = checked && (tempBathrooms === 0 || tempBathrooms === undefined) 
-        ? undefined 
-        : tempBathrooms;
+      const newBedrooms =
+        checked && (tempBedrooms === 0 || tempBedrooms === undefined) ? undefined : tempBedrooms;
+      const newBathrooms =
+        checked && (tempBathrooms === 0 || tempBathrooms === undefined) ? undefined : tempBathrooms;
       const newValueObj = {
         bedrooms: newBedrooms,
         bathrooms: newBathrooms,
@@ -168,7 +166,11 @@ export const BedsBathsFilter = ({
     setTempBathrooms(undefined);
     setTempExactMatch(false);
     if (onChange) {
-      onChange(undefined);
+      onChange({
+        bedrooms: undefined,
+        bathrooms: undefined,
+        exactMatch: undefined,
+      });
     } else {
       setSearchParams({
         bedrooms: undefined,
