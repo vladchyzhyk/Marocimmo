@@ -343,24 +343,26 @@ const Header = ({ className = '' }: HeaderProps) => {
               isDropdownOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0',
             )}
           >
-            <UserDropdown
-              isOpen={isDropdownOpen}
-              onClose={handleCloseDropdown}
-              selectedLanguage={selectedLanguage}
-              buttonInfo={
-                getButtonInfo() as {
-                  text: string;
-                  variant: ButtonVariant;
-                  href: string;
+            <Suspense fallback={null}>
+              <UserDropdown
+                isOpen={isDropdownOpen}
+                onClose={handleCloseDropdown}
+                selectedLanguage={selectedLanguage}
+                buttonInfo={
+                  getButtonInfo() as {
+                    text: string;
+                    variant: ButtonVariant;
+                    href: string;
+                  }
                 }
-              }
-              onLanguageChange={handleLanguageChange}
-              onAddProperty={handleAddProperty}
-              onFavorites={handleFavorites}
-              onSavedFilters={handleSavedFilters}
-              onProfileSettings={handleProfileSettings}
-              onExit={handleExit}
-            />
+                onLanguageChange={handleLanguageChange}
+                onAddProperty={handleAddProperty}
+                onFavorites={handleFavorites}
+                onSavedFilters={handleSavedFilters}
+                onProfileSettings={handleProfileSettings}
+                onExit={handleExit}
+              />
+            </Suspense>
           </div>
         </div>
       </header>

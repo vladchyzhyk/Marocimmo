@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { AgenciesSection } from '@/components/main-page/agencies/AgenciesSection';
 import { AllPropertyTypes } from '@/components/main-page/all-property-types/AllPropertyTypes';
 import Hero from '@/components/main-page/hero/Hero';
@@ -17,7 +18,9 @@ export default function Home() {
       <Marocimmo />
       <StartListingSection />
       <AgenciesSection />
-      <MainFooter />
+      <Suspense fallback={null}>
+        <MainFooter />
+      </Suspense>
     </main>
   );
 }

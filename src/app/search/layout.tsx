@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import MainFooter from '@/components/MainFooter';
 
 export const metadata: Metadata = {
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <>
       {children}
-      <MainFooter />
+      <Suspense fallback={null}>
+        <MainFooter />
+      </Suspense>
     </>
   );
 }
