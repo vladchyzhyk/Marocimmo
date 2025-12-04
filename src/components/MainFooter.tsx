@@ -1,5 +1,10 @@
+'use client';
+
+import type { MouseEvent } from 'react';
 import Link from 'next/link';
 import { PlusIcon, FacebookIcon, XIcon, InstagramIcon, YoutubeIcon } from '@/utils/icons';
+import { DealType } from './filters';
+import { useSearchParams } from '@/hooks/useSearchParams';
 import Button from './ui/Button';
 
 const SocialIcons = () => (
@@ -44,6 +49,13 @@ const SocialIcons = () => (
 );
 
 const MainFooter = () => {
+  const { setSearchParams } = useSearchParams();
+
+  const handleExploreClick = async (dealType: DealType, event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    await setSearchParams({ dealType });
+  };
+
   return (
     <footer className="w-full bg-white border-t border-[var(--border)]">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-[80px]">
@@ -51,7 +63,9 @@ const MainFooter = () => {
           <div className="flex flex-row md:flex-row items-start md:items-center justify-between gap-4">
             <Link href="/" className="flex items-center gap-2">
               <span className="inline-flex items-center justify-center w-[34px] h-[34px] rounded-[8px] bg-[var(--accent-green)]" />
-              <span className="title-xl uppercase text-[var(--color-black)]">Marocimmo</span>
+              <span className="hidden md:block title-xl uppercase text-[var(--color-black)]">
+                Marocimmo
+              </span>
             </Link>
             <p className="hidden lg:block body-lg text-[var(--color-black)]">
               All real estate needs in one place
@@ -90,19 +104,22 @@ const MainFooter = () => {
                 <h4 className="title-md text-[var(--color-black)]">Explore</h4>
                 <div className="flex flex-col gap-3">
                   <Link
-                    href="/buy"
+                    href="/"
+                    onClick={(event) => handleExploreClick('sale', event)}
                     className="text-base font-bold leading-[1.2] tracking-[-0.02em] md:text-base md:font-normal md:leading-[1.4] md:tracking-[0em] text-[var(--color-black)] hover:text-[var(--accent-green)]"
                   >
                     Buy
                   </Link>
                   <Link
-                    href="/short-term-rent"
+                    href="/"
+                    onClick={(event) => handleExploreClick('short-term', event)}
                     className="text-base font-bold leading-[1.2] tracking-[-0.02em] md:text-base md:font-normal md:leading-[1.4] md:tracking-[0em] text-[var(--color-black)] hover:text-[var(--accent-green)]"
                   >
                     Short-time Rent
                   </Link>
                   <Link
-                    href="/long-term-rent"
+                    href="/"
+                    onClick={(event) => handleExploreClick('long-term', event)}
                     className="text-base font-bold leading-[1.2] tracking-[-0.02em] md:text-base md:font-normal md:leading-[1.4] md:tracking-[0em] text-[var(--color-black)] hover:text-[var(--accent-green)]"
                   >
                     Long-time Rent
