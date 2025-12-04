@@ -181,10 +181,12 @@ export const useFilterValue = (filterId: string) => {
           break;
         }
         case 'availability': {
-          const availabilityValue = value as {
-            moveInDate?: string;
-            showWithoutDate?: boolean;
-          };
+          const availabilityValue = value as
+            | {
+                moveInDate?: string;
+                showWithoutDate?: boolean;
+              }
+            | undefined;
           updates.moveInDate = availabilityValue?.moveInDate;
           updates.showWithoutDate = availabilityValue?.showWithoutDate;
           break;
@@ -227,7 +229,11 @@ export const useFilterValue = (filterId: string) => {
           updates.basicSupplies = value as string[] | undefined;
           break;
         case 'bedsBaths': {
-          const bedsBathsValue = value as { bedrooms?: number; bathrooms?: number; exactMatch?: boolean };
+          const bedsBathsValue = value as {
+            bedrooms?: number;
+            bathrooms?: number;
+            exactMatch?: boolean;
+          };
           updates.bedrooms = bedsBathsValue?.bedrooms;
           updates.bathrooms = bedsBathsValue?.bathrooms;
           updates.exactMatch = bedsBathsValue?.exactMatch;
