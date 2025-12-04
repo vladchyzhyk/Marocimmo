@@ -84,7 +84,7 @@ export { default as Parking } from '@/icons/ic_parking.svg';
 export { default as Rooms } from '@/icons/ic_rooms.svg';
 export { default as SquareMeters } from '@/icons/ic_square_meters.svg';
 export { default as OfficeRooms } from '@/icons/ic_office_rooms.svg';
-export { default as Favorite } from '@/icons/ic_favorite.svg';
+export { default as Favorite } from '@/icons/ic_favorites.svg';
 export { default as Share } from '@/icons/ic_share.svg';
 export { default as PhoneIcon } from '@/icons/ic_phone.svg';
 export { default as WhatsAppIcon } from '@/icons/ic_whatsapp.svg';

@@ -1,6 +1,7 @@
-import classNames from 'classnames'
-import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import classNames from 'classnames';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export type SelectOption = {
   label: string;
@@ -77,10 +78,10 @@ const getRightIconContainer = (size: 'sm' | 'md' | 'lg') => {
 };
 
 const dropdownBase =
-  'absolute top-full left-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] md:mt-[-0.125rem] pt-2 md:pt-1 min-w-full w-auto';
+  'fixed bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto overflow-x-hidden pt-2 md:pt-1';
 
 const dropdownOptionBase =
-  'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
+  'relative px-4 py-2 bg-[var(--bg-tint)] cursor-pointer text-[var(--color-black)] body-lg hover:bg-white hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
 
 const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
   (
@@ -112,6 +113,8 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const containerRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLDivElement | HTMLInputElement>(null);
     const hasError = Boolean(error);
 
     const selectedOption = options.find((option) => option.value === value);
@@ -178,19 +181,83 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
       setInputValue(value);
     }, [value]);
 
+    // Calculate dropdown position
+    useEffect(() => {
+      if (isOpen && dropdownRef.current && inputRef.current) {
+        const updatePosition = () => {
+          if (!dropdownRef.current || !inputRef.current) return;
+
+          const rect = inputRef.current.getBoundingClientRect();
+          const dropdown = dropdownRef.current;
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const padding = 16;
+
+          dropdown.style.width = `${rect.width}px`;
+          dropdown.style.minWidth = `${rect.width}px`;
+
+          const spaceBottom = viewportHeight - rect.bottom;
+          const spaceTop = rect.top;
+
+          let top = 0;
+          let left = rect.left;
+
+          if (spaceBottom < dropdown.offsetHeight + padding && spaceTop > spaceBottom) {
+            top = rect.top - dropdown.offsetHeight - 8;
+          } else {
+            top = rect.bottom + 8;
+          }
+
+          if (left < padding) {
+            left = padding;
+          }
+          const dropdownWidth = dropdown.offsetWidth || rect.width;
+          if (left + dropdownWidth > viewportWidth - padding) {
+            left = viewportWidth - dropdownWidth - padding;
+          }
+
+          dropdown.style.top = `${Math.max(padding, Math.min(top, viewportHeight - dropdown.offsetHeight - padding))}px`;
+          dropdown.style.left = `${left}px`;
+        };
+
+        const handleResize = () => {
+          updatePosition();
+        };
+
+        requestAnimationFrame(() => {
+          updatePosition();
+        });
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('scroll', handleResize, true);
+
+        return () => {
+          window.removeEventListener('resize', handleResize);
+          window.removeEventListener('scroll', handleResize, true);
+        };
+      }
+    }, [isOpen]);
+
     // Close dropdown when clicking outside
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        if (
+          containerRef.current &&
+          !containerRef.current.contains(event.target as Node) &&
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
           setIsOpen(false);
         }
       };
 
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
+      if (isOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }
+    }, [isOpen]);
 
     return (
       <div className={containerClasses} ref={containerRef}>
@@ -208,6 +275,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
         <div className={fullWidth ? 'relative w-full' : 'relative inline-block'}>
           {isTyping ? (
             <input
+              ref={inputRef as React.RefObject<HTMLInputElement>}
               id={id}
               name={name}
               type="text"
@@ -229,6 +297,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
             />
           ) : (
             <div
+              ref={inputRef as React.RefObject<HTMLDivElement>}
               className={classNames(computedInputClasses, isOpen ? 'z-[35]' : 'z-[10]')}
               onClick={handleToggle}
               onBlur={handleBlur}
@@ -261,34 +330,57 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               className={` transition-transform ${isOpen ? 'rotate-180' : ''}`}
             />
           </div>
+        </div>
 
-          {/* Dropdown */}
-          {isOpen && (
+        {/* Dropdown Portal */}
+        {isOpen &&
+          typeof window !== 'undefined' &&
+          createPortal(
             <div
-              className={classNames(dropdownBase, isOpen ? 'z-[31]' : 'z-[25]')}
+              ref={dropdownRef}
+              className={classNames(dropdownBase)}
+              style={{ zIndex: 1000 }}
               role="listbox"
               id={`${id}-listbox`}
+              onClick={(e) => e.stopPropagation()}
             >
               {filteredOptions.length > 0 ? (
-                filteredOptions.map((option) => (
-                  <div
-                    key={option.value}
-                    className={classNames(dropdownOptionBase, isOpen ? 'z-[31]' : 'z-[25]')}
-                    onClick={() => handleOptionSelect(option.value)}
-                    role="option"
-                    aria-selected={option.value === value}
-                  >
-                    {option.label}
-                  </div>
-                ))
+                filteredOptions.map((option) => {
+                  const isSelected = option.value === value;
+                  return (
+                    <div
+                      key={option.value}
+                      className={classNames(
+                        dropdownOptionBase,
+                        isSelected ? 'flex items-center justify-between' : '',
+                      )}
+                      onClick={() => handleOptionSelect(option.value)}
+                      role="option"
+                      aria-selected={isSelected}
+                    >
+                      <span className={isSelected ? 'text-[var(--accent-green)]' : ''}>
+                        {option.label}
+                      </span>
+                      {isSelected && (
+                        <Image
+                          src="/icons/ic_check.svg"
+                          alt="Selected"
+                          width={16}
+                          height={16}
+                          className="ml-2"
+                        />
+                      )}
+                    </div>
+                  );
+                })
               ) : (
                 <div className="px-4 py-3 text-[var(--text-body-tint)] body-lg">
                   No matching options
                 </div>
               )}
-            </div>
+            </div>,
+            document.body,
           )}
-        </div>
 
         {hasError ? (
           <p id={`${id}-help`} role="alert" className="label-sm-medium text-[var(--error)]">

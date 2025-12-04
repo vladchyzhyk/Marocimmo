@@ -16,8 +16,10 @@ interface PriceRangeProps extends BaseFilterProps {
 
 const PRICE_MIN_OPTIONS = [
   { label: 'No min', value: 'no-min' },
-  { label: '1,000 DH', value: '1000' },
+  { label: '0 DH', value: '0' },
   { label: '2,000 DH', value: '2000' },
+  { label: '3,000 DH', value: '3000' },
+  { label: '4,000 DH', value: '4000' },
   { label: '5,000 DH', value: '5000' },
   { label: '10,000 DH', value: '10000' },
   { label: '15,000 DH', value: '15000' },
@@ -89,7 +91,7 @@ export const PriceRange = ({
   };
 
   const getMinValue = () => {
-    if (!rangeValue?.min) return 'no-min';
+    if (rangeValue?.min === undefined || rangeValue?.min === null) return 'no-min';
     return rangeValue.min.toString();
   };
 

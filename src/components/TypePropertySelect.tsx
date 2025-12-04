@@ -158,7 +158,7 @@ export default function TypePropertySelect({
   return (
     <div className={`relative w-full ${className}`} ref={containerRef}>
       <div
-        className={`${hasSelection ? 'rounded-[8px]' : 'rounded-[8px] sm:rounded-none'} relative w-full h-12 md:h-10 lg:h-10 xl:h-10 px-4 pr-10 bg-white cursor-pointer transition-colors flex items-center ${
+        className={`${hasSelection ? 'rounded-[8px]' : 'rounded-[8px] '} relative w-full h-12 md:h-10 lg:h-10 xl:h-10 px-4 pr-10 bg-white cursor-pointer transition-colors flex items-center ${
           showDivider ? 'border-r border-[var(--border-input)]' : ''
         } ${hasSelection ? 'border border-[var(--accent-green)] text-[var(--accent-green)]' : ''}`}
         onClick={handleToggle}
@@ -217,7 +217,7 @@ export default function TypePropertySelect({
                 return (
                   <label
                     key={option.value}
-                    className="group flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-[var(--bg-tint)] transition-colors"
+                    className="group flex items-center gap-3 px-4 py-2 cursor-pointer hover:bg-[var(--bg-tint)] transition-colors"
                     role="option"
                     aria-selected={isChecked}
                   >
