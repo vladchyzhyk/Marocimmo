@@ -13,7 +13,8 @@ interface MoreFiltersDropdownProps {
 }
 
 export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps) => {
-  const { popupFilters, mobileBarFilters, visibleFilters, filterValues, clearAllFilters } = useFilters();
+  const { popupFilters, mobileBarFilters, visibleFilters, filterValues, clearAllFilters } =
+    useFilters();
   const isMobile = useIsMobile(768);
 
   const hiddenActiveFiltersCount = visibleFilters
@@ -27,14 +28,17 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
     return null;
   }
 
+  console.log(hiddenActiveFiltersCount);
   const trigger = (
     <button
       type="button"
-      className="flex items-center gap-2 px-4 h-10 border border-[var(--border)] rounded-lg bg-white hover:bg-[var(--bg-tint)] transition-colors flex-shrink-0"
+      className={`relative flex items-center gap-2 px-4 h-10 rounded-lg bg-white hover:bg-[var(--bg-tint)] transition-colors flex-shrink-0 ${
+        hiddenActiveFiltersCount > 0
+          ? 'border border-[var(--accent-green)]'
+          : 'border border-[var(--border)]'
+      }`}
     >
-      <span className="text-base leading-[140%]whitespace-nowrap">
-        More
-      </span>
+      <span className="text-base leading-[140%]whitespace-nowrap">More</span>
       <Image
         src="/icons/ic_arrow_down.svg"
         alt="More"
@@ -87,4 +91,3 @@ export const MoreFiltersDropdown = ({ className = '' }: MoreFiltersDropdownProps
     />
   );
 };
-

@@ -1,4 +1,4 @@
-import { SquareMeters } from '@/utils/icons';
+import { SquareMeters, CommercialIcon } from '@/utils/icons';
 
 interface LandPropertyIconsProps {
   area: number;
