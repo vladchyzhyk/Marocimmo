@@ -1,6 +1,6 @@
-import classNames from 'classnames'
-import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import classNames from 'classnames';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
 
 export type SelectOption = {
   label: string;
@@ -80,7 +80,7 @@ const dropdownBase =
   'absolute top-full left-0 bg-[var(--white)] border border-[var(--border-input)] rounded-[8px] shadow-lg max-h-48 overflow-y-auto mt-[-0.5rem] md:mt-[-0.125rem] pt-2 md:pt-1 min-w-full w-auto';
 
 const dropdownOptionBase =
-  'relative px-4 py-3 bg-white cursor-pointer text-[var(--color-black)] body-lg hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
+  'relative px-4 py-2 bg-[var(--bg-tint)] cursor-pointer text-[var(--color-black)] body-lg hover:bg-white hover:text-[var(--accent-green)] transition-colors whitespace-nowrap';
 
 const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
   (
