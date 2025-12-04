@@ -167,13 +167,18 @@ export const PropertyCard = ({
               <button
                 type="button"
                 onClick={handleFavoriteClick}
-                className={`w-9 h-9 flex items-center justify-center bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity ${
-                  isFav ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
+                className={`w-9 h-9 flex items-center justify-center bg-[var(--color-black)] border border-[var(--border)] rounded-lg shadow-[0px_8px_24px_2px_rgba(23,23,23,0.12)] hover:opacity-70 transition-opacity ${
+                  isFav ? 'text-[var(--accent-green)]' : 'text-white'
                 }`}
                 aria-label="Add to favorites"
               >
                 <Favorite
-                  className={`w-5 h-5 ${isFav ? 'fill-current' : 'fill-white'} stroke-current`}
+                  className={`w-4 h-4 ${
+                    isFav
+                      ? 'fill-[var(--accent-green)] stroke-[var(--accent-green)]'
+                      : 'fill-white stroke-white'
+                  }`}
+                  style={{ strokeWidth: '0.5' }}
                 />
               </button>
               <button
@@ -198,12 +203,17 @@ export const PropertyCard = ({
                 type="button"
                 onClick={handleFavoriteClick}
                 className={`w-8 h-8 flex items-center justify-center hover:opacity-70 transition-opacity ${
-                  isFav ? 'text-[var(--accent-green)]' : 'text-[var(--text-body-tint)]'
+                  isFav ? 'text-[var(--accent-green)]' : ''
                 }`}
                 aria-label="Add to favorites"
               >
                 <Favorite
-                  className={`w-5 h-5 ${isFav ? 'fill-current' : 'fill-white'} stroke-current`}
+                  className={`w-5 h-5 ${
+                    isFav
+                      ? 'fill-[var(--accent-green)] stroke-[var(--accent-green)]'
+                      : 'fill-white stroke-[var(--color-black)]'
+                  }`}
+                  style={{ strokeWidth: '0.5' }}
                 />
               </button>
               <button
