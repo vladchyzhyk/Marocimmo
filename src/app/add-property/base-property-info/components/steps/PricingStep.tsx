@@ -1,11 +1,10 @@
 'use client';
 
-import ToggleCard from '@/components/ToggleCard'
-import Calendar from '@/components/ui/Calendar'
-import Input from '@/components/ui/Input'
-import InputSelect from '@/components/ui/InputSelect'
-import Modal from '@/components/ui/Modal'
-import { useState } from 'react'
+import ToggleCard from '@/components/ToggleCard';
+import Input from '@/components/ui/Input';
+import InputSelect from '@/components/ui/InputSelect';
+import { DatePickerInput } from '@/components/ui/DatePickerInput';
+import { useState } from 'react';
 
 type PricingPeriod = 'per month' | 'per week';
 
@@ -43,7 +42,6 @@ const PricingStep = ({ onDataChange, initialValues }: Props) => {
   const [smokeAllowed, setSmokeAllowed] = useState<boolean>(initialValues?.smokeAllowed ?? false);
   const [listingTitle, setListingTitle] = useState<string>(initialValues?.listingTitle ?? '');
   const [description, setDescription] = useState<string>(initialValues?.description ?? '');
-  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const titleLimit = 60;
   const descriptionLimit = 4000;
@@ -183,14 +181,13 @@ const PricingStep = ({ onDataChange, initialValues }: Props) => {
         {/* Row 2: Available from */}
         <div className="flex flex-row gap-4 md:gap-3 lg:gap-3 xl:gap-3 w-full">
           <div className="w-full md:flex-1 flex flex-col gap-2">
-            <Input
+            <DatePickerInput
               id="availableFrom"
               label="Available from (date)"
               value={availableFrom}
-              onChange={(e) => handleAvailableFromChange(e.target.value)}
+              onChange={handleAvailableFromChange}
               placeholder="Enter the date"
-              calendar
-              onCalendarClick={() => setCalendarOpen(true)}
+              required={false}
             />
           </div>
           <div className="hidden md:block md:flex-1" />
@@ -291,22 +288,6 @@ const PricingStep = ({ onDataChange, initialValues }: Props) => {
           </div>
         </div>
       </div>
-
-      <Modal
-        isOpen={calendarOpen}
-        onClose={() => setCalendarOpen(false)}
-        widthClassName="max-w-[24.5rem] md:w-[calc(100%-32px)] md:!px-8 !py-6"
-      >
-        <Calendar
-          value={availableFrom}
-          onChange={(v) => {
-            handleAvailableFromChange(v);
-            setCalendarOpen(false);
-          }}
-          onCancel={() => setCalendarOpen(false)}
-          showFooter
-        />
-      </Modal>
     </div>
   );
 };

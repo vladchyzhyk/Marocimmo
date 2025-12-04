@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { BaseFilterProps } from './filter-types';
 import { CheckBox } from '@/components/ui/CheckBox';
-import Input from '@/components/ui/Input';
 import { FilterDropdown } from './FilterDropdown';
+import { DatePickerInput } from '@/components/ui/DatePickerInput';
 
 interface AvailabilityFilterProps extends BaseFilterProps {
   variant?: 'compact' | 'select';
@@ -33,14 +33,38 @@ export const AvailabilityFilter = ({
     setTempShowWithoutDate(availabilityValue?.showWithoutDate || false);
   }, [availabilityValue?.moveInDate, availabilityValue?.showWithoutDate]);
 
-  const handleApply = () => {
+  const buildAvailabilityValue = (moveInDate: string, showWithoutDate: boolean) => {
     const result: {
       moveInDate?: string;
       showWithoutDate?: boolean;
     } = {};
-    if (tempMoveInDate) result.moveInDate = tempMoveInDate;
-    if (tempShowWithoutDate) result.showWithoutDate = tempShowWithoutDate;
-    onChange(Object.keys(result).length > 0 ? result : undefined);
+
+    if (moveInDate) {
+      result.moveInDate = moveInDate;
+    }
+    if (showWithoutDate) {
+      result.showWithoutDate = showWithoutDate;
+    }
+
+    return Object.keys(result).length > 0 ? result : undefined;
+  };
+
+  const handleMoveInDateChange = (nextValue: string) => {
+    setTempMoveInDate(nextValue);
+    if (variant === 'select') {
+      onChange(buildAvailabilityValue(nextValue, tempShowWithoutDate));
+    }
+  };
+
+  const handleShowWithoutDateChange = (nextValue: boolean) => {
+    setTempShowWithoutDate(nextValue);
+    if (variant === 'select') {
+      onChange(buildAvailabilityValue(tempMoveInDate, nextValue));
+    }
+  };
+
+  const handleApply = () => {
+    onChange(buildAvailabilityValue(tempMoveInDate, tempShowWithoutDate));
   };
 
   const handleClear = () => {
@@ -49,7 +73,7 @@ export const AvailabilityFilter = ({
     onChange(undefined);
   };
 
-  const hasSelection = tempMoveInDate || tempShowWithoutDate;
+  const hasSelection = availabilityValue?.moveInDate || availabilityValue?.showWithoutDate;
 
   const content = (
     <div className="flex flex-col gap-4">
@@ -64,21 +88,18 @@ export const AvailabilityFilter = ({
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <label className="body-md text-[var(--color-black)]">
-            I want to move in no later than:
-          </label>
-          <Input
-            type="date"
+          <DatePickerInput
+            id="availability-move-in-date"
+            label="I want to move in no later than:"
             value={tempMoveInDate}
-            onChange={(e) => setTempMoveInDate(e.target.value)}
+            onChange={handleMoveInDateChange}
             placeholder="mm/dd/yyyy"
-            calendar={true}
-            className="w-full"
+            inputClassName="w-full"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <CheckBox checked={tempShowWithoutDate} onChange={setTempShowWithoutDate} />
+          <CheckBox checked={tempShowWithoutDate} onChange={handleShowWithoutDateChange} />
           <label className="body-md text-[var(--color-black)] cursor-pointer">
             Also show properties without a specified move-in date
           </label>
@@ -88,10 +109,10 @@ export const AvailabilityFilter = ({
   );
 
   const getDisplayValue = () => {
-    if (tempMoveInDate) {
-      return `Move in: ${new Date(tempMoveInDate).toLocaleDateString()}`;
+    if (availabilityValue?.moveInDate) {
+      return `Move in: ${new Date(availabilityValue.moveInDate).toLocaleDateString()}`;
     }
-    if (tempShowWithoutDate) {
+    if (availabilityValue?.showWithoutDate) {
       return 'Show without date';
     }
     return 'Availability';
@@ -119,7 +140,7 @@ export const AvailabilityFilter = ({
         content={content}
         onApply={handleApply}
         onClear={handleClear}
-        showActions={false}
+        showActions={true}
         placement="bottom-start"
         className={className}
       />
