@@ -37,12 +37,46 @@ export const GuestsFilter = ({
     setTempPetsAllowed(guestsValue?.petsAllowed || false);
   }, [guestsValue?.maxGuests, guestsValue?.disabledAccess, guestsValue?.petsAllowed]);
 
+  const applyImmediateChange = (
+    nextMaxGuests: number,
+    nextDisabledAccess: boolean,
+    nextPetsAllowed: boolean,
+  ) => {
+    if (variant !== 'select') {
+      return;
+    }
+
+    onChange({
+      maxGuests: nextMaxGuests > 0 ? nextMaxGuests : undefined,
+      disabledAccess: nextDisabledAccess,
+      petsAllowed: nextPetsAllowed,
+    });
+  };
+
   const handleIncrement = () => {
-    setTempMaxGuests((prev) => Math.min(prev + 1, 20));
+    setTempMaxGuests((prev) => {
+      const next = Math.min(prev + 1, 20);
+      applyImmediateChange(next, tempDisabledAccess, tempPetsAllowed);
+      return next;
+    });
   };
 
   const handleDecrement = () => {
-    setTempMaxGuests((prev) => Math.max(prev - 1, 0));
+    setTempMaxGuests((prev) => {
+      const next = Math.max(prev - 1, 0);
+      applyImmediateChange(next, tempDisabledAccess, tempPetsAllowed);
+      return next;
+    });
+  };
+
+  const handleDisabledAccessChange = (nextValue: boolean) => {
+    setTempDisabledAccess(nextValue);
+    applyImmediateChange(tempMaxGuests, nextValue, tempPetsAllowed);
+  };
+
+  const handlePetsAllowedChange = (nextValue: boolean) => {
+    setTempPetsAllowed(nextValue);
+    applyImmediateChange(tempMaxGuests, tempDisabledAccess, nextValue);
   };
 
   const handleApply = () => {
@@ -68,45 +102,56 @@ export const GuestsFilter = ({
   };
 
   const content = (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h3 className="title-sm font-medium text-[var(--color-black)]">Guests</h3>
-        <button className="title-sm text-[var(--accent-green)]" onClick={handleClear}>
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex items-center justify-between py-2">
+        <h3 className="title-sm font-bold text-[#222222]">Guests</h3>
+        <button
+          type="button"
+          onClick={handleClear}
+          className="title-sm font-bold text-[#519C2C]"
+        >
           Clear
         </button>
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="body-md text-[var(--color-black)]">Max guests</label>
-        <div className="flex items-center gap-3">
+        <label className="body-md text-[#222222]">Max guests</label>
+        <div className="flex h-12 w-full items-center rounded-[8px] border border-[#519C2C] bg-white px-1">
           <button
             type="button"
             onClick={handleDecrement}
-            className="w-10 h-10 flex items-center justify-center border border-[var(--border)] rounded-[8px] hover:bg-[var(--bg-tint)] transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#FAFAFA]"
           >
-            <MinusIcon className="w-4 h-4 text-[var(--color-black)]" />
+            <MinusIcon className="h-4 w-4 text-[#222222]" />
           </button>
-          <span className="body-lg text-[var(--color-black)] min-w-[40px] text-center">
-            {tempMaxGuests}
-          </span>
+          <div className="flex flex-1 items-center justify-center">
+            <span className="body-lg flex min-w-[40px] items-center justify-center text-center text-[#519C2C]">
+              {tempMaxGuests}
+            </span>
+          </div>
           <button
             type="button"
             onClick={handleIncrement}
-            className="w-10 h-10 flex items-center justify-center border border-[var(--border)] rounded-[8px] hover:bg-[var(--bg-tint)] transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#FAFAFA]"
           >
-            <PlusIcon className="w-4 h-4 text-[var(--color-black)]" />
+            <PlusIcon className="h-4 w-4 text-[#222222]" />
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <label className="body-md text-[var(--color-black)]">Disabled Access</label>
-          <Toggle checked={tempDisabledAccess} onChange={setTempDisabledAccess} />
-        </div>
-        <div className="flex items-center justify-between">
-          <label className="body-md text-[var(--color-black)]">Pets Allowed</label>
-          <Toggle checked={tempPetsAllowed} onChange={setTempPetsAllowed} />
+      <div className="h-px w-full border-b border-[#E5E5E5]" />
+
+      <div className="flex flex-col gap-4">
+        <h4 className="title-sm font-bold text-[#222222]">Options</h4>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <span className="body-md text-[#222222]">Disabled Access</span>
+            <Toggle checked={tempDisabledAccess} onChange={handleDisabledAccessChange} />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="body-md text-[#222222]">Pets Allowed</span>
+            <Toggle checked={tempPetsAllowed} onChange={handlePetsAllowedChange} />
+          </div>
         </div>
       </div>
     </div>
@@ -126,7 +171,7 @@ export const GuestsFilter = ({
         showActions={true}
         placement="bottom-start"
         className={className}
-        contentClassName="min-w-[300px]"
+        contentClassName="w-[248px] !bg-[#FAFAFA] !border-[#E5E5E5] shadow-[0_8px_24px_2px_rgba(23,23,23,0.12)]"
       />
     );
   }
