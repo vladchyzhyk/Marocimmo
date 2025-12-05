@@ -22,7 +22,7 @@ export default function PropertyDescription({
   };
 
   return (
-    <div className="flex flex-col gap-4 border-b border-[var(--border)] pb-8">
+    <div className="flex flex-col gap-4 ">
       <h2 className="title-lg text-[var(--color-black)]">About this property</h2>
       <p className="body-lg text-[var(--text-pill)]">{displayText}</p>
       {shouldShowReadMore && (
