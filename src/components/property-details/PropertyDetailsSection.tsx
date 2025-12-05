@@ -25,7 +25,7 @@ export default function PropertyDetailsSection({
   specialConditions,
 }: PropertyDetailsSectionProps) {
   return (
-    <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-0">
+    <div className="flex flex-col lg:flex-row lg:gap-[130px] gap-8 lg:items-start">
       <PropertyDetailSection title="Details">
         <PropertyDetailRow icon={<CloseIcon />} label="Floor:" value={details.floor.toString()} />
         <PropertyDetailRow
