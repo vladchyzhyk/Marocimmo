@@ -88,6 +88,7 @@ export { default as SquareMeters } from '@/icons/ic_square_meters.svg';
 export { default as OfficeRooms } from '@/icons/ic_office_rooms.svg';
 export { default as Favorite } from '@/icons/ic_favorites.svg';
 export { default as Share } from '@/icons/ic_share.svg';
+export { default as CalendarIcon } from '@/icons/ic_calendar.svg';
 export { default as PhoneIcon } from '@/icons/ic_phone.svg';
 export { default as WhatsAppIcon } from '@/icons/ic_whatsapp.svg';
 export { default as EmailIcon } from '@/icons/ic_mail.svg';
