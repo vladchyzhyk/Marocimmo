@@ -82,7 +82,7 @@ export const ReportPropertyDialog = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      widthClassName="w-[calc(100%-32px)] max-w-[392px]"
+      widthClassName="w-[calc(100%-32px)] max-w-[440px]"
       className="p-0 rounded-2xl overflow-hidden"
     >
       <div className="flex flex-col items-start p-6 relative w-full">
