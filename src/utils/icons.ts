@@ -99,3 +99,4 @@ export { default as RenovationIcon } from '@/icons/ic_renovation.svg';
 export { default as AreaLivingIcon } from '@/icons/ic_area_living.svg';
 export { default as PetsAllowedIcon } from '@/icons/ic_pets_allowed.svg';
 export { default as SmokeNotAllowedIcon } from '@/icons/ic_smoke_not_allowed.svg';
+export { default as ReportIcon } from '@/icons/ic_report.svg';
