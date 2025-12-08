@@ -15,8 +15,12 @@ const ContentContainer = ({ children }: { children: React.ReactNode }) => {
 export default function PropertyPage() {
   return (
     <div className="pt-[80px] px-0 md:px-4 lg:px-[80px] pb-[250px]">
-      <ImageCarousel images={mockPropertyDetail.photos} />
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 lg:gap-6">
+      <ImageCarousel
+        images={mockPropertyDetail.photos}
+        property={mockPropertyDetail}
+        isFavorite={false}
+      />
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 lg:gap-6 px-4 md:px-0">
         <div className="">
           <ContentContainer>
             <PropertyHeader property={mockPropertyDetail} />
@@ -46,7 +50,9 @@ export default function PropertyPage() {
           />
         </div>
       </div>
-      <SimilarProperties properties={mockPropertyDetail.similarProperties} />
+      <div className="pt-8 px-4 md:px-0">
+        <SimilarProperties properties={mockPropertyDetail.similarProperties} />
+      </div>
     </div>
   );
 }
