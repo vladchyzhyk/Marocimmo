@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { formatDate } from '@/utils/propertyFormatters';
 import { CalendarIcon } from '@/utils/icons';
 
@@ -16,7 +15,7 @@ export default function AvailableFrom({ date, className = '' }: AvailableFromPro
     >
       <div className="flex flex-row items-start gap-4">
         <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
-          <CalendarIcon className="w-6 h-6"/>
+          <CalendarIcon className="w-6 h-6" />
         </div>
         <div className="flex flex-col items-start">
           <div className="flex items-center font-medium text-base leading-[100%] text-[#222222]">
@@ -30,4 +29,3 @@ export default function AvailableFrom({ date, className = '' }: AvailableFromPro
     </div>
   );
 }
-

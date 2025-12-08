@@ -1,7 +1,7 @@
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
 import { FilterTip } from '@/components/filters/FilterTip';
 import { formatDeposit, formatSyndicFees } from '@/utils/propertyFormatters';
-import type { Property } from '@/utils/mockPropertyDetail';
+import { Property } from '@/types/propery-details';
 
 interface PropertyHeaderProps {
   property: Property;

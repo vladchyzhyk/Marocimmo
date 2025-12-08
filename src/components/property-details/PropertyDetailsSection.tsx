@@ -1,3 +1,4 @@
+import { BuildingInfo, PropertyDetails, SpecialConditions } from '@/types/propery-details';
 import PropertyDetailRow from './PropertyDetailRow';
 import PropertyDetailSection from './PropertyDetailSection';
 import {
@@ -11,7 +12,6 @@ import {
   SmokeNotAllowedIcon,
   HouseIcon2,
 } from '@/utils/icons';
-import type { PropertyDetails, BuildingInfo, SpecialConditions } from '@/utils/mockPropertyDetail';
 
 interface PropertyDetailsSectionProps {
   details: PropertyDetails;

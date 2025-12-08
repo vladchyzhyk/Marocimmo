@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { LocationIcon, PhoneIcon, WhatsAppIcon, EmailIcon } from '@/utils/icons';
 import { formatPrice } from '@/utils/propertyFormatters';
-import type { AgentInfo, SimilarProperty } from '@/utils/mockPropertyDetail';
 import Button from '../ui/Button';
+import { AgentInfo, SimilarProperty } from '@/types/propery-details';
 
 interface ContactsProps {
   agent: AgentInfo;

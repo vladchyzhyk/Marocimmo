@@ -5,7 +5,6 @@ import { ArrowRightIcon, Favorite, Share, PhoneIcon, WhatsAppIcon, EmailIcon } f
 import Button from '../ui/Button';
 import { SharePropertyDialog } from '../SharePropertyDialog';
 import { AuthModal } from '../AuthModal';
-import type { ReactNode } from 'react';
 import { usePropertyCardLogic } from '@/hooks/usePropertyCardLogic';
 import type { PropertyCardProps } from '../PropertyCard';
 

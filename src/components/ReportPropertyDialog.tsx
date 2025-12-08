@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Modal from './ui/Modal';
-import { CloseIcon } from '@/utils/icons';
 
 export interface ReportPropertyDialogProps {
   isOpen: boolean;
@@ -29,16 +28,13 @@ const REPORT_REASONS: { value: ReportReason; label: string }[] = [
 
 const MAX_REASON_LENGTH = 2000;
 
-export const ReportPropertyDialog = ({ isOpen, onClose, propertyId }: ReportPropertyDialogProps) => {
+export const ReportPropertyDialog = ({
+  isOpen,
+  onClose,
+  propertyId,
+}: ReportPropertyDialogProps) => {
   const [selectedReason, setSelectedReason] = useState<ReportReason | null>(null);
   const [otherReason, setOtherReason] = useState<string>('');
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onClose();
-    }
-  };
 
   const handleReasonChange = (reason: ReportReason) => {
     setSelectedReason(reason);
@@ -60,16 +56,16 @@ export const ReportPropertyDialog = ({ isOpen, onClose, propertyId }: ReportProp
 
   const handleSubmit = () => {
     if (!selectedReason) return;
-    
+
     const reportData = {
       propertyId,
       reason: selectedReason,
       otherReason: selectedReason === 'other' ? otherReason : undefined,
     };
-    
+
     console.log('Report submitted:', reportData);
     onClose();
-    
+
     setSelectedReason(null);
     setOtherReason('');
   };
@@ -90,25 +86,17 @@ export const ReportPropertyDialog = ({ isOpen, onClose, propertyId }: ReportProp
       className="p-0 rounded-2xl overflow-hidden"
     >
       <div className="flex flex-col items-start p-6 relative w-full">
-
         <div className="flex flex-col items-center w-full py-6 gap-6">
           <div className="flex flex-col items-start gap-2 w-full">
-            <h2 className="title-xl">
-              Why are you reporting this property?
-            </h2>
-            <p className="body-lg">
-              Describe the problem with this property
-            </p>
+            <h2 className="title-xl">Why are you reporting this property?</h2>
+            <p className="body-lg">Describe the problem with this property</p>
           </div>
 
           <div className="flex flex-col items-start w-full gap-0">
             {REPORT_REASONS.map((reason) => {
               const isSelected = selectedReason === reason.value;
               return (
-                <div
-                  key={reason.value}
-                  className="flex flex-row items-center py-2 gap-2 w-full"
-                >
+                <div key={reason.value} className="flex flex-row items-center py-2 gap-2 w-full">
                   <label
                     htmlFor={`reason-${reason.value}`}
                     className="flex flex-row items-start gap-2 cursor-pointer flex-1"
@@ -133,9 +121,7 @@ export const ReportPropertyDialog = ({ isOpen, onClose, propertyId }: ReportProp
                         )}
                       </div>
                     </div>
-                    <span className="body-lg flex-1">
-                      {reason.label}
-                    </span>
+                    <span className="body-lg flex-1">{reason.label}</span>
                   </label>
                 </div>
               );
@@ -193,4 +179,3 @@ export const ReportPropertyDialog = ({ isOpen, onClose, propertyId }: ReportProp
     </Modal>
   );
 };
-
