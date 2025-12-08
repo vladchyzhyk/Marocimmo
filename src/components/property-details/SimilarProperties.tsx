@@ -16,7 +16,7 @@ const PropertyIcons = ({ property }: { property: SimilarProperty }) =>
 
 export const SimilarProperties = ({ properties }: { properties: SimilarProperty[] }) => {
   return (
-    <section className="pt-8">
+    <section className="">
       <ScrollableContainer
         title="Similar properties"
         scrollAmount={450 + 16}
@@ -38,7 +38,7 @@ export const SimilarProperties = ({ properties }: { properties: SimilarProperty[
             url={property.url}
             currency={property.currency}
             propertyIcons={<PropertyIcons property={property} />}
-            className="flex-shrink-0 min-w-[450px]"
+            className="flex-shrink-0 w-full min-w-[280px] md:min-w-[450px]"
           />
         ))}
       </ScrollableContainer>
