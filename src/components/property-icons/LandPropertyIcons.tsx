@@ -3,9 +3,10 @@ import { SquareMeters } from '@/utils/icons';
 interface LandPropertyIconsProps {
   area: number;
   location: string;
+  compact?: boolean;
 }
 
-export const LandPropertyIcons = ({ area, location }: LandPropertyIconsProps) => {
+export const LandPropertyIcons = ({ area, location, compact = false }: LandPropertyIconsProps) => {
   return (
     <div className="flex items-center gap-4 md:gap-6 flex-wrap">
       <div className="flex items-center gap-2">
@@ -15,7 +16,9 @@ export const LandPropertyIcons = ({ area, location }: LandPropertyIconsProps) =>
         <span className="body-md text-[var(--color-black)]">{area}m²</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="body-md text-[var(--color-black)]">{location}</span>
+        <span className="body-md text-[var(--color-black)]">
+          {compact ? location : `Location: ${location}`}
+        </span>
       </div>
     </div>
   );

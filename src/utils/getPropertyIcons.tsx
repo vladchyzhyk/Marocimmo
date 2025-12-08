@@ -14,11 +14,13 @@ type MockProperty = {
   location: string;
 };
 
-export function getPropertyIcons(property: MockProperty) {
+export function getPropertyIcons(property: MockProperty, compact: boolean = true) {
   const propertyType = property.propertyType.toLowerCase();
 
   if (propertyType === 'land') {
-    return <LandPropertyIcons area={property.area} location={property.location} />;
+    return (
+      <LandPropertyIcons area={property.area} location={property.location} compact={compact} />
+    );
   }
 
   if (propertyType === 'office' || propertyType === 'offices') {
@@ -28,6 +30,8 @@ export function getPropertyIcons(property: MockProperty) {
         area={property.area}
         bathrooms={property.bathrooms}
         parkings={property.parkings}
+        location={property.location}
+        compact={compact}
       />
     );
   }
@@ -37,8 +41,8 @@ export function getPropertyIcons(property: MockProperty) {
       rooms={property.bedrooms}
       area={property.area}
       bathrooms={property.bathrooms}
+      location={property.location}
+      compact={compact}
     />
   );
 }
-
-
