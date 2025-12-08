@@ -68,7 +68,7 @@ export const PropertyCardCompact = ({
       <div
         className={`w-full border border-[var(--border)] rounded-[8px] overflow-hidden bg-[var(--white)] hover:shadow-lg transition-shadow ${className}`}
       >
-        <div className="flex flex-col h-full gap-6">
+        <div className="flex flex-col h-full gap-0 md:gap-6 ">
           <div className="relative w-full h-[200px] bg-[var(--bg-tint)] overflow-hidden group">
             <Image
               key={currentImageIndex}
@@ -140,11 +140,11 @@ export const PropertyCardCompact = ({
             </div>
           </div>
 
-          <div className="flex-1 p-2 flex flex-col justify-between relative">
-            <div className="flex flex-col items-start gap-2 px-2 relative">
+          <div className="flex-1 p-2 pb-4 flex flex-col justify-between relative">
+            <div className="flex flex-col items-start gap-2 relative">
               <div className="flex flex-col items-start gap-2 w-full">
                 <div className="flex items-end justify-start gap-1 w-full">
-                  <span className="title-xl text-[var(--accent-green)] font-bold">
+                  <span className="title-lg text-[var(--accent-green)] font-bold">
                     {formattedPrice} {currency}
                   </span>
                   {pricePerPeriod && (
