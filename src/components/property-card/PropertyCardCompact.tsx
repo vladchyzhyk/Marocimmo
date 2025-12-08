@@ -5,7 +5,6 @@ import { ArrowRightIcon, Favorite, Share, PhoneIcon, WhatsAppIcon, EmailIcon } f
 import Button from '../ui/Button';
 import { SharePropertyDialog } from '../SharePropertyDialog';
 import { AuthModal } from '../AuthModal';
-import type { ReactNode } from 'react';
 import { usePropertyCardLogic } from '@/hooks/usePropertyCardLogic';
 import type { PropertyCardProps } from '../PropertyCard';
 
@@ -27,6 +26,7 @@ export const PropertyCardCompact = ({
   pricePerPeriod,
   id,
   url,
+  onClick,
 }: PropertyCardProps) => {
   const {
     isFav,
@@ -64,7 +64,7 @@ export const PropertyCardCompact = ({
       : undefined);
 
   return (
-    <div>
+    <div onClick={() => onClick?.(id || '')}>
       <div
         className={`w-full border border-[var(--border)] rounded-[8px] overflow-hidden bg-[var(--white)] hover:shadow-lg transition-shadow ${className}`}
       >

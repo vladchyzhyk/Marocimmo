@@ -27,6 +27,7 @@ export const PropertyCardFull = ({
   pricePerPeriod,
   id,
   url,
+  onClick,
 }: PropertyCardProps) => {
   const {
     isFav,
@@ -64,7 +65,7 @@ export const PropertyCardFull = ({
       : undefined);
 
   return (
-    <div>
+    <div onClick={() => onClick?.(id || '')}>
       <div
         className={`w-full border border-[var(--border)] rounded-[8px] overflow-hidden bg-[var(--white)] hover:shadow-lg transition-shadow ${className}`}
       >
@@ -228,4 +229,3 @@ export const PropertyCardFull = ({
     </div>
   );
 };
-

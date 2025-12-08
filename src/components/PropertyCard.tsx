@@ -24,6 +24,7 @@ export type PropertyCardProps = {
   id?: string;
   url?: string;
   variant?: PropertyCardVariant;
+  onClick?: (id: string) => void;
 };
 
 export const PropertyCard = (props: PropertyCardProps) => {

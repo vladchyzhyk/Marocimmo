@@ -17,7 +17,7 @@ import { SortDropdown } from '@/components/search-results/SortDropdown';
 import { mockProperties } from '@/utils/mockProperties';
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
 import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
-import Button from '@/components/ui/Button';
+import { useRouter } from 'next/navigation';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -27,6 +27,8 @@ function SearchPageContent() {
   const [isSaveFilterModalOpen, setIsSaveFilterModalOpen] = useState(false);
   const [isSaveFilterSuccessModalOpen, setIsSaveFilterSuccessModalOpen] = useState(false);
   const [savedFilterName, setSavedFilterName] = useState('');
+
+  const router = useRouter();
 
   const currentPage = searchParams.page ?? 1;
   const prevFiltersRef = useRef<string>('');
@@ -232,6 +234,7 @@ function SearchPageContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 py-4">
                 {paginatedProperties.map((property) => (
                   <PropertyCard
+                    onClick={() => router.push(`/property/${property.id}`)}
                     key={property.id}
                     id={property.id}
                     title={property.title}
