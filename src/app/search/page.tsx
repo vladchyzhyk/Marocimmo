@@ -18,6 +18,7 @@ import { mockProperties } from '@/utils/mockProperties';
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
 import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import { saveFilterToStorage } from '@/utils/savedFiltersStorage';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -185,10 +186,14 @@ function SearchPageContent() {
   };
 
   const handleSaveFilter = (filterName: string) => {
-    console.log('Saving filter:', filterName, searchParams);
-    setSavedFilterName(filterName);
-    setIsSaveFilterModalOpen(false);
-    setIsSaveFilterSuccessModalOpen(true);
+    try {
+      saveFilterToStorage(filterName, searchParams, filteredProperties.length);
+      setSavedFilterName(filterName);
+      setIsSaveFilterModalOpen(false);
+      setIsSaveFilterSuccessModalOpen(true);
+    } catch (error) {
+      console.error('Error saving filter:', error);
+    }
   };
 
   return (
