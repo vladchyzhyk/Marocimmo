@@ -343,6 +343,7 @@ const InputSelect = React.forwardRef<HTMLDivElement, InputSelectProps>(
               role="listbox"
               id={`${id}-listbox`}
               onClick={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
             >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => {
