@@ -66,5 +66,6 @@ export { NoSavedFilters } from './NoSavedFilters';
 export { SavedFilterCard } from './SavedFilterCard';
 export { EditFilterModal } from './EditFilterModal';
 export { DeleteFilterModal } from './DeleteFilterModal';
+export { ClearAllButton } from './ClearAllButton';
 export * from './filters-config';
 export * from './filter-types';

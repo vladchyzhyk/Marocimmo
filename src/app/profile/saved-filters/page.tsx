@@ -6,6 +6,7 @@ import {
   SavedFilterCard,
   EditFilterModal,
   DeleteFilterModal,
+  ClearAllButton,
 } from '@/components/filters';
 import SideMenu from '../components/SideMenu';
 import { useState, useEffect } from 'react';
@@ -16,7 +17,7 @@ import {
   updateFilterInStorage,
 } from '@/utils/savedFiltersStorage';
 import { MockSavedFilter } from '@/utils/mockSavedFilters';
-
+import { SortDropdown, SortValue } from '@/components/search-results/SortDropdown';
 export default function SavedFiltersPage() {
   const router = useRouter();
   const [savedFilters, setSavedFilters] = useState<MockSavedFilter[]>(mockSavedFilters);
@@ -24,10 +25,11 @@ export default function SavedFiltersPage() {
   const [editingFilter, setEditingFilter] = useState<{ id: string; title: string } | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deletingFilter, setDeletingFilter] = useState<{ id: string; title: string } | null>(null);
+  const [sortValue, setSortValue] = useState<SortValue>('newest');
 
   useEffect(() => {
     const customFilters = getSavedFilters();
-    setSavedFilters([...mockSavedFilters, ...customFilters]);
+    setSavedFilters([...customFilters]);
   }, []);
 
   const handleEdit = (filter: { id: string; title: string }) => {
@@ -78,12 +80,22 @@ export default function SavedFiltersPage() {
     setDeletingFilter(null);
   };
 
+  const handleClearAll = () => {
+    console.log('clear all');
+  };
+
   return (
     <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-4 lg:gap-8 px-4 py-6 md:py-8 mt-[6rem]">
       <div className="flex flex-col gap-8">
-        <div className="hidden md:flex flex-col">
-          <h1 className="text-[var(--color-black)] title-xl">Profile Settings</h1>
-          <p className="body-lg mt-1">Manage your account information and preferences</p>
+        <div className="flex">
+          <div className="hidden md:flex flex-col">
+            <h1 className="text-[var(--color-black)] title-xl">Profile Settings</h1>
+            <p className="body-lg mt-1">Manage your account information and preferences</p>
+          </div>
+          <div className="hidden md:flex justify-end w-full items-center gap-2">
+            <ClearAllButton onClick={handleClearAll} />
+            <SortDropdown value={sortValue} onChange={(value) => setSortValue(value)} />
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-4">

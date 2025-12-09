@@ -171,7 +171,7 @@ export const SavedFilterCard = ({
   }, [isMenuOpen]);
 
   return (
-    <div className="box-border flex flex-row items-start p-4 md:p-6 w-full max-w-[848px] bg-white border border-[#E5E5E5] rounded-lg flex-none self-stretch flex-grow-0 overflow-hidden">
+    <div className="box-border flex flex-row items-start p-4 md:p-6 w-full max-w-[1280px] bg-white border border-[#E5E5E5] rounded-lg flex-none self-stretch flex-grow-0 overflow-hidden">
       <div className="flex flex-col justify-between items-start p-0 gap-4 md:gap-6 w-full flex-none self-stretch flex-grow-1 min-w-0">
         <div className="flex flex-row items-start p-0 gap-2 md:gap-4 w-full flex-none self-stretch flex-grow-0 min-w-0">
           <div className="flex flex-col items-start p-0 gap-2 min-w-0 max-w-full lg:max-w-[672px]">
