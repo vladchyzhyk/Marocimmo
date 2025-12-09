@@ -1,12 +1,16 @@
 'use client';
-
-import ProfileForm from '@/app/profile/components/ProfileForm';
 import { ArrowNextIcon } from '@/utils/icons';
 import { useRouter } from 'next/navigation';
+import { NoSavedFilters, SavedFilterCard } from '@/components/filters';
 import SideMenu from '../components/SideMenu';
+import { useState } from 'react';
+import { mockSavedFilters } from '@/utils/mockSavedFilters';
 
-const ProfileInformationPage = () => {
+export default function SavedFiltersPage() {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
+  const savedFilters = mockSavedFilters;
 
   return (
     <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-4 lg:gap-8 px-4 py-6 md:py-8 mt-[6rem]">
@@ -27,15 +31,33 @@ const ProfileInformationPage = () => {
           </div>
           <div className="hidden md:flex w-full flex-col gap-2 md:max-w-[14.375rem] lg:max-w-[19.375rem]">
             <SideMenu />
+            <button onClick={() => setIsOpen(!isOpen)}>1123</button>
           </div>
 
           <div className="flex-1">
-            <ProfileForm />
+            {savedFilters.length === 0 ? (
+              <NoSavedFilters />
+            ) : (
+              <>
+                {savedFilters.map((filter) => (
+                  <SavedFilterCard
+                    key={filter.id}
+                    title={filter.title}
+                    newCount={filter.newCount}
+                    filterTags={Object.values(filter.filterQuery)}
+                    updatedAt={filter.updatedAt}
+                    propertyCount={filter.propertyCount}
+                    onEdit={() => {}}
+                    onShare={() => {}}
+                    onDelete={() => {}}
+                    onViewProperties={() => {}}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default ProfileInformationPage;
+}

@@ -1,11 +1,10 @@
 'use client';
-
 import { ArrowNextIcon } from '@/utils/icons';
 import { useRouter } from 'next/navigation';
-import SecurityContent from '../components/SecurityContent';
+import { NoFavorites } from '@/components/NoFavorites';
 import SideMenu from '../components/SideMenu';
 
-const ProfileSecurityPage = () => {
+export default function FavoritesPage() {
   const router = useRouter();
 
   return (
@@ -25,16 +24,15 @@ const ProfileSecurityPage = () => {
             <ArrowNextIcon className="w-6 h-6 rotate-180" />
             <p className="label-md-medium text-[var(--color-black)]">Back to Settings</p>
           </div>
-          <div className="w-full hidden md:flex flex-col gap-2 md:max-w-[14.375rem] lg:max-w-[19.375rem]">
+          <div className="hidden md:flex w-full flex-col gap-2 md:max-w-[14.375rem] lg:max-w-[19.375rem]">
             <SideMenu />
           </div>
+
           <div className="flex-1">
-            <SecurityContent />
+            <NoFavorites />
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default ProfileSecurityPage;
+}
