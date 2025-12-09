@@ -1,13 +1,6 @@
 'use client';
 import ProfileOptionCard from '@/components/profile/ProfileOptionCard';
-import {
-  AccountIcon,
-  Favorite,
-  FilterIcon,
-  NotificationIcon,
-  SavedIcon,
-  SecurityIcon,
-} from '@/utils/icons';
+import { AccountIcon, Favorite, NotificationIcon, SecurityIcon } from '@/utils/icons';
 import classNames from 'classnames';
 import { usePathname, useRouter } from 'next/navigation';
 
