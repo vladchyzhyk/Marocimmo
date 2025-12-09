@@ -10,7 +10,11 @@ import {
 import SideMenu from '../components/SideMenu';
 import { useState, useEffect } from 'react';
 import { mockSavedFilters } from '@/utils/mockSavedFilters';
-import { deleteFilterFromStorage, getSavedFilters } from '@/utils/savedFiltersStorage';
+import {
+  deleteFilterFromStorage,
+  getSavedFilters,
+  updateFilterInStorage,
+} from '@/utils/savedFiltersStorage';
 import { MockSavedFilter } from '@/utils/mockSavedFilters';
 
 export default function SavedFiltersPage() {
@@ -33,16 +37,14 @@ export default function SavedFiltersPage() {
 
   const handleSaveFilterName = (newName: string) => {
     if (editingFilter) {
+      const isMockFilter = mockSavedFilters.some((mf) => mf.id === editingFilter.id);
+      if (!isMockFilter) {
+        updateFilterInStorage(editingFilter.id, { title: newName });
+      }
       const updatedFilters = savedFilters.map((filter) =>
         filter.id === editingFilter.id ? { ...filter, title: newName } : filter,
       );
       setSavedFilters(updatedFilters);
-      const customFilters = updatedFilters.filter(
-        (f) => !mockSavedFilters.some((mf) => mf.id === f.id),
-      );
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('savedFilters', JSON.stringify(customFilters));
-      }
     }
     setIsEditModalOpen(false);
     setEditingFilter(null);

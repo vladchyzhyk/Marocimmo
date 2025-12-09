@@ -8,6 +8,9 @@ import { FilterValues } from '@/utils/filterUtils';
 import { collectAllFilters } from '@/utils/collectFilters';
 import { FILTERS_CONFIG } from './filters-config';
 import { generateFilterTips } from '@/utils/filterTips';
+import { useRouter } from 'next/navigation';
+import { convertFilterValuesToSearchParams } from '@/utils/savedFiltersStorage';
+import { serializeSearchParams } from '@/hooks/useSearchParams';
 
 interface SavedFilterCardProps {
   title: string;
@@ -65,6 +68,7 @@ export const SavedFilterCard = ({
   onViewProperties,
 }: SavedFilterCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
@@ -95,6 +99,9 @@ export const SavedFilterCard = ({
 
   const handleViewProperties = () => {
     onViewProperties?.();
+    const searchParams = convertFilterValuesToSearchParams(filterQuery);
+    const queryString = serializeSearchParams(searchParams);
+    router.push(`/search${queryString}`);
   };
 
   const handleMenuToggle = () => {

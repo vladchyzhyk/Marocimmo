@@ -1,6 +1,6 @@
 import { FilterValues } from './filterUtils';
 import { SearchParams } from '@/hooks/useSearchParams';
-import { DealType } from '@/components/filters/filters-config';
+import { DealType, PropertyType } from '@/components/filters/filters-config';
 
 export interface SavedFilter {
   id: string;
@@ -171,7 +171,7 @@ export function saveFilterToStorage(
   };
 
   savedFilters.push(newFilter);
-  
+
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
   } catch (error) {
@@ -185,7 +185,7 @@ export function saveFilterToStorage(
 export function deleteFilterFromStorage(filterId: string): void {
   const savedFilters = getSavedFilters();
   const filtered = savedFilters.filter((filter) => filter.id !== filterId);
-  
+
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
   } catch (error) {
@@ -197,7 +197,7 @@ export function deleteFilterFromStorage(filterId: string): void {
 export function updateFilterInStorage(filterId: string, updates: Partial<SavedFilter>): void {
   const savedFilters = getSavedFilters();
   const index = savedFilters.findIndex((filter) => filter.id === filterId);
-  
+
   if (index === -1) {
     throw new Error(`Filter with id ${filterId} not found`);
   }
@@ -207,7 +207,7 @@ export function updateFilterInStorage(filterId: string, updates: Partial<SavedFi
     ...updates,
     updatedAt: new Date().toISOString(),
   };
-  
+
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(savedFilters));
   } catch (error) {
@@ -216,3 +216,167 @@ export function updateFilterInStorage(filterId: string, updates: Partial<SavedFi
   }
 }
 
+export function convertFilterValuesToSearchParams(
+  filterValues: FilterValues,
+): Partial<SearchParams> {
+  const searchParams: Partial<SearchParams> = {};
+
+  if (filterValues.propertyTypes && filterValues.propertyTypes.length > 0) {
+    searchParams.propertyTypes = filterValues.propertyTypes as PropertyType[];
+  }
+  if (filterValues.location) {
+    searchParams.locationId = filterValues.location;
+  }
+  if (filterValues.priceMin !== undefined) {
+    searchParams.priceMin = filterValues.priceMin;
+  }
+  if (filterValues.priceMax !== undefined) {
+    searchParams.priceMax = filterValues.priceMax;
+  }
+  if (filterValues.areaMin !== undefined) {
+    searchParams.areaMin = filterValues.areaMin;
+  }
+  if (filterValues.areaMax !== undefined) {
+    searchParams.areaMax = filterValues.areaMax;
+  }
+  if (filterValues.livingAreaMin !== undefined) {
+    searchParams.livingAreaMin = filterValues.livingAreaMin;
+  }
+  if (filterValues.livingAreaMax !== undefined) {
+    searchParams.livingAreaMax = filterValues.livingAreaMax;
+  }
+  if (filterValues.totalAreaMin !== undefined) {
+    searchParams.totalAreaMin = filterValues.totalAreaMin;
+  }
+  if (filterValues.totalAreaMax !== undefined) {
+    searchParams.totalAreaMax = filterValues.totalAreaMax;
+  }
+  if (filterValues.bedrooms !== undefined) {
+    searchParams.bedrooms = filterValues.bedrooms;
+  }
+  if (filterValues.bathrooms !== undefined) {
+    searchParams.bathrooms = filterValues.bathrooms;
+  }
+  if (filterValues.rooms !== undefined) {
+    searchParams.rooms = filterValues.rooms;
+  }
+  if (filterValues.parking !== undefined) {
+    searchParams.parking = filterValues.parking;
+  }
+  if (filterValues.floorLevelMin !== undefined) {
+    searchParams.floorLevelMin = filterValues.floorLevelMin;
+  }
+  if (filterValues.floorLevelMax !== undefined) {
+    searchParams.floorLevelMax = filterValues.floorLevelMax;
+  }
+  if (filterValues.totalFloorsMin !== undefined) {
+    searchParams.totalFloorsMin = filterValues.totalFloorsMin;
+  }
+  if (filterValues.totalFloorsMax !== undefined) {
+    searchParams.totalFloorsMax = filterValues.totalFloorsMax;
+  }
+  if (filterValues.furnished !== undefined) {
+    searchParams.furnished = filterValues.furnished;
+  }
+  if (filterValues.zoningCategory) {
+    searchParams.zoningCategory = filterValues.zoningCategory;
+  }
+  if (filterValues.amenities && filterValues.amenities.length > 0) {
+    searchParams.amenities = filterValues.amenities;
+  }
+  if (filterValues.exactMatch !== undefined) {
+    searchParams.exactMatch = filterValues.exactMatch;
+  }
+  if (filterValues.guests) {
+    searchParams.guests = filterValues.guests;
+    if (filterValues.guests.maxGuests !== undefined) {
+      searchParams.maxGuests = filterValues.guests.maxGuests;
+    }
+    if (filterValues.guests.disabledAccess !== undefined) {
+      searchParams.guestsDisabledAccess = filterValues.guests.disabledAccess;
+    }
+    if (filterValues.guests.petsAllowed !== undefined) {
+      searchParams.guestsPetsAllowed = filterValues.guests.petsAllowed;
+    }
+  }
+  if (filterValues.building) {
+    searchParams.building = filterValues.building;
+    if (filterValues.building.year) {
+      searchParams.buildingYear = filterValues.building.year;
+    }
+    if (filterValues.building.condition) {
+      searchParams.buildingCondition = filterValues.building.condition;
+    }
+    if (filterValues.building.renovation) {
+      searchParams.buildingRenovation = filterValues.building.renovation;
+    }
+    if (filterValues.building.propertyClass) {
+      searchParams.buildingPropertyClass = filterValues.building.propertyClass;
+    }
+  }
+  if (filterValues.view) {
+    searchParams.view = filterValues.view;
+  }
+  if (filterValues.ceilingMin !== undefined) {
+    searchParams.ceilingMin = filterValues.ceilingMin;
+  }
+  if (filterValues.ceilingMax !== undefined) {
+    searchParams.ceilingMax = filterValues.ceilingMax;
+  }
+  if (filterValues.availability) {
+    searchParams.availability = filterValues.availability;
+    if (filterValues.availability.moveInDate) {
+      searchParams.moveInDate = filterValues.availability.moveInDate;
+    }
+    if (filterValues.availability.showWithoutDate !== undefined) {
+      searchParams.showWithoutDate = filterValues.availability.showWithoutDate;
+    }
+  }
+  if (filterValues.specialCondition) {
+    searchParams.specialCondition = filterValues.specialCondition;
+    if (filterValues.specialCondition.disabledAccess !== undefined) {
+      searchParams.specialDisabledAccess = filterValues.specialCondition.disabledAccess;
+    }
+    if (filterValues.specialCondition.petsAllowed !== undefined) {
+      searchParams.specialPetsAllowed = filterValues.specialCondition.petsAllowed;
+    }
+    if (filterValues.specialCondition.smokingAllowed !== undefined) {
+      searchParams.specialSmokingAllowed = filterValues.specialCondition.smokingAllowed;
+    }
+    if (filterValues.specialCondition.negotiablePrice !== undefined) {
+      searchParams.specialNegotiablePrice = filterValues.specialCondition.negotiablePrice;
+    }
+    if (filterValues.specialCondition.touristLicense !== undefined) {
+      searchParams.specialTouristLicense = filterValues.specialCondition.touristLicense;
+    }
+    if (filterValues.specialCondition.loti !== undefined) {
+      searchParams.specialLoti = filterValues.specialCondition.loti;
+    }
+    if (filterValues.specialCondition.titledLand !== undefined) {
+      searchParams.specialTitledLand = filterValues.specialCondition.titledLand;
+    }
+  }
+  if (filterValues.furnishing && filterValues.furnishing.length > 0) {
+    searchParams.furnishing = filterValues.furnishing;
+  }
+  if (filterValues.layout && filterValues.layout.length > 0) {
+    searchParams.layout = filterValues.layout;
+  }
+  if (filterValues.buildingAmenities && filterValues.buildingAmenities.length > 0) {
+    searchParams.buildingAmenities = filterValues.buildingAmenities;
+  }
+  if (filterValues.safety && filterValues.safety.length > 0) {
+    searchParams.safety = filterValues.safety;
+  }
+  if (filterValues.utilities && filterValues.utilities.length > 0) {
+    searchParams.utilities = filterValues.utilities;
+  }
+  if (filterValues.basicSupplies && filterValues.basicSupplies.length > 0) {
+    searchParams.basicSupplies = filterValues.basicSupplies;
+  }
+  if (filterValues.pricePeriod) {
+    searchParams.pricePeriod = filterValues.pricePeriod;
+  }
+
+  return searchParams;
+}
