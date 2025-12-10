@@ -17,12 +17,7 @@ import {
   updateFilterInStorage,
 } from '@/utils/savedFiltersStorage';
 import { MockSavedFilter } from '@/utils/mockSavedFilters';
-import {
-  SortDropdown,
-  SortValue,
-  SORT_OPTIONS,
-  SortOption,
-} from '@/components/search-results/SortDropdown';
+import { SortDropdown, SortOption } from '@/components/search-results/SortDropdown';
 
 const DROPDOWN_OPTIONS: SortOption<'oldest' | 'latest'>[] = [
   { value: 'oldest', label: 'Oldest first' },

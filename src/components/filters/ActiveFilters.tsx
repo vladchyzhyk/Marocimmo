@@ -5,7 +5,7 @@ import { FilterTip } from './FilterTip';
 import { useCollectFilters } from '@/hooks/useCollectFilters';
 import { useFilters } from '@/hooks/useFilters';
 import { FILTERS_CONFIG } from './filters-config';
-import { generateFilterTips, FilterTipItem } from '@/utils/filterTips';
+import { generateFilterTips } from '@/utils/filterTips';
 
 interface SeeMoreButtonProps {
   text: string;

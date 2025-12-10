@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
-import { WhatsAppIcon, FacebookIcon2, EmailIcon, CloseIcon } from '@/utils/icons';
+import { CloseIcon } from '@/utils/icons';
 import { FilterValues } from '@/utils/filterUtils';
 import { convertFilterValuesToSearchParams } from '@/utils/savedFiltersStorage';
 import { serializeSearchParams } from '@/hooks/useSearchParams';
@@ -31,28 +31,6 @@ const CopyButton = ({ copied, onClick }: CopyButtonProps) => {
       variant="primary"
       size="lg"
       fullWidth={false}
-    />
-  );
-};
-
-interface SocialShareButtonProps {
-  icon: React.ReactNode;
-  label: string;
-  onClick: () => void;
-  ariaLabel: string;
-}
-
-const SocialShareButton = ({ icon, label, onClick, ariaLabel }: SocialShareButtonProps) => {
-  return (
-    <Button
-      leftIcon={icon}
-      label={label}
-      onClick={onClick}
-      variant="secondary"
-      size="lg"
-      fullWidth={true}
-      className="!bg-[var(--bg-tint)] border border-[var(--border)] rounded-lg"
-      aria-label={ariaLabel}
     />
   );
 };
@@ -128,7 +106,6 @@ export const ShareFilterDialog = ({ isOpen, onClose, filter }: ShareFilterDialog
 
           <div className="w-full h-px bg-[var(--border)]" />
 
-
           <div className="flex flex-row items-end gap-2 w-full">
             <div className="w-[70%]">
               <Input
@@ -154,4 +131,3 @@ export const ShareFilterDialog = ({ isOpen, onClose, filter }: ShareFilterDialog
     </Modal>
   );
 };
-
