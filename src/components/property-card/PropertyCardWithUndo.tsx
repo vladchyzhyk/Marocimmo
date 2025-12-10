@@ -5,6 +5,7 @@ import { usePropertyCardVariant, type PropertyCardVariant } from '@/hooks/usePro
 import { PropertyCardCompactBase } from './PropertyCardCompactBase';
 import { PropertyCardFullBase } from './PropertyCardFullBase';
 import { SharePropertyDialog } from '../SharePropertyDialog';
+import { useRouter } from 'next/navigation';
 
 export interface PropertyCardWithUndoProps {
   title: string;
@@ -54,6 +55,7 @@ export const PropertyCardWithUndo = ({
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const previousFavRef = useRef(isFavorite);
   const undoTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const router = useRouter();
 
   const hasMultipleImages = images.length > 1;
   const currentImage = images[currentImageIndex] || images[0];
@@ -83,8 +85,6 @@ export const PropertyCardWithUndo = ({
     setIsFav(newFavState);
     setShowUndo(true);
 
-    console.log('onFavoriteClick', { id, isFav: newFavState });
-
     undoTimerRef.current = setTimeout(() => {
       setShowUndo(false);
     }, undoTimeout);
@@ -99,14 +99,11 @@ export const PropertyCardWithUndo = ({
 
     setIsFav(previousFavRef.current);
     setShowUndo(false);
-
-    console.log('onUndoClick', { id, restoredFav: previousFavRef.current });
   };
 
   const handleShareClick = (e: MouseEvent) => {
     e.stopPropagation();
     setIsShareDialogOpen(true);
-    console.log('onShareClick', { id, title });
   };
 
   const handleCloseShareDialog = () => {
@@ -115,41 +112,35 @@ export const PropertyCardWithUndo = ({
 
   const handleContactClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log('onContactClick', { id, showContacts: !showContacts });
     setShowContacts(!showContacts);
   };
 
   const handlePhoneClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log('onPhoneClick', { id, phone });
   };
 
   const handleWhatsAppClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log('onWhatsAppClick', { id, whatsapp });
   };
 
   const handleEmailClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log('onEmailClick', { id, email });
   };
 
   const handlePreviousImage = (e: MouseEvent) => {
     e.stopPropagation();
     const newIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
-    console.log('onPreviousImage', { id, from: currentImageIndex, to: newIndex });
     setCurrentImageIndex(newIndex);
   };
 
   const handleNextImage = (e: MouseEvent) => {
     e.stopPropagation();
     const newIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
-    console.log('onNextImage', { id, from: currentImageIndex, to: newIndex });
     setCurrentImageIndex(newIndex);
   };
 
   const handleCardClick = (cardId: string) => {
-    console.log('onCardClick', { id: cardId });
+    router.push(`/property/${cardId}`);
   };
 
   const baseProps = {

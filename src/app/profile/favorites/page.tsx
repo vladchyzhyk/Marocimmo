@@ -63,6 +63,7 @@ export default function FavoritesPage() {
                 favorites.map((property) => (
                   <PropertyCardWithUndo
                     key={property.id}
+                    id={property.id}
                     title={property.title}
                     price={property.price}
                     currency={property.currency}
