@@ -1,23 +1,34 @@
 'use client';
 import { ArrowNextIcon } from '@/utils/icons';
 import { useRouter } from 'next/navigation';
-import { NoFavorites } from '@/components/NoFavorites';
 import SideMenu from '../components/SideMenu';
 import { ClearAllButton } from '@/components/filters';
-import { SortDropdown, SortValue } from '@/components/search-results/SortDropdown';
+import { SortDropdown, SortOption } from '@/components/search-results/SortDropdown';
 import { useState } from 'react';
+import { getPropertyIcons } from '@/utils/getPropertyIcons';
+import { mockProperties } from '@/utils/mockProperties';
+import { PropertyCardWithUndo } from '@/components/property-card';
+import { NoFavorites } from '@/components/NoFavorites';
+
+const DROPDOWN_OPTIONS: SortOption<'oldest' | 'latest'>[] = [
+  { value: 'oldest', label: 'Oldest first' },
+  { value: 'latest', label: 'Latest first' },
+];
 
 export default function FavoritesPage() {
   const router = useRouter();
-  const [sortValue, setSortValue] = useState<SortValue>('newest');
+  const [favorites, setFavorites] = useState(() =>
+    mockProperties.filter((property) => property.isFavorite),
+  );
+  const [sortValue, setSortValue] = useState<'oldest' | 'latest'>('latest');
 
   const handleClearAll = () => {
     console.log('clear all');
+    setFavorites([]);
   };
 
   return (
     <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-4 lg:gap-8 px-4 py-6 md:py-8 mt-[6rem]">
-      {/* Title and filters block */}
       <div className="flex flex-col gap-8">
         <div className="flex">
           <div className="hidden md:flex flex-col">
@@ -26,7 +37,11 @@ export default function FavoritesPage() {
           </div>
           <div className="hidden md:flex justify-end w-full items-center gap-2">
             <ClearAllButton onClick={handleClearAll} />
-            <SortDropdown value={sortValue} onChange={(value) => setSortValue(value)} />
+            <SortDropdown
+              value={sortValue}
+              options={DROPDOWN_OPTIONS}
+              onChange={(value) => setSortValue(value)}
+            />
           </div>
         </div>
 
@@ -43,7 +58,27 @@ export default function FavoritesPage() {
           </div>
 
           <div className="flex-1">
-            <NoFavorites />
+            <div className="grid grid-cols-1  lg:grid-cols-1 gap-4">
+              {favorites.length > 0 ? (
+                favorites.map((property) => (
+                  <PropertyCardWithUndo
+                    key={property.id}
+                    title={property.title}
+                    price={property.price}
+                    currency={property.currency}
+                    propertyType={property.propertyType}
+                    location={property.location}
+                    images={property.images}
+                    pricePerPeriod={property.pricePerPeriod}
+                    isFavorite={property.isFavorite}
+                    className="flex-shrink-0 w-full"
+                    propertyIcons={getPropertyIcons(property)}
+                  />
+                ))
+              ) : (
+                <NoFavorites />
+              )}
+            </div>
           </div>
         </div>
       </div>
