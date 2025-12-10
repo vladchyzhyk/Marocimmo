@@ -17,7 +17,18 @@ import {
   updateFilterInStorage,
 } from '@/utils/savedFiltersStorage';
 import { MockSavedFilter } from '@/utils/mockSavedFilters';
-import { SortDropdown, SortValue } from '@/components/search-results/SortDropdown';
+import {
+  SortDropdown,
+  SortValue,
+  SORT_OPTIONS,
+  SortOption,
+} from '@/components/search-results/SortDropdown';
+
+const DROPDOWN_OPTIONS: SortOption<'oldest' | 'latest'>[] = [
+  { value: 'oldest', label: 'Oldest first' },
+  { value: 'latest', label: 'Latest first' },
+];
+
 export default function SavedFiltersPage() {
   const router = useRouter();
   const [savedFilters, setSavedFilters] = useState<MockSavedFilter[]>(mockSavedFilters);
@@ -25,7 +36,7 @@ export default function SavedFiltersPage() {
   const [editingFilter, setEditingFilter] = useState<{ id: string; title: string } | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deletingFilter, setDeletingFilter] = useState<{ id: string; title: string } | null>(null);
-  const [sortValue, setSortValue] = useState<SortValue>('newest');
+  const [sortValue, setSortValue] = useState<'oldest' | 'latest'>('latest');
 
   useEffect(() => {
     const customFilters = getSavedFilters();
@@ -81,7 +92,7 @@ export default function SavedFiltersPage() {
   };
 
   const handleClearAll = () => {
-    console.log('clear all');
+    setSavedFilters([]);
   };
 
   return (
@@ -94,7 +105,11 @@ export default function SavedFiltersPage() {
           </div>
           <div className="hidden md:flex justify-end w-full items-center gap-2">
             <ClearAllButton onClick={handleClearAll} />
-            <SortDropdown value={sortValue} onChange={(value) => setSortValue(value)} />
+            <SortDropdown
+              value={sortValue}
+              options={DROPDOWN_OPTIONS}
+              onChange={(value) => setSortValue(value)}
+            />
           </div>
         </div>
 

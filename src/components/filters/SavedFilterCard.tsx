@@ -11,6 +11,7 @@ import { generateFilterTips } from '@/utils/filterTips';
 import { useRouter } from 'next/navigation';
 import { convertFilterValuesToSearchParams } from '@/utils/savedFiltersStorage';
 import { serializeSearchParams } from '@/hooks/useSearchParams';
+import { ShareFilterDialog } from './ShareFilterDialog';
 
 interface SavedFilterCardProps {
   title: string;
@@ -68,6 +69,7 @@ export const SavedFilterCard = ({
   onViewProperties,
 }: SavedFilterCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -90,7 +92,12 @@ export const SavedFilterCard = ({
   };
 
   const handleShare = () => {
+    setIsShareDialogOpen(true);
     onShare?.();
+  };
+
+  const handleCloseShareDialog = () => {
+    setIsShareDialogOpen(false);
   };
 
   const handleDelete = () => {
@@ -305,6 +312,14 @@ export const SavedFilterCard = ({
           </div>
         </div>
       </div>
+      <ShareFilterDialog
+        isOpen={isShareDialogOpen}
+        onClose={handleCloseShareDialog}
+        filter={{
+          title,
+          filterQuery,
+        }}
+      />
     </div>
   );
 };
