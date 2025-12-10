@@ -13,11 +13,12 @@ import { PropertyType, DealType } from '@/components/filters/filters-config';
 import { ActiveFilters } from '@/components/filters/ActiveFilters';
 import { NoResults } from '@/components/search-results/NoResults';
 import Pagination from '@/components/search-results/Pagination';
-import { SortDropdown } from '@/components/search-results/SortDropdown';
+import { SortDropdown, SortValue, SORT_OPTIONS } from '@/components/search-results/SortDropdown';
 import { mockProperties } from '@/utils/mockProperties';
 import { getPropertyIcons } from '@/utils/getPropertyIcons';
 import { LOCATION_SEARCH_OPTIONS } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import { saveFilterToStorage } from '@/utils/savedFiltersStorage';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -27,6 +28,7 @@ function SearchPageContent() {
   const [isSaveFilterModalOpen, setIsSaveFilterModalOpen] = useState(false);
   const [isSaveFilterSuccessModalOpen, setIsSaveFilterSuccessModalOpen] = useState(false);
   const [savedFilterName, setSavedFilterName] = useState('');
+  const [sortValue, setSortValue] = useState<SortValue>('newest');
 
   const router = useRouter();
 
@@ -185,10 +187,14 @@ function SearchPageContent() {
   };
 
   const handleSaveFilter = (filterName: string) => {
-    console.log('Saving filter:', filterName, searchParams);
-    setSavedFilterName(filterName);
-    setIsSaveFilterModalOpen(false);
-    setIsSaveFilterSuccessModalOpen(true);
+    try {
+      saveFilterToStorage(filterName, searchParams, filteredProperties.length);
+      setSavedFilterName(filterName);
+      setIsSaveFilterModalOpen(false);
+      setIsSaveFilterSuccessModalOpen(true);
+    } catch (error) {
+      console.error('Error saving filter:', error);
+    }
   };
 
   return (
@@ -224,7 +230,11 @@ function SearchPageContent() {
                 </span>
               </button>
 
-              <SortDropdown />
+              <SortDropdown
+                value={sortValue}
+                options={SORT_OPTIONS}
+                onChange={(value) => setSortValue(value)}
+              />
             </div>
           </div>
           {filteredProperties.length === 0 ? (

@@ -1,13 +1,12 @@
 'use client';
 
 import ProfileForm from '@/app/profile/components/ProfileForm';
-import ProfileOptionCard from '@/components/profile/ProfileOptionCard';
-import { AccountIcon, ArrowNextIcon, SecurityIcon } from '@/utils/icons';
-import { usePathname, useRouter } from 'next/navigation';
+import { ArrowNextIcon } from '@/utils/icons';
+import { useRouter } from 'next/navigation';
+import SideMenu from '../components/SideMenu';
 
 const ProfileInformationPage = () => {
   const router = useRouter();
-  const pathname = usePathname();
 
   return (
     <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-4 lg:gap-8 px-4 py-6 md:py-8 mt-[6rem]">
@@ -27,20 +26,7 @@ const ProfileInformationPage = () => {
             <p className="label-md-medium text-[var(--color-black)]">Back to Settings</p>
           </div>
           <div className="hidden md:flex w-full flex-col gap-2 md:max-w-[14.375rem] lg:max-w-[19.375rem]">
-            <ProfileOptionCard
-              title="Personal Information"
-              description="Update your personal details and profile photo"
-              Icon={AccountIcon}
-              isSelected={pathname === '/profile/information'}
-              onClick={() => router.push('/profile/information')}
-            />
-            <ProfileOptionCard
-              title="Password & Security"
-              description="Manage your password and account security"
-              Icon={SecurityIcon}
-              isSelected={pathname === '/profile/security'}
-              onClick={() => router.push('/profile/security')}
-            />
+            <SideMenu />
           </div>
 
           <div className="flex-1">

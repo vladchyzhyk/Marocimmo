@@ -4,36 +4,34 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { ArrowDownIcon, CheckIcon, SortIcon } from '@/utils/icons';
 
-export interface SortDropdownProps {
-  value?: SortValue;
-  onChange?: (value: SortValue) => void;
-  className?: string;
-}
-
 export type SortValue = 'newest' | 'price-asc' | 'price-desc';
 
-interface SortOption {
-  value: SortValue;
+export interface SortOption<T extends string | number> {
+  value: T;
   label: string;
 }
 
-const SORT_OPTIONS: SortOption[] = [
+export const SORT_OPTIONS: SortOption<SortValue>[] = [
   { value: 'newest', label: 'Newest first' },
   { value: 'price-asc', label: 'Price (Low to High)' },
   { value: 'price-desc', label: 'Price (High to Low)' },
 ];
 
-export function SortDropdown({ value, onChange, className }: SortDropdownProps) {
+export interface SortDropdownProps<T extends string | number> {
+  value: T;
+  options: SortOption<T>[];
+  onChange: (value: T) => void;
+  className?: string;
+}
+
+export function SortDropdown<T extends string | number>({
+  value,
+  options,
+  onChange,
+  className,
+}: SortDropdownProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [internalValue, setInternalValue] = useState<SortValue>('newest');
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const selectedValue = value ?? internalValue;
-
-  useEffect(() => {
-    if (!value) return;
-    setInternalValue(value);
-  }, [value]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -65,24 +63,14 @@ export function SortDropdown({ value, onChange, className }: SortDropdownProps) 
     setIsOpen((prev) => !prev);
   }
 
-  function handleSelect(option: SortOption) {
-    if (!value) {
-      setInternalValue(option.value);
-    }
-    onChange?.(option.value);
+  function handleSelect(option: SortOption<T>) {
+    onChange(option.value);
     setIsOpen(false);
   }
 
-  function getLabelForValue(currentValue: SortValue) {
-    if (currentValue === 'price-asc') {
-      return 'Low to High';
-    }
-    if (currentValue === 'price-desc') {
-      return 'High to Low';
-    }
-    const found = SORT_OPTIONS.find((option) => option.value === currentValue);
-    if (!found) return SORT_OPTIONS[0]?.label ?? '';
-    return found.label;
+  function getLabelForValue(currentValue: T) {
+    const found = options.find((option) => option.value === currentValue);
+    return found?.label ?? options[0]?.label ?? '';
   }
 
   return (
@@ -129,7 +117,7 @@ export function SortDropdown({ value, onChange, className }: SortDropdownProps) 
             isOpen ? 'text-[var(--accent-green)]' : 'text-[#222222]',
           )}
         >
-          {getLabelForValue(selectedValue)}
+          {getLabelForValue(value)}
         </span>
         <ArrowDownIcon
           className={classNames(
@@ -146,10 +134,10 @@ export function SortDropdown({ value, onChange, className }: SortDropdownProps) 
             aria-label="Sort results"
             className="flex flex-col py-2"
           >
-            {SORT_OPTIONS.map((option) => {
-              const isSelected = option.value === selectedValue;
+            {options.map((option) => {
+              const isSelected = option.value === value;
               return (
-                <li key={option.value}>
+                <li key={String(option.value)}>
                   <button
                     type="button"
                     role="option"

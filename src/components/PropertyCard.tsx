@@ -1,9 +1,13 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { usePropertyCardVariant, type PropertyCardVariant } from '@/hooks/usePropertyCardVariant';
-import { PropertyCardCompact } from './property-card/PropertyCardCompact';
-import { PropertyCardFull } from './property-card/PropertyCardFull';
+import type { PropertyCardVariant } from '@/hooks/usePropertyCardVariant';
+import { PropertyCardWithDialogs } from './property-card/PropertyCardWithDialogs';
+
+export type { PropertyCardBaseProps } from './property-card/types';
+export { PropertyCardCompactBase } from './property-card/PropertyCardCompactBase';
+export { PropertyCardFullBase } from './property-card/PropertyCardFullBase';
+export { PropertyCardWithDialogs } from './property-card/PropertyCardWithDialogs';
 
 export type PropertyCardProps = {
   title: string;
@@ -28,13 +32,7 @@ export type PropertyCardProps = {
 };
 
 export const PropertyCard = (props: PropertyCardProps) => {
-  const variant = usePropertyCardVariant(1024, props.variant);
-
-  if (variant === 'full') {
-    return <PropertyCardFull {...props} />;
-  }
-
-  return <PropertyCardCompact {...props} />;
+  return <PropertyCardWithDialogs {...props} />;
 };
 
 export default PropertyCard;

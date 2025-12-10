@@ -4,9 +4,11 @@ import type { ReactNode } from 'react';
 import { SharePropertyDialog } from '../SharePropertyDialog';
 import { AuthModal } from '../AuthModal';
 import { usePropertyCardLogic } from '@/hooks/usePropertyCardLogic';
+import { usePropertyCardVariant, type PropertyCardVariant } from '@/hooks/usePropertyCardVariant';
 import { PropertyCardCompactBase } from './PropertyCardCompactBase';
+import { PropertyCardFullBase } from './PropertyCardFullBase';
 
-export interface PropertyCardCompactProps {
+export interface PropertyCardWithDialogsProps {
   title: string;
   price: number;
   currency?: string;
@@ -24,10 +26,11 @@ export interface PropertyCardCompactProps {
   email?: string;
   id?: string;
   url?: string;
+  variant?: PropertyCardVariant;
   onClick?: (id: string) => void;
 }
 
-export const PropertyCardCompact = ({
+export const PropertyCardWithDialogs = ({
   title,
   price,
   currency = 'DH',
@@ -45,8 +48,11 @@ export const PropertyCardCompact = ({
   email,
   id,
   url,
+  variant: variantProp,
   onClick,
-}: PropertyCardCompactProps) => {
+}: PropertyCardWithDialogsProps) => {
+  const variant = usePropertyCardVariant(1024, variantProp);
+
   const {
     isFav,
     currentImageIndex,
@@ -81,36 +87,42 @@ export const PropertyCardCompact = ({
       ? `${typeof window !== 'undefined' ? window.location.origin : ''}/search/${id}`
       : undefined);
 
+  const baseProps = {
+    title,
+    price,
+    currency,
+    propertyType,
+    location,
+    pricePerPeriod,
+    className,
+    propertyIcons,
+    phone,
+    whatsapp,
+    email,
+    id,
+    isFav,
+    currentImageIndex,
+    showContacts,
+    hasMultipleImages,
+    currentImage,
+    onFavoriteClick: handleFavoriteClick,
+    onShareClick: handleShareClick,
+    onContactClick: handleContactClick,
+    onPhoneClick: handlePhoneClick,
+    onWhatsAppClick: handleWhatsAppClick,
+    onEmailClick: handleEmailClick,
+    onPreviousImage: handlePreviousImage,
+    onNextImage: handleNextImage,
+    onCardClick: onClick,
+  };
+
   return (
     <>
-      <PropertyCardCompactBase
-        title={title}
-        price={price}
-        currency={currency}
-        propertyType={propertyType}
-        location={location}
-        pricePerPeriod={pricePerPeriod}
-        className={className}
-        propertyIcons={propertyIcons}
-        phone={phone}
-        whatsapp={whatsapp}
-        email={email}
-        id={id}
-        isFav={isFav}
-        currentImageIndex={currentImageIndex}
-        showContacts={showContacts}
-        hasMultipleImages={hasMultipleImages}
-        currentImage={currentImage}
-        onFavoriteClick={handleFavoriteClick}
-        onShareClick={handleShareClick}
-        onContactClick={handleContactClick}
-        onPhoneClick={handlePhoneClick}
-        onWhatsAppClick={handleWhatsAppClick}
-        onEmailClick={handleEmailClick}
-        onPreviousImage={handlePreviousImage}
-        onNextImage={handleNextImage}
-        onCardClick={onClick}
-      />
+      {variant === 'full' ? (
+        <PropertyCardFullBase {...baseProps} />
+      ) : (
+        <PropertyCardCompactBase {...baseProps} />
+      )}
       <SharePropertyDialog
         isOpen={isShareDialogOpen}
         onClose={handleCloseShareDialog}
@@ -131,3 +143,4 @@ export const PropertyCardCompact = ({
     </>
   );
 };
+
